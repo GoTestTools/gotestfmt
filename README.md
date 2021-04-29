@@ -1,10 +1,11 @@
 # Golang test output formatter
 
-Are you tired of scrolling through endless Golang test logs in GitHub Actions? Would you like a test log like this?
+Are you tired of scrolling through endless Golang test logs in GitHub Actions? Would you like a test log like this? (Click the test cases.)
 
+<pre>
 <details><summary>✅ TestCase1</summary>
 <p>
-Here are the details of the first test case/
+Here are the details of the first test case.
 </p>
 </details>
 <details><summary>✅ TestCase2</summary>
@@ -17,6 +18,7 @@ Here are the details of the second test case.
 Here are the details why the third test case failed.
 </p>
 </details>
+</pre>
 
 Then this is the tool for you. Here's how you use it:
 
