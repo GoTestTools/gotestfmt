@@ -1,4 +1,4 @@
-# Golang test output formatter
+# WORK IN PROGRESS: Golang test output formatter
 
 Are you tired of scrolling through endless Golang test logs in GitHub Actions? Would you like a test log like this? (Click the test cases.)
 
