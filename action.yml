@@ -1,0 +1,11 @@
+name: 'gotestfmt'
+description: 'Nicely format the go test output'
+inputs:
+  args:
+    description: 'Arguments to go test'
+    required: false
+    default: ''
+runs:
+  using: composite
+  args:
+    - ${{ inputs.args }}

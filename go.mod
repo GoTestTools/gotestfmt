@@ -1,3 +1,3 @@
-module github.com/janoszen/go-test-output-formatter
+module github.com/haveyoudebuggedit/gotestfmt
 
 go 1.16
