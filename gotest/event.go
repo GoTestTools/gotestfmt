@@ -26,9 +26,6 @@ type Event struct {
 	Cached bool `json:"cached"`
 	// Coverage shows the code coverage.
 	Coverage float64 `json:"coverage"`
-	// CoverageNoStatements indicates that there is no code overage data available because there are no statements in
-	// the code. You may want to add some code.
-	CoverageNoStatements bool `json:"coverageNoStatements"`
 }
 
 func (e Event) Equals(o Event) bool {
@@ -56,6 +53,8 @@ func (e Event) Diff(o Event) string {
 	e.diff("elapsed", e.Elapsed, o.Elapsed, &diff, ",")
 	e.diff("package", e.Package, o.Package, &diff, ",")
 	e.diff("version", e.Version, o.Version, &diff, ",")
+	e.diff("cached", e.Cached, e.Cached, &diff, ",")
+	e.diff("coverage", e.Coverage, o.Coverage, &diff, ",")
 	e.diff("output", string(e.Output), string(o.Output), &diff, "")
 
 	diff.WriteString("}\n")

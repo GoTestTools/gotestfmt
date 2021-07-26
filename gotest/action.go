@@ -23,6 +23,10 @@ const (
 	ActionSkip Action = "skip"
 	// ActionDownload is an event when a package is downloaded via Go modules.
 	ActionDownload Action = "download"
+	// ActionDownloadFailed indicates that the download of a package failed.
+	ActionDownloadFailed Action = "download_failed"
 	// ActionCoverage is an event showing code coverage-related statements.
 	ActionCoverage Action = "coverage"
+	// ActionCoverageNoStatements indicates that there were no code statements to cover.
+	ActionCoverageNoStatements Action = "coverage_nostatements"
 )

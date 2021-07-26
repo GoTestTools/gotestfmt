@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"strconv"
 	"time"
 )
 
@@ -37,6 +38,12 @@ var stateMachine = []stateChange{
 		regexp.MustCompile(`^go: downloading (?P<Package>[^\s]+) (?P<Version>.*)$`),
 		stateInit,
 		ActionDownload,
+		stateInit,
+	},
+	{
+		regexp.MustCompile(`^go: (?P<Package>[^@]+)@(?P<Version>[^:]+): (?P<Output>.*)`),
+		stateInit,
+		ActionDownloadFailed,
 		stateInit,
 	},
 	{
@@ -88,49 +95,49 @@ var stateMachine = []stateChange{
 		stateRun,
 	},
 	{
-		regexp.MustCompile(`^\s*--- FAIL:\s+(?P<Test>[^\s]+) \((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^\s*--- FAIL:\s+(?P<Test>[^\s]+) \(((?P<Cached>cached)|(?P<Elapsed>[^\s]*))\)$`),
 		stateRun,
 		ActionFail,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^\s*--- FAIL:\s+(?P<Test>[^\s]+) \((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^\s*--- FAIL:\s+(?P<Test>[^\s]+) \(((?P<Cached>cached)|(?P<Elapsed>[^\s]*))\)$`),
 		stateBetweenTests,
 		ActionFail,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^\s*--- PASS:\s+(?P<Test>[^\s]+) \((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^\s*--- PASS:\s+(?P<Test>[^\s]+) \(((?P<Cached>cached)|(?P<Elapsed>[^\s]*))\)$`),
 		stateRun,
 		ActionPass,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^\s*--- PASS:\s+(?P<Test>[^\s]+) \((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^\s*--- PASS:\s+(?P<Test>[^\s]+) \(((?P<Cached>cached)|(?P<Elapsed>[^\s]*))\)$`),
 		stateBetweenTests,
 		ActionPass,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^\s*--- SKIP:\s+(?P<Test>[^\s]+) \((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^\s*--- SKIP:\s+(?P<Test>[^\s]+) \(((?P<Cached>cached)|(?P<Elapsed>[^\s]*))\)$`),
 		stateRun,
 		ActionSkip,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^\s*--- SKIP:\s+(?P<Test>[^\s]+) \((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^\s*--- SKIP:\s+(?P<Test>[^\s]+) \(((?P<Cached>cached)|(?P<Elapsed>[^\s]*))\)$`),
 		stateBetweenTests,
 		ActionSkip,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^ok\s+(?P<Package>[^\s]+)\s+(?P<Elapsed>.*)$`),
+		regexp.MustCompile(`^ok\s+(?P<Package>[^\s]+)\s+(\((?P<Cached>cached)\)|(?P<Elapsed>[^\s]*))(|([\s]+)coverage: ((?P<Coverage>.*)% of statements|\[no statements]))$`),
 		stateInit,
 		ActionPass,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^ok\s+(?P<Package>[^\s]+)\s+(?P<Elapsed>.*)$`),
+		regexp.MustCompile(`^ok\s+(?P<Package>[^\s]+)\s+(\((?P<Cached>cached)\)|(?P<Elapsed>[^\s]*))(|\s+coverage: ((?P<Coverage>.*)% of statements|\[no statements]))$`),
 		stateBetweenTests,
 		ActionPass,
 		stateBetweenTests,
@@ -148,13 +155,13 @@ var stateMachine = []stateChange{
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^FAIL\s+(?P<Package>[^\s]+)\s+\((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^FAIL\s+(?P<Package>[^\s]+)\s+\((?P<Elapsed>[^\s]*)\)$`),
 		stateInit,
 		ActionFail,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^FAIL\s+(?P<Package>[^\s]+)\s+(?P<Elapsed>.*)$`),
+		regexp.MustCompile(`^FAIL\s+(?P<Package>[^\s]+)\s+(?P<Elapsed>[^\s]*)$`),
 		stateBetweenTests,
 		ActionFail,
 		stateBetweenTests,
@@ -166,25 +173,25 @@ var stateMachine = []stateChange{
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^PASS\s+(?P<Package>[^\s]+)\s+\((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^PASS\s+(?P<Package>[^\s]+)\s+\(((?P<Elapsed>[0-9.smh]+)|(?P<Cached>cached))\)$`),
 		stateInit,
 		ActionPass,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^PASS\s+(?P<Package>[^\s]+)\s+\((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^PASS\s+(?P<Package>[^\s]+)\s+\(((?P<Elapsed>[^\s]*)|(?P<Cached>cached))\)$`),
 		stateBetweenTests,
 		ActionPass,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^SKIP\s+(?P<Package>[^\s]+)\s+\((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^SKIP\s+(?P<Package>[^\s]+)\s+\(((?P<Elapsed>[^\s]*)|(?P<Cached>cached))\)$`),
 		stateInit,
 		ActionSkip,
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^SKIP\s+(?P<Package>[^\s]+)\s+\((?P<Elapsed>.*)\)$`),
+		regexp.MustCompile(`^SKIP\s+(?P<Package>[^\s]+)\s+\(((?P<Elapsed>[^\s]*)|(?P<Cached>cached))\)$`),
 		stateBetweenTests,
 		ActionSkip,
 		stateBetweenTests,
@@ -212,6 +219,30 @@ var stateMachine = []stateChange{
 		stateBetweenTests,
 		ActionPass,
 		stateBetweenTests,
+	},
+	{
+		regexp.MustCompile(`^coverage: (?P<Coverage>.*)% of statements$`),
+		stateBetweenTests,
+		ActionCoverage,
+		stateBetweenTests,
+	},
+	{
+		regexp.MustCompile(`^coverage: (?P<Coverage>.*)% of statements$`),
+		stateRun,
+		ActionCoverage,
+		stateRun,
+	},
+	{
+		regexp.MustCompile(`^coverage: \[no statements]$`),
+		stateBetweenTests,
+		ActionCoverageNoStatements,
+		stateBetweenTests,
+	},
+	{
+		regexp.MustCompile(`^coverage: \[no statements]$`),
+		stateRun,
+		ActionCoverageNoStatements,
+		stateRun,
 	},
 	{
 		regexp.MustCompile(`^(?P<Output>.*)$`),
@@ -269,13 +300,24 @@ func parseLine(currentState state, line []byte, output chan<- Event) state {
 		if match := stateTransition.regexp.FindSubmatch(line); len(match) != 0 {
 			elapsed, err := getTimeElapsed(stateTransition.regexp, match, "Elapsed")
 			if err == nil {
+				coverageString := string(extract(stateTransition.regexp, match, "Coverage"))
+				coverage := 0.00
+				if coverageString != "" {
+					coverage, err = strconv.ParseFloat(coverageString, 64)
+					if err != nil {
+						continue
+					}
+				}
+
 				evt := Event{
-					Action:  stateTransition.action,
-					Package: string(extract(stateTransition.regexp, match, "Package")),
-					Version: string(extract(stateTransition.regexp, match, "Version")),
-					Test:    string(extract(stateTransition.regexp, match, "Test")),
-					Elapsed: elapsed,
-					Output:  extract(stateTransition.regexp, match, "Output"),
+					Action:   stateTransition.action,
+					Package:  string(extract(stateTransition.regexp, match, "Package")),
+					Version:  string(extract(stateTransition.regexp, match, "Version")),
+					Test:     string(extract(stateTransition.regexp, match, "Test")),
+					Cached:   string(extract(stateTransition.regexp, match, "Cached")) == "cached",
+					Coverage: coverage,
+					Elapsed:  elapsed,
+					Output:   extract(stateTransition.regexp, match, "Output"),
 				}
 
 				output <- evt

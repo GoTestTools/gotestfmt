@@ -151,36 +151,36 @@ PASS
 ok      github.com/haveyoudebuggedit/example    10.048s`,
 		expectedOutput: []gotest.Event{
 			{
-				Action:  gotest.ActionRun,
-				Test:    "TestParallel1",
+				Action: gotest.ActionRun,
+				Test:   "TestParallel1",
 			},
 			{
-				Action:  gotest.ActionPause,
-				Test:    "TestParallel1",
+				Action: gotest.ActionPause,
+				Test:   "TestParallel1",
 			},
 			{
-				Action:  gotest.ActionRun,
-				Test:    "TestParallel2",
+				Action: gotest.ActionRun,
+				Test:   "TestParallel2",
 			},
 			{
-				Action:  gotest.ActionPause,
-				Test:    "TestParallel2",
+				Action: gotest.ActionPause,
+				Test:   "TestParallel2",
 			},
 			{
-				Action:  gotest.ActionCont,
-				Test:    "TestParallel1",
+				Action: gotest.ActionCont,
+				Test:   "TestParallel1",
 			},
 			{
 				Action: gotest.ActionStdout,
 				Output: []byte("    parallel_test.go:10: Test message 1"),
 			},
 			{
-				Action:  gotest.ActionCont,
-				Test:    "TestParallel2",
+				Action: gotest.ActionCont,
+				Test:   "TestParallel2",
 			},
 			{
-				Action:  gotest.ActionCont,
-				Test:    "TestParallel1",
+				Action: gotest.ActionCont,
+				Test:   "TestParallel1",
 			},
 			{
 				Action: gotest.ActionStdout,
@@ -192,8 +192,8 @@ ok      github.com/haveyoudebuggedit/example    10.048s`,
 				Elapsed: 5010 * time.Millisecond,
 			},
 			{
-				Action:  gotest.ActionCont,
-				Test:    "TestParallel2",
+				Action: gotest.ActionCont,
+				Test:   "TestParallel2",
 			},
 			{
 				Action: gotest.ActionStdout,
@@ -209,7 +209,7 @@ ok      github.com/haveyoudebuggedit/example    10.048s`,
 				Elapsed: 10020 * time.Millisecond,
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action: gotest.ActionPass,
 			},
 			{
 				Action:  gotest.ActionPass,
@@ -225,7 +225,7 @@ FAIL    github.com/haveyoudebuggedit/example [setup failed]
 FAIL`,
 		expectedOutput: []gotest.Event{
 			{
-				Action: gotest.ActionPackage,
+				Action:  gotest.ActionPackage,
 				Package: "github.com/haveyoudebuggedit/example",
 			},
 			{
@@ -235,7 +235,7 @@ FAIL`,
 			{
 				Action:  gotest.ActionFail,
 				Package: "github.com/haveyoudebuggedit/example",
-				Output: []byte("setup failed"),
+				Output:  []byte("setup failed"),
 			},
 			{
 				Action: gotest.ActionFail,
@@ -243,7 +243,7 @@ FAIL`,
 		},
 	},
 	"subtest": {
-		input:          `=== RUN   TestSubtest
+		input: `=== RUN   TestSubtest
 === RUN   TestSubtest/test1
     subtest_test.go:9: Hello world!
 === RUN   TestSubtest/test2
@@ -260,11 +260,11 @@ FAIL`,
 		expectedOutput: []gotest.Event{
 			{
 				Action: gotest.ActionRun,
-				Test: "TestSubtest",
+				Test:   "TestSubtest",
 			},
 			{
 				Action: gotest.ActionRun,
-				Test: "TestSubtest/test1",
+				Test:   "TestSubtest/test1",
 			},
 			{
 				Action: gotest.ActionStdout,
@@ -272,7 +272,7 @@ FAIL`,
 			},
 			{
 				Action: gotest.ActionRun,
-				Test: "TestSubtest/test2",
+				Test:   "TestSubtest/test2",
 			},
 			{
 				Action: gotest.ActionStdout,
@@ -280,7 +280,7 @@ FAIL`,
 			},
 			{
 				Action: gotest.ActionRun,
-				Test: "TestSubtest/test3",
+				Test:   "TestSubtest/test3",
 			},
 			{
 				Action: gotest.ActionStdout,
@@ -288,25 +288,25 @@ FAIL`,
 			},
 			{
 				Action: gotest.ActionFail,
-				Test: "TestSubtest",
+				Test:   "TestSubtest",
 			},
 			{
 				Action: gotest.ActionPass,
-				Test: "TestSubtest/test1",
+				Test:   "TestSubtest/test1",
 			},
 			{
 				Action: gotest.ActionFail,
-				Test: "TestSubtest/test2",
+				Test:   "TestSubtest/test2",
 			},
 			{
 				Action: gotest.ActionSkip,
-				Test: "TestSubtest/test3",
+				Test:   "TestSubtest/test3",
 			},
 			{
 				Action: gotest.ActionFail,
 			},
 			{
-				Action: gotest.ActionFail,
+				Action:  gotest.ActionFail,
 				Package: "github.com/haveyoudebuggedit/example",
 				Elapsed: 20 * time.Millisecond,
 			},
@@ -324,24 +324,22 @@ ok      github.com/haveyoudebuggedit/example    0.024s  coverage: [no statements
 		expectedOutput: []gotest.Event{
 			{
 				Action: gotest.ActionRun,
-				Test:  "TestNothing",
+				Test:   "TestNothing",
 			},
 			{
 				Action: gotest.ActionPass,
-				Test:  "TestNothing",
+				Test:   "TestNothing",
 			},
 			{
 				Action: gotest.ActionPass,
 			},
 			{
-				Action: gotest.ActionCoverage,
-				CoverageNoStatements: true,
+				Action:               gotest.ActionCoverageNoStatements,
 			},
 			{
-				Action: gotest.ActionPass,
-				Package: "github.com/haveyoudebuggedit/example",
-				Elapsed: 24 * time.Millisecond,
-				CoverageNoStatements: true,
+				Action:               gotest.ActionPass,
+				Package:              "github.com/haveyoudebuggedit/example",
+				Elapsed:              24 * time.Millisecond,
 			},
 		},
 	},
@@ -354,24 +352,50 @@ ok      github.com/haveyoudebuggedit/example    (cached)        coverage: 57.8% 
 		expectedOutput: []gotest.Event{
 			{
 				Action: gotest.ActionRun,
-				Test:  "TestNothing",
+				Test:   "TestNothing",
 			},
 			{
 				Action: gotest.ActionPass,
-				Test:  "TestNothing",
+				Test:   "TestNothing",
 			},
 			{
 				Action: gotest.ActionPass,
 			},
 			{
-				Action: gotest.ActionCoverage,
+				Action:   gotest.ActionCoverage,
 				Coverage: 57.8,
 			},
 			{
-				Action: gotest.ActionPass,
-				Package: "github.com/haveyoudebuggedit/example",
-				Cached: true,
+				Action:   gotest.ActionPass,
+				Package:  "github.com/haveyoudebuggedit/example",
+				Cached:   true,
 				Coverage: 57.8,
+			},
+		},
+	},
+	"gosum": {
+		input: "go: github.com/haveyoudebuggedit/nonexistent@v1.0.0: missing go.sum entry; to add it:\n        go mod download github.com/haveyoudebuggedit/nonexistent",
+		expectedOutput: []gotest.Event{
+			{
+				Action:  gotest.ActionDownloadFailed,
+				Package: "github.com/haveyoudebuggedit/nonexistent",
+				Version: "v1.0.0",
+				Output: []byte("missing go.sum entry; to add it:"),
+			},
+			{
+				Action: gotest.ActionStdout,
+				Output: []byte("        go mod download github.com/haveyoudebuggedit/nonexistent"),
+			},
+		},
+	},
+	"norevision": {
+		input: `go: github.com/haveyoudebuggedit/nonexistent@v1.0.0: reading github.com/haveyoudebuggedit/nonexistent/go.mod at revision v1.0.0: unknown revision v1.0.0`,
+		expectedOutput: []gotest.Event{
+			{
+				Action:  gotest.ActionDownloadFailed,
+				Package: "github.com/haveyoudebuggedit/nonexistent",
+				Version: "v1.0.0",
+				Output: []byte("reading github.com/haveyoudebuggedit/nonexistent/go.mod at revision v1.0.0: unknown revision v1.0.0"),
 			},
 		},
 	},
@@ -380,26 +404,31 @@ ok      github.com/haveyoudebuggedit/example    (cached)        coverage: 57.8% 
 func TestParsing(t *testing.T) {
 	for name, testEntry := range testdata {
 		entry := testEntry
-		t.Run(name, func(t *testing.T) {
-			reader := gotest.NewEventReader(bytes.NewReader([]byte(entry.input)))
-			remainingOutput := entry.expectedOutput
-			for {
-				event, ok := <- reader
-				if !ok {
-					if len(remainingOutput) != 0 {
-						t.Fatalf("Reader closed even though there are %d expected items remaining", len(remainingOutput))
+		t.Run(
+			name, func(t *testing.T) {
+				reader := gotest.NewEventReader(bytes.NewReader([]byte(entry.input)))
+				remainingOutput := entry.expectedOutput
+				for {
+					event, ok := <-reader
+					if !ok {
+						if len(remainingOutput) != 0 {
+							t.Fatalf(
+								"Reader closed even though there are %d expected items remaining",
+								len(remainingOutput),
+							)
+						}
+						return
 					}
-					return
+					if len(remainingOutput) == 0 {
+						t.Fatalf("Reader returned an event, but there were no more events expected: %v", event)
+					}
+					expectedEvent := remainingOutput[0]
+					remainingOutput = remainingOutput[1:]
+					if !expectedEvent.Equals(event) {
+						t.Fatalf("The following two events did not match:\n%s", expectedEvent.Diff(event))
+					}
 				}
-				if len(remainingOutput) == 0 {
-					t.Fatalf("Reader returned an event, but there were no more events expected: %v", event)
-				}
-				expectedEvent := remainingOutput[0]
-				remainingOutput = remainingOutput[1:]
-				if !expectedEvent.Equals(event) {
-					t.Fatalf("The following two events did not match:\n%s", expectedEvent.Diff(event))
-				}
-			}
-		})
+			},
+		)
 	}
 }

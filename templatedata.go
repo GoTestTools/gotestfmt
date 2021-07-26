@@ -12,11 +12,7 @@ const (
 	ResultSkip Result = "SKIP"
 )
 
-// DownloadingVars is the context for the downloading template.
-type DownloadingVars struct {
-	Package string
-	Version string
-}
+
 
 // PackageVars is the context for the package rendering template.
 type PackageVars struct {
