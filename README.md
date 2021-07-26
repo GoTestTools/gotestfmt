@@ -58,10 +58,14 @@ There are two ways you can customize the runner. The first possibility is to cre
 args: -cover
 templates:
   # Add your custom rendering templates here.
-  downloading: |
+  downloads: |
     Add a Go template here to render a line where a package is downloaded
-    as part of a test suite. The {{ .Package }} and {{ .Version }} tags can
-    be used to print the package name and version.
+    as part of a test suite. You can print {{ if .Failed }}failed!{{ end }}
+    to indicate failure, or loop over .Packages with
+    {{ range .Packages }}...{{ end }}. Within the loop you can access the
+    package name with {{ .Package }}, the package version with
+    {{ .Version }}. You can check individual package failure with
+    {{ .Failed }} and print the reason text with {{ .Reason }}.
   package: |
     Add a Go template here to render a package. The {{ .Package }} fragment
     can be used to print the package name. The {{ .Result }} fragment will

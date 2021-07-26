@@ -12,8 +12,6 @@ const (
 	ResultSkip Result = "SKIP"
 )
 
-
-
 // PackageVars is the context for the package rendering template.
 type PackageVars struct {
 	// Package is the name for this package.
