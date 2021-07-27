@@ -37,7 +37,7 @@ jobs:
           go-version: 1.16
 
       - name: Set up gotestfmt
-        uses: haveyoudebuggedit/gotestfmt@v1
+        uses: haveyoudebuggedit/gotestfmt-action@v1
 
       - name: Run tests
         run: go test -v 2>&1 | gotestfmt
@@ -104,3 +104,7 @@ The **tokenizer** takes the raw output from `go test` and turns it into a stream
 The **parser** takes the tokens from the tokenizer and interprets them, constructing logical units for test cases, packages, and package downloads.
 
 Finally, the **renderer** takes the two streams from the parser and renders them into human-readable text templates, which are then streamed out to the main application for writing.
+
+## License
+
+This project is licensed under the [Unlicense](LICENSE.md), you are free to do with it as you please. It has no external dependencies.
