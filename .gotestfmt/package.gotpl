@@ -3,7 +3,6 @@
 This template contains the format for an individual package. GitHub actions does not currently support nested groups so
 we are creating a stylized header for each package.
 */ -}}
---------------------------------------------------------------------------{{- "\n" -}}
 {{- if eq .Result "PASS" -}}
     {{ "\033" }}[0;32m
 {{- else if eq .Result "SKIP" -}}
@@ -12,10 +11,11 @@ we are creating a stylized header for each package.
     {{ "\033" }}[0;31m
 {{- end -}}
 📦 {{ .Name }}{{ "\033" }}[0m{{- "\n" -}}
---------------------------------------------------------------------------{{- "\n" -}}
+{{- with .Reason -}}
+    {{- . -}}{{- "\n" -}}
+{{- end -}}
 {{- with .Output -}}
     {{- . -}}{{- "\n" -}}
-    --------------------------------------------------------------------------{{- "\n" -}}
 {{- end -}}
 {{- with .TestCases -}}
     {{- range . -}}
@@ -42,6 +42,5 @@ we are creating a stylized header for each package.
 
         ::endgroup::{{- "\n" -}}
     {{- end -}}
-    --------------------------------------------------------------------------{{- "\n" -}}
 {{- end -}}
 {{- "\n" -}}
