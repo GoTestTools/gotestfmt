@@ -11,6 +11,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/haveyoudebuggedit/gotestfmt/testutil"
 	"github.com/haveyoudebuggedit/gotestfmt/tokenizer"
 )
 
@@ -55,33 +56,27 @@ func TestTokenization(t *testing.T) {
 				if err != nil {
 					t.Fatalf("failed to read expected file %s (%v)", expectedFile, err)
 				}
+				defer func() {
+					_ = expectedFh.Close()
+				}()
+
 				decoder := json.NewDecoder(expectedFh)
 				var expectedOutput []tokenizer.Event
 				if err := decoder.Decode(&expectedOutput); err != nil {
 					t.Fatalf("failed to decode expected file %s (%v)", expectedFile, err)
 				}
 				reader := tokenizer.Tokenize(bytes.NewReader(source))
-				remainingOutput := expectedOutput
+				var events []tokenizer.Event
 				for {
 					event, ok := <-reader
 					if !ok {
-						if len(remainingOutput) != 0 {
-							t.Fatalf(
-								"Reader closed even though there are %d expected items remaining: %v",
-								len(remainingOutput),
-								remainingOutput,
-							)
-						}
-						return
+						break
 					}
-					if len(remainingOutput) == 0 {
-						t.Fatalf("Reader returned an event, but there were no more events expected: %v", event)
-					}
-					expectedEvent := remainingOutput[0]
-					remainingOutput = remainingOutput[1:]
-					if !expectedEvent.Equals(event) {
-						t.Fatalf("The following two events did not match:\n%s", expectedEvent.Diff(event))
-					}
+					events = append(events, event)
+				}
+				diff := testutil.Diff(expectedOutput, events)
+				if diff != "" {
+					t.Fatalf("The expected output did not match the real output:\n%v", diff)
 				}
 			},
 		)

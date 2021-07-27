@@ -23,9 +23,9 @@ type TestCase struct {
 	Duration time.Duration
 	// Coverage is the percentage of code coverage in this test case, or a negative number if no coverage data is
 	// present.
-	Coverage float64
+	Coverage *float64
 	// Output is the log output of this test case.
-	Output []byte
+	Output string
 }
 
 // Package is the structure for all tests in a package.
@@ -38,30 +38,36 @@ type Package struct {
 	Duration time.Duration
 	// Coverage is the percentage of code coverage in this package, or a negative number if no coverage data is
 	// present.
-	Coverage float64
+	Coverage *float64
 	// Output is the text output of a generic failure (e.g. a syntax error)
-	Output []byte
+	Output string
 	// TestCases is a list of test cases run in this package. Subtests are included as separate test cases.
 	TestCases []*TestCase
 	// Reason is a description of why the Result happened. Empty in most cases.
-	Reason []byte
+	Reason string
 }
 
 type Download struct {
 	// Package is the name of the package being downloaded.
-	Package string
+	Package string `json:"package"`
 	// Version is the version of the package being downloaded
-	Version string
+	Version string `json:"version"`
 	// Failed indicates that the download failed.
-	Failed bool
+	Failed bool `json:"failed"`
 	// Reason is the reason text of the download failure.
-	Reason []byte
+	Reason string `json:"reason"`
 }
 
 // Downloads is the context for TemplatePackageDownloads.
 type Downloads struct {
 	// Packages is a list of packages
-	Packages []*Download
+	Packages []*Download `json:"packages"`
 	// Failed indicates that one or more package downloads failed.
-	Failed bool
+	Failed bool `json:"failed"`
+}
+
+// ParseResult is an overall structure for parser results, containing both downloads and packages.
+type ParseResult struct {
+	Downloads Downloads `json:"downloads"`
+	Packages []Package `json:"packages"`
 }

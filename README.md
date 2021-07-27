@@ -84,7 +84,7 @@ This template is the output format for the results of a single package and the t
 | `.Name`   | `string` | Name of the package under test.
 | `.Result` | `string` | Result of all tests in this package. Can be `PASS`, `FAIL`, or `SKIP`. |
 | `.Duration` | `time.Duration` | Duration of all test runs in this package. |
-| `.Coverage` | `float64` | If coverage data was provided, this indicates the code coverage percentage. Contains a negative number if no coverage data is available. |
+| `.Coverage` | `*float64` | If coverage data was provided, this indicates the code coverage percentage. |
 | `.Output` | `string` | Additional output from failures. (e.g. syntax error indications) |
 | `.TestCases` | `[]TestCase` | A list of test case results. |
 | `.Reason` | `string` | Text explaining the failure. Empty in most cases. |

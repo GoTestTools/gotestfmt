@@ -143,6 +143,18 @@ var stateMachine = []stateChange{
 		stateBetweenTests,
 	},
 	{
+		regexp.MustCompile(`^\?\s+(?P<Package>[^\s]+)\s+\[(?P<Output>.*)]$`),
+		stateInit,
+		ActionSkip,
+		stateBetweenTests,
+	},
+	{
+		regexp.MustCompile(`^\?\s+(?P<Package>[^\s]+)\s+\[(?P<Output>.*)]$`),
+		stateBetweenTests,
+		ActionSkip,
+		stateBetweenTests,
+	},
+	{
 		regexp.MustCompile(`^\?\s+(?P<Package>[^\s]+)\s+(?P<Output>.*)$`),
 		stateInit,
 		ActionSkip,
@@ -167,7 +179,7 @@ var stateMachine = []stateChange{
 		stateBetweenTests,
 	},
 	{
-		regexp.MustCompile(`^FAIL\s+(?P<Package>[^\s]+)\s+\[(?P<Output>.*)\]$`),
+		regexp.MustCompile(`^FAIL\s+(?P<Package>[^\s]+)\s+\[(?P<Output>.*)]$`),
 		stateBetweenTests,
 		ActionFail,
 		stateBetweenTests,
@@ -285,6 +297,7 @@ func decode(input io.Reader, output chan<- Event) {
 		lastBuffer = lines[len(lines)-1]
 		lines = lines[:len(lines)-1]
 		for _, line := range lines {
+			line = bytes.TrimSuffix(line, []byte("\r"))
 			currentState = parseLine(currentState, line, output)
 		}
 	}
@@ -301,12 +314,16 @@ func parseLine(currentState state, line []byte, output chan<- Event) state {
 			elapsed, err := getTimeElapsed(stateTransition.regexp, match, "Elapsed")
 			if err == nil {
 				coverageString := string(extract(stateTransition.regexp, match, "Coverage"))
-				coverage := 0.00
+				coverage := -1.0
 				if coverageString != "" {
 					coverage, err = strconv.ParseFloat(coverageString, 64)
 					if err != nil {
 						continue
 					}
+				}
+				var coveragePtr *float64
+				if coverage >= 0 {
+					coveragePtr = &coverage
 				}
 
 				evt := Event{
@@ -315,7 +332,7 @@ func parseLine(currentState state, line []byte, output chan<- Event) state {
 					Version:  string(extract(stateTransition.regexp, match, "Version")),
 					Test:     string(extract(stateTransition.regexp, match, "Test")),
 					Cached:   string(extract(stateTransition.regexp, match, "Cached")) == "cached",
-					Coverage: coverage,
+					Coverage: coveragePtr,
 					Elapsed:  elapsed,
 					Output:   extract(stateTransition.regexp, match, "Output"),
 				}

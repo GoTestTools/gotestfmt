@@ -1,0 +1,13 @@
+{
+  "downloads": {
+    "packages": [
+      {
+        "package": "github.com/haveyoudebuggedit/nonexistent",
+        "version": "v1.0.0",
+        "failed": true,
+        "reason": "missing go.sum entry; to add it:\n        go mod download github.com/haveyoudebuggedit/nonexistent"
+      }
+    ],
+    "failed": true
+  }
+}

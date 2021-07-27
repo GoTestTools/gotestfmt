@@ -1,0 +1,33 @@
+{
+  "downloads": {
+    "failed": false
+  },
+  "packages": [
+    {
+      "name": "github.com/haveyoudebuggedit/example",
+      "result": "FAIL",
+      "duration": "0.020s",
+      "testcases": [
+        {
+          "name": "TestSubtest",
+          "result": "FAIL"
+        },
+        {
+          "name": "TestSubtest/test1",
+          "result": "PASS",
+          "output": "    subtest_test.go:9: Hello world!"
+        },
+        {
+          "name": "TestSubtest/test2",
+          "result": "FAIL",
+          "output": "    subtest_test.go:12: Here's an error."
+        },
+        {
+          "name": "TestSubtest/test3",
+          "result": "SKIP",
+          "output": "    subtest_test.go:15: Let's skip this one..."
+        }
+      ]
+    }
+  ]
+}

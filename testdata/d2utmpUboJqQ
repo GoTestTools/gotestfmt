@@ -1,0 +1,612 @@
+[
+  {
+    "action": "skip",
+    "package": "github.com/haveyoudebuggedit/gotestfmt",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "W25vIHRlc3QgZmlsZXNdDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "skip",
+    "package": "github.com/haveyoudebuggedit/gotestfmt/cmd/gotestfmt",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "W25vIHRlc3QgZmlsZXNdDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/coverage-nostatements\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/coverage\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/depdownloadfailed-cached\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/depdownloadfailed\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/gosum\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/mod-download\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/norevision\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/parallel\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/single-package-verbose\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/single-package\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/subtest\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestParse/syntax-error\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "LS0tIFBBU1M6IFRlc3RQYXJzZSAoMC4wMHMpDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2UvY292ZXJhZ2Utbm9zdGF0ZW1lbnRzICgwLjAwcykN",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2UvY292ZXJhZ2UgKDAuMDBzKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2UvZGVwZG93bmxvYWRmYWlsZWQtY2FjaGVkICgwLjAwcykN",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2UvZGVwZG93bmxvYWRmYWlsZWQgKDAuMDBzKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2UvZ29zdW0gKDAuMDBzKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2UvbW9kLWRvd25sb2FkICgwLjAwcykN",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2Uvbm9yZXZpc2lvbiAoMC4wMHMpDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2UvcGFyYWxsZWwgKDAuMDBzKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2Uvc2luZ2xlLXBhY2thZ2UtdmVyYm9zZSAoMC4wMHMpDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2Uvc2luZ2xlLXBhY2thZ2UgKDAuMDBzKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2Uvc3VidGVzdCAoMC4wMHMpDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0UGFyc2Uvc3ludGF4LWVycm9yICgwLjAwcykN",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "UEFTUw0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "b2sgICAgICBnaXRodWIuY29tL2hhdmV5b3VkZWJ1Z2dlZGl0L2dvdGVzdGZtdC9wYXJzZXIgICAoY2FjaGVkKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "PyAgICAgICBnaXRodWIuY29tL2hhdmV5b3VkZWJ1Z2dlZGl0L2dvdGVzdGZtdC9yZW5kZXJlciBbbm8gdGVzdCBmaWxlc10N",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "PyAgICAgICBnaXRodWIuY29tL2hhdmV5b3VkZWJ1Z2dlZGl0L2dvdGVzdGZtdC90ZXN0dXRpbCBbbm8gdGVzdCBmaWxlc10N",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/coverage-nostatements\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/coverage\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/depdownloadfailed-cached\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/depdownloadfailed\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/gosum\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/mod-download\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/norevision\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/parallel\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/single-package-verbose\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/single-package\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/subtest\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestTokenization/syntax-error\r",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "LS0tIFBBU1M6IFRlc3RUb2tlbml6YXRpb24gKDAuMDBzKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL2NvdmVyYWdlLW5vc3RhdGVtZW50cyAoMC4wMHMpDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL2NvdmVyYWdlICgwLjAwcykN",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL2RlcGRvd25sb2FkZmFpbGVkLWNhY2hlZCAoMC4wMHMpDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL2RlcGRvd25sb2FkZmFpbGVkICgwLjAwcykN",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL2dvc3VtICgwLjAwcykN",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL21vZC1kb3dubG9hZCAoMC4wMHMpDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL25vcmV2aXNpb24gKDAuMDBzKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL3BhcmFsbGVsICgwLjAwcykN",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL3NpbmdsZS1wYWNrYWdlLXZlcmJvc2UgKDAuMDBzKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL3NpbmdsZS1wYWNrYWdlICgwLjAwcykN",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL3N1YnRlc3QgKDAuMDBzKQ0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIC0tLSBQQVNTOiBUZXN0VG9rZW5pemF0aW9uL3N5bnRheC1lcnJvciAoMC4wMHMpDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "UEFTUw0=",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "b2sgICAgICBnaXRodWIuY29tL2hhdmV5b3VkZWJ1Z2dlZGl0L2dvdGVzdGZtdC90b2tlbml6ZXIgICAgICAgIChjYWNoZWQpDQ==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "",
+    "cached": false,
+    "coverage": null
+  }
+]

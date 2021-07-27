@@ -1,0 +1,13 @@
+{
+  "downloads": {
+    "failed": false
+  },
+  "packages": [
+    {
+      "name": "github.com/haveyoudebuggedit/example",
+      "result": "FAIL",
+      "output": "nothing_test.go:7:11: expected '(', found Nothing",
+      "reason": "setup failed"
+    }
+  ]
+}

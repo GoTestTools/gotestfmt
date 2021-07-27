@@ -1,0 +1,13 @@
+{
+  "downloads": {
+    "packages": [
+      {
+        "package": "github.com/haveyoudebuggedit/nonexistent",
+        "version": "v1.0.0",
+        "failed": true,
+        "reason": "nothing.go:4:2: no required module provides package github.com/haveyoudebuggedit/nonexistent; to add it:\n        go get github.com/haveyoudebuggedit/nonexistent"
+      }
+    ],
+    "failed": true
+  }
+}
