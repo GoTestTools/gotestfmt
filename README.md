@@ -1,6 +1,6 @@
 # 🚧 WORK IN PROGRESS: Go test output formatter 🚧
 
-Are you tired of scrolling through endless Golang test logs in GitHub Actions or other CI systems? Would you like a test log like this? (Click the test cases.)
+Are you tired of scrolling through endless Golang test logs in GitHub Actions (or other CI systems)? Would you like a test log like this? (Click the test cases.)
 
 <pre>
 <details><summary>✅ TestCase1</summary>
@@ -31,67 +31,76 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-        # You MUST set up Go before calling gotestfmt.
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.16
 
-        # Running gotestfmt will call your tests
-      - name: Run gotestfmt
+      - name: Set up gotestfmt
         uses: haveyoudebuggedit/gotestfmt@v1
+
+      - name: Run tests
+        run: go test -v 2>&1 | gotestfmt
 ```
 
-Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions.
+Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions. Alternatively, you can grab the binary from [the releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and run it.
 
 ## How does it work?
 
-This application runs `go test -v`, then parses the output and reformats it. The default output format is for GitHub Actions, but you can customize it as needed (see below). The best part is: you can download and run it yourself, you don't have to use our action!
+You can run your tests as normal. The output is piped to gotestfmt which parses and reformats it.
 
-## Customizing test run
+## Customizing the output
 
-There are two ways you can customize the runner. The first possibility is to create a file named `.gotestfmt.yaml` in your project that has the following structure:
+You can, of course, customize the output to match your CI system. This can be done by creating a folder named `.gotestfmt` in your project and adding the files below. You can find the default templates in the [.gotestfmt](.gotestfmt) folder in this repository.
 
-```yaml
-# Add arguments to go test here. These can be overridden on the command
-# line, see below.
-args: -cover
-templates:
-  # Add your custom rendering templates here.
-  downloads: |
-    Add a Go template here to render a line where a package is downloaded
-    as part of a test suite. You can print {{ if .Failed }}failed!{{ end }}
-    to indicate failure, or loop over .Packages with
-    {{ range .Packages }}...{{ end }}. Within the loop you can access the
-    package name with {{ .Package }}, the package version with
-    {{ .Version }}. You can check individual package failure with
-    {{ .Failed }} and print the reason text with {{ .Reason }}.
-  package: |
-    Add a Go template here to render a package. The {{ .Package }} fragment
-    can be used to print the package name. The {{ .Result }} fragment will
-    print PASS, SKIP, or FAIL, depending on the package result. The
-    {{ .Elapsed }} tag contains the duration that this package took to
-    complete tests. The {{ .Content }} fragment can be used to print the
-    tests contained in the package. The {{ .Reason }} tag may contain the
-    failure reason.
-  syntax: |
-    Add a Go template here to render a syntax error. The {{ .Output }}
-    contains the error message with the syntax error.
-  test: |
-    Add a Go template here to render the results of a single test. The
-    {{ .Output }} fragment contains the output of that test. The
-    {{ .Result }} fragment will print PASS, SKIP, or FAIL, depending on the
-    test result. The {{ .Elapsed }} fragment will print the elapsed time for
-    this test. The {{ .Reason }} tag may contain the failure reason.
-```
+### downloads.tpl
 
-When using the GitHub actions, you can override the `args` parameter as follows:
+This file contains the output fragment showing the package downloads in the Go template format. It has the following variables available:
 
-```yaml
-- name: Run gotestfmt
-  uses: haveyoudebuggedit/gotestfmt@v1
-  with:
-    args: -cover ./...
-```
+| Variable | Type | Description |
+|----------|------|-------------|
+| `.Failed` | `bool` | Indicates an overall failure. |
+| `.Packages` | `[]Package` | A list of packages that have been processed.
 
-If you are running this tool from the command line, simply pass the options to the tool and they will be passed through to `go test`.
+The `Package` items have the following format:
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `.Package` | `string` | Name of the package. (e.g. `github.com/haveyoudebuggedit/gotestfmt`) |
+| `.Version` | `string` | Version of the package. (e.g. `v1.0.0`) |
+| `.Failed` | `bool` | If the package download has failed. |
+| `.Reason` | `string` | Text explaining the failure. |
+
+## package.tpl
+
+This template is the output format for the results of a single package and the tests in it. If multiple packages are tested, this template is called multiple time in a row. It has the following fields:
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `.Name`   | `string` | Name of the package under test.
+| `.Result` | `string` | Result of all tests in this package. Can be `PASS`, `FAIL`, or `SKIP`. |
+| `.Duration` | `time.Duration` | Duration of all test runs in this package. |
+| `.Coverage` | `float64` | If coverage data was provided, this indicates the code coverage percentage. Contains a negative number if no coverage data is available. |
+| `.Output` | `string` | Additional output from failures. (e.g. syntax error indications) |
+| `.TestCases` | `[]TestCase` | A list of test case results. |
+| `.Reason` | `string` | Text explaining the failure. Empty in most cases. |
+
+Test cases have the following format:
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `.Name` | `string` | Name of the test case. May contain slashes (`/`) if subtests are run. |
+| `.Result` | `string` | Result of the test. Can be `PASS`, `FAIL`, or `SKIP`. |
+| `.Duration` | `time.Duration` | Duration of all test runs in this package. |
+| `.Coverage` | `float64` | If coverage data was provided, this indicates the code coverage percentage. Contains a negative number if no coverage data is available. |
+| `.Output` | `string` | Log output from the test. |
+
+## Architecture
+
+This application has 3 main pieces: the tokenizer, the parser, and the renderer. All of them run in separate goroutines and pipeline data using channels.
+
+The **tokenizer** takes the raw output from `go test` and turns it into a stream of events that can be consumed.
+
+The **parser** takes the tokens from the tokenizer and interprets them, constructing logical units for test cases, packages, and package downloads.
+
+Finally, the **renderer** takes the two streams from the parser and renders them into human-readable text templates, which are then streamed out to the main application for writing.

@@ -1,0 +1,1 @@
+This directory contains the tokenizer, which provides a basic, event-based parsing for go test output. It is similar to test2json, but it produces a slightly different output geared towards rendering GitHub Actions output. The output of this directory is consumed by the parser.

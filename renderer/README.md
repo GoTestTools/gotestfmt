@@ -1,0 +1,1 @@
+This directory contains the renderer that turns the stream of packages from the parser into text fragments that can be written to the output.

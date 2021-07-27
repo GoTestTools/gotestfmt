@@ -1,24 +1,24 @@
-package gotest_test
+package tokenizer_test
 
 import (
 	"bytes"
 	"testing"
 	"time"
 
-	"github.com/haveyoudebuggedit/gotestfmt/gotest"
+	"github.com/haveyoudebuggedit/gotestfmt/tokenizer"
 )
 
 type testEntry struct {
 	input          string
-	expectedOutput []gotest.Event
+	expectedOutput []tokenizer.Event
 }
 
 var testdata = map[string]testEntry{
 	"single-package": {
 		input: `ok      github.com/haveyoudebuggedit/example   0.019s`,
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Package: "github.com/haveyoudebuggedit/example",
 				Test:    "",
 				Elapsed: 19 * time.Millisecond,
@@ -31,29 +31,29 @@ var testdata = map[string]testEntry{
 --- PASS: TestNothing (0.00s)
 PASS
 ok      github.com/haveyoudebuggedit/example   0.019s`,
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action:  gotest.ActionRun,
+				Action:  tokenizer.ActionRun,
 				Package: "",
 				Test:    "TestNothing",
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Package: "",
 				Test:    "TestNothing",
 				Elapsed: 0,
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Package: "",
 				Test:    "",
 				Elapsed: 0,
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Package: "github.com/haveyoudebuggedit/example",
 				Test:    "",
 				Elapsed: 19 * time.Millisecond,
@@ -70,9 +70,9 @@ go: downloading gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
 --- PASS: TestNothing (0.00s)
 PASS
 ok      github.com/haveyoudebuggedit/example    0.027s`,
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action:  gotest.ActionDownload,
+				Action:  tokenizer.ActionDownload,
 				Package: "github.com/stretchr/testify",
 				Version: "v1.7.0",
 				Test:    "",
@@ -80,7 +80,7 @@ ok      github.com/haveyoudebuggedit/example    0.027s`,
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionDownload,
+				Action:  tokenizer.ActionDownload,
 				Package: "github.com/pmezard/go-difflib",
 				Version: "v1.0.0",
 				Test:    "",
@@ -88,7 +88,7 @@ ok      github.com/haveyoudebuggedit/example    0.027s`,
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionDownload,
+				Action:  tokenizer.ActionDownload,
 				Package: "github.com/davecgh/go-spew",
 				Version: "v1.1.0",
 				Test:    "",
@@ -96,7 +96,7 @@ ok      github.com/haveyoudebuggedit/example    0.027s`,
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionDownload,
+				Action:  tokenizer.ActionDownload,
 				Package: "gopkg.in/yaml.v3",
 				Version: "v3.0.0-20200313102051-9f266ea9e77c",
 				Test:    "",
@@ -104,27 +104,27 @@ ok      github.com/haveyoudebuggedit/example    0.027s`,
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionRun,
+				Action:  tokenizer.ActionRun,
 				Package: "",
 				Test:    "TestNothing",
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Package: "",
 				Test:    "TestNothing",
 				Elapsed: 0,
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Package: "",
 				Test:    "",
 				Elapsed: 0,
 				Output:  nil,
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Package: "github.com/haveyoudebuggedit/example",
 				Test:    "",
 				Elapsed: 27 * time.Millisecond,
@@ -149,70 +149,70 @@ ok      github.com/haveyoudebuggedit/example    0.027s`,
 --- PASS: TestParallel2 (10.02s)
 PASS
 ok      github.com/haveyoudebuggedit/example    10.048s`,
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action: gotest.ActionRun,
+				Action: tokenizer.ActionRun,
 				Test:   "TestParallel1",
 			},
 			{
-				Action: gotest.ActionPause,
+				Action: tokenizer.ActionPause,
 				Test:   "TestParallel1",
 			},
 			{
-				Action: gotest.ActionRun,
+				Action: tokenizer.ActionRun,
 				Test:   "TestParallel2",
 			},
 			{
-				Action: gotest.ActionPause,
+				Action: tokenizer.ActionPause,
 				Test:   "TestParallel2",
 			},
 			{
-				Action: gotest.ActionCont,
+				Action: tokenizer.ActionCont,
 				Test:   "TestParallel1",
 			},
 			{
-				Action: gotest.ActionStdout,
+				Action: tokenizer.ActionStdout,
 				Output: []byte("    parallel_test.go:10: Test message 1"),
 			},
 			{
-				Action: gotest.ActionCont,
+				Action: tokenizer.ActionCont,
 				Test:   "TestParallel2",
 			},
 			{
-				Action: gotest.ActionCont,
+				Action: tokenizer.ActionCont,
 				Test:   "TestParallel1",
 			},
 			{
-				Action: gotest.ActionStdout,
+				Action: tokenizer.ActionStdout,
 				Output: []byte("    parallel_test.go:12: Test message 2"),
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Test:    "TestParallel1",
 				Elapsed: 5010 * time.Millisecond,
 			},
 			{
-				Action: gotest.ActionCont,
+				Action: tokenizer.ActionCont,
 				Test:   "TestParallel2",
 			},
 			{
-				Action: gotest.ActionStdout,
+				Action: tokenizer.ActionStdout,
 				Output: []byte("    parallel_test.go:18: Test message 1"),
 			},
 			{
-				Action: gotest.ActionStdout,
+				Action: tokenizer.ActionStdout,
 				Output: []byte("    parallel_test.go:20: Test message 2"),
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Test:    "TestParallel2",
 				Elapsed: 10020 * time.Millisecond,
 			},
 			{
-				Action: gotest.ActionPass,
+				Action: tokenizer.ActionPass,
 			},
 			{
-				Action:  gotest.ActionPass,
+				Action:  tokenizer.ActionPass,
 				Package: "github.com/haveyoudebuggedit/example",
 				Elapsed: 10048 * time.Millisecond,
 			},
@@ -223,22 +223,22 @@ ok      github.com/haveyoudebuggedit/example    10.048s`,
 nothing_test.go:7:11: expected '(', found Nothing
 FAIL    github.com/haveyoudebuggedit/example [setup failed]
 FAIL`,
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action:  gotest.ActionPackage,
+				Action:  tokenizer.ActionPackage,
 				Package: "github.com/haveyoudebuggedit/example",
 			},
 			{
-				Action: gotest.ActionStdout,
+				Action: tokenizer.ActionStdout,
 				Output: []byte("nothing_test.go:7:11: expected '(', found Nothing"),
 			},
 			{
-				Action:  gotest.ActionFail,
+				Action:  tokenizer.ActionFail,
 				Package: "github.com/haveyoudebuggedit/example",
 				Output:  []byte("setup failed"),
 			},
 			{
-				Action: gotest.ActionFail,
+				Action: tokenizer.ActionFail,
 			},
 		},
 	},
@@ -257,61 +257,61 @@ FAIL`,
 FAIL
 FAIL    github.com/haveyoudebuggedit/example    0.020s
 FAIL`,
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action: gotest.ActionRun,
+				Action: tokenizer.ActionRun,
 				Test:   "TestSubtest",
 			},
 			{
-				Action: gotest.ActionRun,
+				Action: tokenizer.ActionRun,
 				Test:   "TestSubtest/test1",
 			},
 			{
-				Action: gotest.ActionStdout,
+				Action: tokenizer.ActionStdout,
 				Output: []byte("    subtest_test.go:9: Hello world!"),
 			},
 			{
-				Action: gotest.ActionRun,
+				Action: tokenizer.ActionRun,
 				Test:   "TestSubtest/test2",
 			},
 			{
-				Action: gotest.ActionStdout,
+				Action: tokenizer.ActionStdout,
 				Output: []byte("    subtest_test.go:12: Here's an error."),
 			},
 			{
-				Action: gotest.ActionRun,
+				Action: tokenizer.ActionRun,
 				Test:   "TestSubtest/test3",
 			},
 			{
-				Action: gotest.ActionStdout,
+				Action: tokenizer.ActionStdout,
 				Output: []byte("    subtest_test.go:15: Let's skip this one..."),
 			},
 			{
-				Action: gotest.ActionFail,
+				Action: tokenizer.ActionFail,
 				Test:   "TestSubtest",
 			},
 			{
-				Action: gotest.ActionPass,
+				Action: tokenizer.ActionPass,
 				Test:   "TestSubtest/test1",
 			},
 			{
-				Action: gotest.ActionFail,
+				Action: tokenizer.ActionFail,
 				Test:   "TestSubtest/test2",
 			},
 			{
-				Action: gotest.ActionSkip,
+				Action: tokenizer.ActionSkip,
 				Test:   "TestSubtest/test3",
 			},
 			{
-				Action: gotest.ActionFail,
+				Action: tokenizer.ActionFail,
 			},
 			{
-				Action:  gotest.ActionFail,
+				Action:  tokenizer.ActionFail,
 				Package: "github.com/haveyoudebuggedit/example",
 				Elapsed: 20 * time.Millisecond,
 			},
 			{
-				Action: gotest.ActionFail,
+				Action: tokenizer.ActionFail,
 			},
 		},
 	},
@@ -321,25 +321,25 @@ FAIL`,
 PASS
 coverage: [no statements]
 ok      github.com/haveyoudebuggedit/example    0.024s  coverage: [no statements]`,
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action: gotest.ActionRun,
+				Action: tokenizer.ActionRun,
 				Test:   "TestNothing",
 			},
 			{
-				Action: gotest.ActionPass,
+				Action: tokenizer.ActionPass,
 				Test:   "TestNothing",
 			},
 			{
-				Action: gotest.ActionPass,
+				Action: tokenizer.ActionPass,
 			},
 			{
-				Action:               gotest.ActionCoverageNoStatements,
+				Action: tokenizer.ActionCoverageNoStatements,
 			},
 			{
-				Action:               gotest.ActionPass,
-				Package:              "github.com/haveyoudebuggedit/example",
-				Elapsed:              24 * time.Millisecond,
+				Action:  tokenizer.ActionPass,
+				Package: "github.com/haveyoudebuggedit/example",
+				Elapsed: 24 * time.Millisecond,
 			},
 		},
 	},
@@ -349,24 +349,24 @@ ok      github.com/haveyoudebuggedit/example    0.024s  coverage: [no statements
 PASS
 coverage: 57.8% of statements
 ok      github.com/haveyoudebuggedit/example    (cached)        coverage: 57.8% of statements`,
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action: gotest.ActionRun,
+				Action: tokenizer.ActionRun,
 				Test:   "TestNothing",
 			},
 			{
-				Action: gotest.ActionPass,
+				Action: tokenizer.ActionPass,
 				Test:   "TestNothing",
 			},
 			{
-				Action: gotest.ActionPass,
+				Action: tokenizer.ActionPass,
 			},
 			{
-				Action:   gotest.ActionCoverage,
+				Action:   tokenizer.ActionCoverage,
 				Coverage: 57.8,
 			},
 			{
-				Action:   gotest.ActionPass,
+				Action:   tokenizer.ActionPass,
 				Package:  "github.com/haveyoudebuggedit/example",
 				Cached:   true,
 				Coverage: 57.8,
@@ -375,27 +375,27 @@ ok      github.com/haveyoudebuggedit/example    (cached)        coverage: 57.8% 
 	},
 	"gosum": {
 		input: "go: github.com/haveyoudebuggedit/nonexistent@v1.0.0: missing go.sum entry; to add it:\n        go mod download github.com/haveyoudebuggedit/nonexistent",
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action:  gotest.ActionDownloadFailed,
+				Action:  tokenizer.ActionDownloadFailed,
 				Package: "github.com/haveyoudebuggedit/nonexistent",
 				Version: "v1.0.0",
-				Output: []byte("missing go.sum entry; to add it:"),
+				Output:  []byte("missing go.sum entry; to add it:"),
 			},
 			{
-				Action: gotest.ActionStdout,
+				Action: tokenizer.ActionStdout,
 				Output: []byte("        go mod download github.com/haveyoudebuggedit/nonexistent"),
 			},
 		},
 	},
 	"norevision": {
 		input: `go: github.com/haveyoudebuggedit/nonexistent@v1.0.0: reading github.com/haveyoudebuggedit/nonexistent/go.mod at revision v1.0.0: unknown revision v1.0.0`,
-		expectedOutput: []gotest.Event{
+		expectedOutput: []tokenizer.Event{
 			{
-				Action:  gotest.ActionDownloadFailed,
+				Action:  tokenizer.ActionDownloadFailed,
 				Package: "github.com/haveyoudebuggedit/nonexistent",
 				Version: "v1.0.0",
-				Output: []byte("reading github.com/haveyoudebuggedit/nonexistent/go.mod at revision v1.0.0: unknown revision v1.0.0"),
+				Output:  []byte("reading github.com/haveyoudebuggedit/nonexistent/go.mod at revision v1.0.0: unknown revision v1.0.0"),
 			},
 		},
 	},
@@ -406,7 +406,7 @@ func TestParsing(t *testing.T) {
 		entry := testEntry
 		t.Run(
 			name, func(t *testing.T) {
-				reader := gotest.NewEventReader(bytes.NewReader([]byte(entry.input)))
+				reader := tokenizer.Tokenize(bytes.NewReader([]byte(entry.input)))
 				remainingOutput := entry.expectedOutput
 				for {
 					event, ok := <-reader

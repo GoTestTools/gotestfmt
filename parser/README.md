@@ -1,0 +1,2 @@
+This directory contains the parser. It converts low-level tokens from the tokenizer into high level objects that can be used
+to render templates. The result of the parser is sent to the renderer. The objects are described in [model.go](model.go).

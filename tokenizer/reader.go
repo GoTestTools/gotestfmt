@@ -1,4 +1,4 @@
-package gotest
+package tokenizer
 
 import (
 	"bytes"
@@ -10,9 +10,9 @@ import (
 	"time"
 )
 
-// NewEventReader starts a reader of Event in the background that reads until the input is closed. This method starts a
+// Tokenize starts a reader of Event in the background that reads until the input is closed. This method starts a
 // goroutine in the background and should be stopped by closing the input reader.
-func NewEventReader(input io.Reader) <-chan Event {
+func Tokenize(input io.Reader) <-chan Event {
 	output := make(chan Event)
 	go decode(input, output)
 	return output
@@ -265,6 +265,7 @@ var stateMachine = []stateChange{
 }
 
 func decode(input io.Reader, output chan<- Event) {
+	defer close(output)
 	var lastBuffer []byte
 	buffer := make([]byte, 4096)
 	currentState := stateInit
@@ -274,7 +275,7 @@ func decode(input io.Reader, output chan<- Event) {
 			if !errors.Is(err, io.EOF) {
 				panic(fmt.Errorf("failed to read from input (%w)", err))
 			}
-			break
+			return
 		}
 		if n == 0 {
 			break
@@ -288,7 +289,6 @@ func decode(input io.Reader, output chan<- Event) {
 		}
 	}
 	_ = parseLine(currentState, lastBuffer, output)
-	close(output)
 }
 
 func parseLine(currentState state, line []byte, output chan<- Event) state {

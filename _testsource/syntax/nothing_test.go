@@ -2,8 +2,8 @@ package gomod
 
 import (
 	"testing"
-
 )
 
-func TestNothing(t *testing.T) {
+func Test Nothing(_ *testing.T) {
+
 }
