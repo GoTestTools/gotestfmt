@@ -7,20 +7,20 @@ import (
 )
 
 type tmpTestCase struct {
-	Name string `json:"name"`
-	Result Result `json:"result"`
-	Duration string `json:"duration"`
+	Name     string   `json:"name"`
+	Result   Result   `json:"result"`
+	Duration string   `json:"duration"`
 	Coverage *float64 `json:"coverage"`
-	Output string `json:"output"`
+	Output   string   `json:"output"`
 }
 
 func (t *TestCase) MarshalJSON() ([]byte, error) {
 	tmp := tmpTestCase{
-		Name: t.Name,
-		Result: t.Result,
+		Name:     t.Name,
+		Result:   t.Result,
 		Duration: t.Duration.String(),
 		Coverage: t.Coverage,
-		Output: t.Output,
+		Output:   t.Output,
 	}
 	return json.Marshal(tmp)
 }
@@ -47,13 +47,13 @@ func (t *TestCase) UnmarshalJSON(data []byte) error {
 }
 
 type tmpPackage struct {
-	Name string `json:"name"`
-	Result Result `json:"result"`
-	Duration string `json:"duration"`
-	Coverage *float64 `json:"coverage"`
-	Output string `json:"output"`
+	Name      string      `json:"name"`
+	Result    Result      `json:"result"`
+	Duration  string      `json:"duration"`
+	Coverage  *float64    `json:"coverage"`
+	Output    string      `json:"output"`
 	TestCases []*TestCase `json:"testcases"`
-	Reason string `json:"reason"`
+	Reason    string      `json:"reason"`
 }
 
 func (p *Package) MarshalJSON() ([]byte, error) {

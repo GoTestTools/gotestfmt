@@ -69,5 +69,5 @@ type Downloads struct {
 // ParseResult is an overall structure for parser results, containing both downloads and packages.
 type ParseResult struct {
 	Downloads Downloads `json:"downloads"`
-	Packages []Package `json:"packages"`
+	Packages  []Package `json:"packages"`
 }

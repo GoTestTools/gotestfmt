@@ -26,7 +26,7 @@ func Diff(o1 interface{}, o2 interface{}) string {
 	result := strings.Builder{}
 	result.WriteString(fmt.Sprintf("--- expected\n+++ actual\n@@ -1,%d +1,%d @@\n", len(l1), len(l2)))
 	for i := 0; i < len(l1); i++ {
-		if len(l2) < i + 1 {
+		if len(l2) < i+1 {
 			result.WriteString(fmt.Sprintf("-%s\n", l1[i]))
 			continue
 		}
