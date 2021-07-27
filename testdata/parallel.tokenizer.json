@@ -1,0 +1,68 @@
+[
+  {
+    "action": "run",
+    "test": "TestParallel1"
+  },
+  {
+    "action": "pause",
+    "test": "TestParallel1"
+  },
+  {
+    "action": "run",
+    "test": "TestParallel2"
+  },
+  {
+    "action": "pause",
+    "test": "TestParallel2"
+  },
+  {
+    "action": "cont",
+    "test": "TestParallel1"
+  },
+  {
+    "action": "stdout",
+    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MTA6IFRlc3QgbWVzc2FnZSAx"
+  },
+  {
+    "action": "cont",
+    "test": "TestParallel2"
+  },
+  {
+    "action": "cont",
+    "test": "TestParallel1"
+  },
+  {
+    "action": "stdout",
+    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MTI6IFRlc3QgbWVzc2FnZSAy"
+  },
+  {
+    "action": "pass",
+    "test": "TestParallel1",
+    "elapsed": "5.010s"
+  },
+  {
+    "action": "cont",
+    "test": "TestParallel2"
+  },
+  {
+    "action": "stdout",
+    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MTg6IFRlc3QgbWVzc2FnZSAx"
+  },
+  {
+    "action": "stdout",
+    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MjA6IFRlc3QgbWVzc2FnZSAy"
+  },
+  {
+    "action": "pass",
+    "test": "TestParallel2",
+    "elapsed": "10.020s"
+  },
+  {
+    "action": "pass"
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example",
+    "elapsed": "10.048s"
+  }
+]

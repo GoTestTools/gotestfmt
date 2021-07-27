@@ -1,0 +1,5 @@
+=== RUN   TestNothing
+--- PASS: TestNothing (0.00s)
+PASS
+coverage: [no statements]
+ok      github.com/haveyoudebuggedit/example    0.024s  coverage: [no statements]

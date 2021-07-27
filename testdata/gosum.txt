@@ -1,0 +1,2 @@
+go: github.com/haveyoudebuggedit/nonexistent@v1.0.0: missing go.sum entry; to add it:
+        go mod download github.com/haveyoudebuggedit/nonexistent

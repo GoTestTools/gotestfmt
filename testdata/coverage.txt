@@ -1,0 +1,5 @@
+=== RUN   TestNothing
+--- PASS: TestNothing (0.00s)
+PASS
+coverage: 57.8% of statements
+ok      github.com/haveyoudebuggedit/example    (cached)        coverage: 57.8% of statements

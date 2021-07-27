@@ -1,0 +1,12 @@
+[
+  {
+    "action": "download_failed",
+    "package": "github.com/haveyoudebuggedit/nonexistent",
+    "version": "v1.0.0",
+    "output": "bWlzc2luZyBnby5zdW0gZW50cnk7IHRvIGFkZCBpdDo="
+  },
+  {
+    "action": "stdout",
+    "output": "ICAgICAgICBnbyBtb2QgZG93bmxvYWQgZ2l0aHViLmNvbS9oYXZleW91ZGVidWdnZWRpdC9ub25leGlzdGVudA=="
+  }
+]

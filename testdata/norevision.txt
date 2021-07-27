@@ -1,0 +1,1 @@
+go: github.com/haveyoudebuggedit/nonexistent@v1.0.0: reading github.com/haveyoudebuggedit/nonexistent/go.mod at revision v1.0.0: unknown revision v1.0.0

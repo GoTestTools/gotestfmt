@@ -1,0 +1,18 @@
+[
+  {
+    "action": "package",
+    "package": "github.com/haveyoudebuggedit/example"
+  },
+  {
+    "action": "stdout",
+    "output": "bm90aGluZ190ZXN0LmdvOjc6MTE6IGV4cGVjdGVkICcoJywgZm91bmQgTm90aGluZw=="
+  },
+  {
+    "action": "fail",
+    "package": "github.com/haveyoudebuggedit/example",
+    "output": "c2V0dXAgZmFpbGVk"
+  },
+  {
+    "action": "fail"
+  }
+]

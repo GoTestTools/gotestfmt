@@ -1,0 +1,57 @@
+[
+  {
+    "action": "run",
+    "test":   "TestSubtest"
+  },
+  {
+    "action": "run",
+    "test":   "TestSubtest/test1"
+  },
+  {
+    "action": "stdout",
+    "output": "ICAgIHN1YnRlc3RfdGVzdC5nbzo5OiBIZWxsbyB3b3JsZCE="
+  },
+  {
+    "action": "run",
+    "test":   "TestSubtest/test2"
+  },
+  {
+    "action": "stdout",
+    "output": "ICAgIHN1YnRlc3RfdGVzdC5nbzoxMjogSGVyZSdzIGFuIGVycm9yLg=="
+  },
+  {
+    "action": "run",
+    "test":   "TestSubtest/test3"
+  },
+  {
+    "action": "stdout",
+    "output": "ICAgIHN1YnRlc3RfdGVzdC5nbzoxNTogTGV0J3Mgc2tpcCB0aGlzIG9uZS4uLg=="
+  },
+  {
+    "action": "fail",
+    "test":   "TestSubtest"
+  },
+  {
+    "action": "pass",
+    "test":   "TestSubtest/test1"
+  },
+  {
+    "action": "fail",
+    "test":   "TestSubtest/test2"
+  },
+  {
+    "action": "skip",
+    "test":   "TestSubtest/test3"
+  },
+  {
+    "action": "fail"
+  },
+  {
+    "action": "fail",
+    "package": "github.com/haveyoudebuggedit/example",
+    "elapsed": "0.020s"
+  },
+  {
+    "action": "fail"
+  }
+]

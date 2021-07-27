@@ -1,3 +1,3 @@
 module github.com/haveyoudebuggedit/gotestfmt
 
-go 1.14
+go 1.16

@@ -1,0 +1,16 @@
+=== RUN   TestParallel1
+=== PAUSE TestParallel1
+=== RUN   TestParallel2
+=== PAUSE TestParallel2
+=== CONT  TestParallel1
+    parallel_test.go:10: Test message 1
+=== CONT  TestParallel2
+=== CONT  TestParallel1
+    parallel_test.go:12: Test message 2
+--- PASS: TestParallel1 (5.01s)
+=== CONT  TestParallel2
+    parallel_test.go:18: Test message 1
+    parallel_test.go:20: Test message 2
+--- PASS: TestParallel2 (10.02s)
+PASS
+ok      github.com/haveyoudebuggedit/example    10.048s

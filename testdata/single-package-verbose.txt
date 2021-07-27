@@ -1,0 +1,4 @@
+=== RUN   TestNothing
+--- PASS: TestNothing (0.00s)
+PASS
+ok      github.com/haveyoudebuggedit/example   0.019s

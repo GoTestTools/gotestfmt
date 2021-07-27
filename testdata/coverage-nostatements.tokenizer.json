@@ -1,0 +1,21 @@
+[
+  {
+    "action": "run",
+    "test":   "TestNothing"
+  },
+  {
+    "action": "pass",
+    "test":   "TestNothing"
+  },
+  {
+    "action": "pass"
+  },
+  {
+    "action": "coverage_nostatements"
+  },
+  {
+    "action":  "pass",
+    "package": "github.com/haveyoudebuggedit/example",
+    "elapsed": "0.024s"
+  }
+]

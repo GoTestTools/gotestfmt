@@ -1,0 +1,38 @@
+[
+  {
+    "action": "download",
+    "package": "github.com/stretchr/testify",
+    "version": "v1.7.0"
+  },
+  {
+    "action": "download",
+    "package": "github.com/pmezard/go-difflib",
+    "version": "v1.0.0"
+  },
+  {
+    "action": "download",
+    "package": "github.com/davecgh/go-spew",
+    "version": "v1.1.0"
+  },
+  {
+    "action": "download",
+    "package": "gopkg.in/yaml.v3",
+    "version": "v3.0.0-20200313102051-9f266ea9e77c"
+  },
+  {
+    "action": "run",
+    "test": "TestNothing"
+  },
+  {
+    "action": "pass",
+    "test": "TestNothing"
+  },
+  {
+    "action": "pass"
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example",
+    "elapsed": "0.027s"
+  }
+]

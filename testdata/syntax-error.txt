@@ -1,0 +1,4 @@
+# github.com/haveyoudebuggedit/example
+nothing_test.go:7:11: expected '(', found Nothing
+FAIL    github.com/haveyoudebuggedit/example [setup failed]
+FAIL

@@ -1,0 +1,15 @@
+[
+  {
+    "action":"download",
+    "package":"github.com/haveyoudebuggedit/nonexistent",
+    "version":"v1.0.0"
+  },
+  {
+    "action":"stdout",
+    "output":"bm90aGluZy5nbzo0OjI6IG5vIHJlcXVpcmVkIG1vZHVsZSBwcm92aWRlcyBwYWNrYWdlIGdpdGh1Yi5jb20vaGF2ZXlvdWRlYnVnZ2VkaXQvbm9uZXhpc3RlbnQ7IHRvIGFkZCBpdDo="
+  },
+  {
+    "action":"stdout",
+    "output":"ICAgICAgICBnbyBnZXQgZ2l0aHViLmNvbS9oYXZleW91ZGVidWdnZWRpdC9ub25leGlzdGVudA=="
+  }
+]

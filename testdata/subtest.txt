@@ -1,0 +1,14 @@
+=== RUN   TestSubtest
+=== RUN   TestSubtest/test1
+    subtest_test.go:9: Hello world!
+=== RUN   TestSubtest/test2
+    subtest_test.go:12: Here's an error.
+=== RUN   TestSubtest/test3
+    subtest_test.go:15: Let's skip this one...
+--- FAIL: TestSubtest (0.00s)
+    --- PASS: TestSubtest/test1 (0.00s)
+    --- FAIL: TestSubtest/test2 (0.00s)
+    --- SKIP: TestSubtest/test3 (0.00s)
+FAIL
+FAIL    github.com/haveyoudebuggedit/example    0.020s
+FAIL

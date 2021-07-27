@@ -275,7 +275,7 @@ func decode(input io.Reader, output chan<- Event) {
 			if !errors.Is(err, io.EOF) {
 				panic(fmt.Errorf("failed to read from input (%w)", err))
 			}
-			return
+			break
 		}
 		if n == 0 {
 			break

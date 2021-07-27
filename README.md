@@ -20,12 +20,12 @@ Here are the details why the third test case failed.
 </details>
 </pre>
 
-Then this is the tool for you. Here's how you use it:
+Then this is the tool for you. Here's how you use it with GitHub Actions:
 
 ```yaml
 jobs:
   build:
-    name: Build
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,10 +40,14 @@ jobs:
         uses: haveyoudebuggedit/gotestfmt-action@v1
 
       - name: Run tests
-        run: go test -v 2>&1 | gotestfmt
+        run: go test -v ./... 2>&1 | gotestfmt
 ```
 
-Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions. Alternatively, you can grab the binary from [the releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and run it.
+Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions. Alternatively, you can grab the binary from [the releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and run it in a different CI:
+
+```bash
+go test -v ./... 2>&1 | gotestfmt
+```
 
 ## How does it work?
 
@@ -73,7 +77,7 @@ The `Package` items have the following format:
 
 ## package.tpl
 
-This template is the output format for the results of a single package and the tests in it. If multiple packages are tested, this template is called multiple time in a row. It has the following fields:
+This template is the output format for the results of a single package and the tests in it. If multiple packages are tested, this template is called multiple times in a row. It has the following fields:
 
 | Variable | Type | Description |
 |----------|------|-------------|
@@ -104,6 +108,10 @@ The **tokenizer** takes the raw output from `go test` and turns it into a stream
 The **parser** takes the tokens from the tokenizer and interprets them, constructing logical units for test cases, packages, and package downloads.
 
 Finally, the **renderer** takes the two streams from the parser and renders them into human-readable text templates, which are then streamed out to the main application for writing.
+
+## Building
+
+If you wish to build `gotestfmt` for yourself you'll need at least Go 1.16. You can then build it by running `go build cmd/gotestfmt`.
 
 ## License
 

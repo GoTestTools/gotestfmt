@@ -1,0 +1,3 @@
+go: downloading github.com/haveyoudebuggedit/nonexistent v1.0.0
+nothing.go:4:2: no required module provides package github.com/haveyoudebuggedit/nonexistent; to add it:
+        go get github.com/haveyoudebuggedit/nonexistent
