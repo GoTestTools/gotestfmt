@@ -18,6 +18,7 @@ import (
 // TestTokenization reads the *.txt and *.tokenizer.json files from the ../testdata directory, then runs
 // the tokenizer.Tokenize function on the text input and compares the output to the events read from the JSON files.
 func TestTokenization(t *testing.T) {
+	t.Logf("Locating testdata directory...")
 	tryDirectories := []string{
 		"./testdata",
 		"../testdata",
@@ -32,6 +33,7 @@ func TestTokenization(t *testing.T) {
 	if foundDir == "" {
 		t.Fatalf("failed to find testdata directory in %v", tryDirectories)
 	}
+	t.Logf("Testdata directory is located at %s.", foundDir)
 
 	if e := filepath.Walk(foundDir, func(path string, info fs.FileInfo, _ error) error {
 		if info.IsDir() {
@@ -45,8 +47,11 @@ func TestTokenization(t *testing.T) {
 		t.Run(
 			base,
 			func(t *testing.T) {
+				t.Parallel()
 				sourceFile := path
 				expectedFile := strings.Replace(path, ".txt", ".tokenizer.json", 1)
+
+				t.Logf("Tokenizing %s and comparing with %s...", sourceFile, expectedFile)
 
 				var source, err = ioutil.ReadFile(sourceFile)
 				if err != nil {
@@ -78,6 +83,7 @@ func TestTokenization(t *testing.T) {
 				if diff != "" {
 					t.Fatalf("The expected output did not match the real output:\n%v", diff)
 				}
+				t.Logf("No difference, test successful.")
 			},
 		)
 		return nil

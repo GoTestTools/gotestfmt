@@ -17,6 +17,7 @@ import (
 // TestParse takes the *.tokenizer.json and *.parser.json files in ../testdata, runs the tokenizer files as input
 // through the parser and compares the result with the parser files.
 func TestParse(t *testing.T) {
+	t.Logf("Locating testdata directory...")
 	tryDirectories := []string{
 		"./testdata",
 		"../testdata",
@@ -31,6 +32,7 @@ func TestParse(t *testing.T) {
 	if foundDir == "" {
 		t.Fatalf("failed to find testdata directory in %v", tryDirectories)
 	}
+	t.Logf("Testdata directory is located at %s.", foundDir)
 
 	if e := filepath.Walk(foundDir, func(path string, info fs.FileInfo, _ error) error {
 		if info.IsDir() {
@@ -44,8 +46,11 @@ func TestParse(t *testing.T) {
 		t.Run(
 			base,
 			func(t *testing.T) {
+				t.Parallel()
 				sourceFile := path
 				expectedFile := strings.Replace(path, ".tokenizer.json", ".parser.json", 1)
+
+				t.Logf("Parsing %s and comparing with %s...", sourceFile, expectedFile)
 
 				var input []tokenizer.Event
 				inputFh, err := os.Open(sourceFile)
@@ -104,6 +109,7 @@ func TestParse(t *testing.T) {
 				if diff != "" {
 					t.Fatalf("The expected output did not match the real output:\n%v", diff)
 				}
+				t.Logf("No difference, test successful.")
 			},
 		)
 		return nil
