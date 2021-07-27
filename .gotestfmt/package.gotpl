@@ -12,7 +12,7 @@ we are creating a stylized header for each package.
 {{- end -}}
 📦 {{ .Name }}{{ "\033" }}[0m{{- "\n" -}}
 {{- with .Reason -}}
-    {{- . -}}{{- "\n" -}}
+    🛑 {{- . -}}{{- "\n" -}}
 {{- end -}}
 {{- with .Output -}}
     {{- . -}}{{- "\n" -}}
