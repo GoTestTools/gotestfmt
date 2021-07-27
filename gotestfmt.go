@@ -1,6 +1,7 @@
 package gotestfmt
 
 import (
+	"embed"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -11,17 +12,26 @@ import (
 	"github.com/haveyoudebuggedit/gotestfmt/tokenizer"
 )
 
+//go:embed .gotestfmt/*.gotpl
+var fs embed.FS
+
 func New(
 	templateDir string,
 ) (GoTestFmt, error) {
 	downloadsTpl, err := ioutil.ReadFile(path.Join(templateDir, "downloads.gotpl"))
 	if err != nil {
-		return nil, fmt.Errorf("failed to read downloads.gotpl (%w)", err)
+		downloadsTpl, err = fs.ReadFile(".gotestfmt/downloads.gotpl")
+		if err != nil {
+			panic(fmt.Errorf("bug: downloads.gotpl not found in binary (%w)", err))
+		}
 	}
 
 	packageTpl, err := ioutil.ReadFile(path.Join(templateDir, "package.gotpl"))
 	if err != nil {
-		return nil, fmt.Errorf("failed to read downloads.gotpl (%w)", err)
+		packageTpl, err = fs.ReadFile(".gotestfmt/package.gotpl")
+		if err != nil {
+			panic(fmt.Errorf("bug: package.gotpl not found in binary (%w)", err))
+		}
 	}
 
 	return &goTestFmt{
