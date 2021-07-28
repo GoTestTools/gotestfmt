@@ -103,7 +103,7 @@ jobs:
           path: /tmp/gotest.log
           if-no-files-found: error
   release:
-    name: Release
+    name: release
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'schedule' }}
     needs:
