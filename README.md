@@ -47,7 +47,9 @@ jobs:
 
       # Run tests with nice formatting. Save the original log in /tmp/gotest.log
       - name: Run tests
-        run: go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+        run: |
+          set -euo pipefail
+          go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
 
       # Upload the original go test log as an artifact for later review.
       - name: Upload test log
