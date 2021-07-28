@@ -1,6 +1,6 @@
 # gotestfmt: go test output for humans
 
-Are you tired of scrolling through endless Golang test logs in GitHub Actions (or other CI systems)? Then this is the project for you.
+Are you tired of scrolling through endless Golang test logs in GitHub Actions (or other CI systems)?
 
 ![An animation showcasing that gotestfmt transforms a text log into an interactive log with folding sections.](https://debugged.it/projects/gotestfmt/gotestfmt.svg)
 
