@@ -64,7 +64,8 @@ jobs:
 Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions and the original log will be uploaded as an artifact next to the test run. Alternatively, you can grab the binary from [the releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and run it in a different CI:
 
 ```bash
-go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt -log /tmp/gotest.log
+set -euo pipefail
+go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
 ```
 
 **Note:** Please always save the original log. You will need it if you have to file a bug report.
