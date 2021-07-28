@@ -1,4 +1,4 @@
-<h1 align="center">🚧 gotestfmt: beautify your go test output 🚧</h1>
+# gotestfmt: go test output for humans
 
 Are you tired of scrolling through endless Golang test logs in GitHub Actions (or other CI systems)? Then this is the project for you.
 
