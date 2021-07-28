@@ -80,9 +80,16 @@ func TestParse(t *testing.T) {
 
 				parserInput := make(chan tokenizer.Event)
 				parserResult := parser.ParseResult{}
-				downloads, packages := parser.Parse(parserInput)
+				prefixes, downloads, packages := parser.Parse(parserInput)
 				readerDone := make(chan struct{})
 				go func() {
+					for {
+						prefix, ok := <-prefixes
+						if !ok {
+							break
+						}
+						parserResult.Prefix = append(parserResult.Prefix, prefix)
+					}
 					for {
 						download, ok := <-downloads
 						if !ok {

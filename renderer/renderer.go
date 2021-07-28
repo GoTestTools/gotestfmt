@@ -10,6 +10,7 @@ import (
 
 // Render takes the two input channels from the parser and renders them into text output fragments.
 func Render(
+	prefixes <-chan string,
 	downloadsChannel <-chan *parser.Downloads,
 	packagesChannel <-chan *parser.Package,
 	downloadsTemplate []byte,
@@ -18,6 +19,14 @@ func Render(
 	result := make(chan []byte)
 	go func() {
 		defer close(result)
+		for {
+			prefix, ok := <-prefixes
+			if !ok {
+				break
+			}
+			result <- []byte(fmt.Sprintf("%s\n", prefix))
+		}
+
 		for {
 			downloads, ok := <-downloadsChannel
 			if !ok {

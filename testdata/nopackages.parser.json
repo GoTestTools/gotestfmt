@@ -1,3 +1,6 @@
 {
-  "prefix": "go: warning: \"./...\" matched no packages\nno packages to test"
+  "prefix": [
+    "go: warning: \"./...\" matched no packages",
+    "no packages to test"
+  ]
 }

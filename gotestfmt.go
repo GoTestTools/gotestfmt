@@ -51,8 +51,8 @@ type goTestFmt struct {
 
 func (g *goTestFmt) Format(input io.Reader, target io.WriteCloser) {
 	tokenizerOutput := tokenizer.Tokenize(input)
-	downloads, packages := parser.Parse(tokenizerOutput)
-	result := renderer.Render(downloads, packages, g.downloadsTpl, g.packageTpl)
+	prefixes, downloads, packages := parser.Parse(tokenizerOutput)
+	result := renderer.Render(prefixes, downloads, packages, g.downloadsTpl, g.packageTpl)
 
 	for {
 		fragment, ok := <-result

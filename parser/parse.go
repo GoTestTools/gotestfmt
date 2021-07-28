@@ -9,21 +9,29 @@ import (
 
 // Parse creates a new formatter that reads the go test output from the input reader, formats it and writes
 // to the output according to the passed configuration.
-// The result are two channels: the download channel will receive either zero or one result and then be closed.
-// Once the downloads channel is closed the parsed package results will be streamed over the second result.
+// The result are three channels: the prefix text before any recognized action, the download channel will receive either
+// zero or one result and then be closed. Once the downloads channel is closed the parsed package results will be
+// streamed over the second result.
 func Parse(
 	evts <-chan tokenizer.Event,
-) (<-chan *Downloads, <-chan *Package) {
+) (<-chan string, <-chan *Downloads, <-chan *Package) {
+	prefixChannel := make(chan string)
 	downloadsChannel := make(chan *Downloads)
 	packagesChannel := make(chan *Package)
-	go parse(evts, downloadsChannel, packagesChannel)
-	return downloadsChannel, packagesChannel
+	go parse(evts, prefixChannel, downloadsChannel, packagesChannel)
+	return prefixChannel, downloadsChannel, packagesChannel
 }
 
 var noModuleProvidesRegexp = regexp.MustCompile(`no required module provides package (?P<package>[^\s]+);`)
 
-func parse(evts <-chan tokenizer.Event, downloadsChannel chan *Downloads, packagesChannel chan *Package) {
+func parse(
+	evts <-chan tokenizer.Event,
+	prefixChannel chan string,
+	downloadsChannel chan *Downloads,
+	packagesChannel chan *Package,
+) {
 	downloadTracker := &downloadsTracker{
+		prefixChannel: prefixChannel,
 		downloadResultsList: nil,
 		downloadsByPackage:  map[string]*Download{},
 		downloadsFinished:   false,
@@ -62,6 +70,7 @@ func parse(evts <-chan tokenizer.Event, downloadsChannel chan *Downloads, packag
 				)
 			}
 		}
+		prevaction:
 		switch evt.Action {
 		case tokenizer.ActionRun:
 			fallthrough
@@ -107,7 +116,8 @@ func parse(evts <-chan tokenizer.Event, downloadsChannel chan *Downloads, packag
 				if match := noModuleProvidesRegexp.FindSubmatch(evt.Output); len(match) != 0 {
 					pkg = string(match[1])
 				} else {
-					panic(fmt.Errorf("unexpected first line: %s", evt.Output))
+					prefixChannel <- string(evt.Output)
+					break prevaction
 				}
 				evt.Action = tokenizer.ActionDownloadFailed
 				downloadTracker.Add(
@@ -282,6 +292,7 @@ type downloadsTracker struct {
 	downloadsFinished   bool
 	lastDownload        *Download
 	target              chan *Downloads
+	prefixChannel       chan string
 }
 
 func (d *downloadsTracker) Add(download *Download) {
@@ -305,6 +316,7 @@ func (d *downloadsTracker) Write() {
 	if d.downloadsFinished {
 		return
 	}
+	close(d.prefixChannel)
 	failed := false
 	for _, dl := range d.downloadResultsList {
 		if dl.Failed {
