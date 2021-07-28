@@ -1,4 +1,4 @@
-# 🚧 WORK IN PROGRESS: Go test output formatter 🚧
+# 🚧 gotestfmt: beautify your go test output 🚧
 
 Are you tired of scrolling through endless Golang test logs in GitHub Actions (or other CI systems)? Would you like a test log like this? (Click the test cases.)
 
@@ -41,6 +41,9 @@ jobs:
       # Install gotestfmt on the VM running the action.
       - name: Set up gotestfmt
         uses: haveyoudebuggedit/gotestfmt-action@v1
+        with:
+          # Optional: pass GITHUB_TOKEN to avoid rate limiting.
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # Run tests with nice formatting. Save the original log in /tmp/gotest.log
       - name: Run tests
@@ -49,6 +52,7 @@ jobs:
       # Upload the original go test log as an artifact for later review.
       - name: Upload test log
         uses: actions/upload-artifact@v2
+        if: always()
         with:
           name: test-log
           path: /tmp/gotest.log
@@ -58,10 +62,12 @@ jobs:
 Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions and the original log will be uploaded as an artifact next to the test run. Alternatively, you can grab the binary from [the releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and run it in a different CI:
 
 ```bash
-go test -v ./... 2>&1 | gotestfmt -log /tmp/gotest.log
+go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt -log /tmp/gotest.log
 ```
 
 **Note:** Please always save the original log. You will need it if you have to file a bug report.
+
+For the full list of options for GitHub Actions please see the [gotestfmt-action](https://github.com/haveyoudebuggedit/gotestfmt-action) repository.
 
 ## How does it work?
 
