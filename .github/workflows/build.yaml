@@ -95,4 +95,9 @@ jobs:
         with:
           go-version: 1.16
       - name: Run self-test
-        run: go test -v ./... 2>&1 | go run ./cmd/gotestfmt
+        run: go test -v ./... 2>&1 | tee /tmp/gotest.log | go run ./cmd/gotestfmt
+      - name: Upload test log
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-log
+          path: /tmp/gotest.log

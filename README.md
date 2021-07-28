@@ -28,26 +28,39 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      # Checkout your project with git
       - name: Checkout
         uses: actions/checkout@v2
 
+      # Install Go on the VM running the action.
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.16
 
+      # Install gotestfmt on the VM running the action.
       - name: Set up gotestfmt
         uses: haveyoudebuggedit/gotestfmt-action@v1
 
+      # Run tests with nice formatting. Save the original log in /tmp/gotest.log
       - name: Run tests
-        run: go test -v ./... 2>&1 | gotestfmt
+        run: go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+
+      # Upload the original go test log as an artifact for later review.
+      - name: Upload test log
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-log
+          path: /tmp/gotest.log
 ```
 
-Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions. Alternatively, you can grab the binary from [the releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and run it in a different CI:
+Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions and the original log will be uploaded as an artifact next to the test run. Alternatively, you can grab the binary from [the releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and run it in a different CI:
 
 ```bash
-go test -v ./... 2>&1 | gotestfmt
+go test -v ./... 2>&1 | gotestfmt -log /tmp/gotest.log
 ```
+
+**Note:** Please always save the original log. You will need it if you have to file a bug report.
 
 ## How does it work?
 
