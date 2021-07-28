@@ -52,6 +52,7 @@ jobs:
         with:
           name: test-log
           path: /tmp/gotest.log
+          if-no-files-found: error
 ```
 
 Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions and the original log will be uploaded as an artifact next to the test run. Alternatively, you can grab the binary from [the releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and run it in a different CI:
