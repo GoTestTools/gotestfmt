@@ -68,7 +68,7 @@ type Downloads struct {
 
 // ParseResult is an overall structure for parser results, containing the prefix text, downloads and packages.
 type ParseResult struct {
-	Prefix    []string `json:"prefix"`
+	Prefix    []string  `json:"prefix"`
 	Downloads Downloads `json:"downloads"`
 	Packages  []Package `json:"packages"`
 }

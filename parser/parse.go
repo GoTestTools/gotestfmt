@@ -31,7 +31,7 @@ func parse(
 	packagesChannel chan *Package,
 ) {
 	downloadTracker := &downloadsTracker{
-		prefixChannel: prefixChannel,
+		prefixChannel:       prefixChannel,
 		downloadResultsList: nil,
 		downloadsByPackage:  map[string]*Download{},
 		downloadsFinished:   false,
@@ -70,7 +70,7 @@ func parse(
 				)
 			}
 		}
-		prevaction:
+	prevaction:
 		switch evt.Action {
 		case tokenizer.ActionRun:
 			fallthrough
