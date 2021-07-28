@@ -1,24 +1,8 @@
 <h1 align="center">🚧 gotestfmt: beautify your go test output 🚧</h1>
 
-Are you tired of scrolling through endless Golang test logs in GitHub Actions (or other CI systems)? Would you like a test log like this? (Click the test cases.)
+Are you tired of scrolling through endless Golang test logs in GitHub Actions (or other CI systems)? Then this is the project for you.
 
-<pre>
-<details><summary>✅ TestCase1</summary>
-<p>
-Here are the details of the first test case.
-</p>
-</details>
-<details><summary>✅ TestCase2</summary>
-<p>
-Here are the details of the second test case.
-</p>
-</details>
-<details><summary>❌ TestCase3</summary>
-<p>
-Here are the details why the third test case failed.
-</p>
-</details>
-</pre>
+![An animation showcasing that gotestfmt transforms a text log into an interactive log with folding sections.](https://debugged.it/projects/gotestfmt/gotestfmt.svg)
 
 Then this is the tool for you. Here's how you use it with GitHub Actions:
 
