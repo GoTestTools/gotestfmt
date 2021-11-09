@@ -44,7 +44,7 @@
     "test":   "TestSubtest/test3"
   },
   {
-    "action": "fail"
+    "action": "fail-final"
   },
   {
     "action": "fail",
@@ -52,6 +52,6 @@
     "elapsed": "0.020s"
   },
   {
-    "action": "fail"
+    "action": "fail-final"
   }
 ]

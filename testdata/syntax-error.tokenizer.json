@@ -13,6 +13,6 @@
     "output": "c2V0dXAgZmFpbGVk"
   },
   {
-    "action": "fail"
+    "action": "fail-final"
   }
 ]

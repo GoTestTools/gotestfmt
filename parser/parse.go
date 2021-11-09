@@ -39,6 +39,7 @@ func parse(
 	}
 	pkgTracker := &packageTracker{
 		currentPackage:  nil,
+		packages:        map[string]*Package{},
 		testCases:       nil,
 		lastTestCase:    nil,
 		testCasesByName: map[string]*TestCase{},
@@ -142,6 +143,12 @@ func parse(
 				}
 			case tokenizer.ActionRun:
 				fallthrough
+			case tokenizer.ActionPass:
+				fallthrough
+			case tokenizer.ActionFail:
+				fallthrough
+			case tokenizer.ActionSkip:
+				fallthrough
 			case tokenizer.ActionCont:
 				lastTestCase := pkgTracker.GetLastTestCase()
 				if lastTestCase.Output == "" {
@@ -164,6 +171,12 @@ func parse(
 						string(evt.Output),
 					)
 				}
+			case tokenizer.ActionFailFinal:
+				fallthrough
+			case tokenizer.ActionPassFinal:
+				fallthrough
+			case tokenizer.ActionSkipFinal:
+				pkgTracker.Write()
 			default:
 				if len(evt.Output) > 0 {
 					panic(fmt.Errorf("unexpected output after %s event: %s", lastAction, evt.Output))
@@ -194,12 +207,12 @@ func finish(evt tokenizer.Event, pkgTracker *packageTracker, result Result) {
 				Coverage: evt.Coverage,
 			},
 		)
-		pkgTracker.Write()
 	}
 }
 
 type packageTracker struct {
 	currentPackage  *Package
+	packages        map[string]*Package
 	testCases       []*TestCase
 	lastTestCase    *TestCase
 	testCasesByName map[string]*TestCase
@@ -210,12 +223,11 @@ func (p *packageTracker) SetPackage(pkg *Package) {
 	if p.currentPackage == nil {
 		pkg.TestCases = p.testCases
 		p.currentPackage = pkg
+		p.packages[pkg.Name] = pkg
 		p.testCases = nil
 		return
 	} else if p.currentPackage.Name != pkg.Name {
-		// Write the current package
-		p.Write()
-		p.currentPackage = nil
+		p.currentPackage = p.packages[pkg.Name]
 	}
 
 	if pkg.Result != "" {
@@ -260,10 +272,12 @@ func (p *packageTracker) Write() {
 			}
 		}
 		p.testCases = nil
-	} else {
-		p.target <- p.currentPackage
-		p.currentPackage = nil
 	}
+	for _, pkg := range p.packages {
+		p.target <- pkg
+	}
+	p.packages = map[string]*Package{}
+	p.currentPackage = nil
 	p.testCasesByName = map[string]*TestCase{}
 }
 

@@ -1,0 +1,10 @@
+--- FAIL: TestTestify (0.00s)
+    testify_test.go:10:
+                Error Trace:    testify_test.go:10
+                Error:          Not equal:
+                                expected: 50
+                                actual  : 48
+                Test:           TestTestify
+FAIL
+FAIL    github.com/haveyoudebuggedit/example    0.071s
+FAIL
