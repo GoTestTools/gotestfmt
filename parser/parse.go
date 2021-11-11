@@ -39,6 +39,7 @@ func parse(
 	}
 	pkgTracker := &packageTracker{
 		currentPackage:  nil,
+		packageList:     []*Package{},
 		packages:        map[string]*Package{},
 		testCases:       nil,
 		lastTestCase:    nil,
@@ -151,14 +152,16 @@ func parse(
 				fallthrough
 			case tokenizer.ActionCont:
 				lastTestCase := pkgTracker.GetLastTestCase()
-				if lastTestCase.Output == "" {
-					lastTestCase.Output = string(evt.Output)
-				} else {
-					lastTestCase.Output = fmt.Sprintf(
-						"%s\n%s",
-						lastTestCase.Output,
-						string(evt.Output),
-					)
+				if lastTestCase != nil && len(evt.Output) > 0 {
+					if lastTestCase.Output == "" {
+						lastTestCase.Output = string(evt.Output)
+					} else {
+						lastTestCase.Output = fmt.Sprintf(
+							"%s\n%s",
+							lastTestCase.Output,
+							string(evt.Output),
+						)
+					}
 				}
 			case tokenizer.ActionPackage:
 				lastPackage := pkgTracker.GetPackage()
@@ -217,13 +220,18 @@ type packageTracker struct {
 	lastTestCase    *TestCase
 	testCasesByName map[string]*TestCase
 	target          chan<- *Package
+	packageList     []*Package
 }
 
 func (p *packageTracker) SetPackage(pkg *Package) {
 	if p.currentPackage == nil {
 		pkg.TestCases = p.testCases
 		p.currentPackage = pkg
-		p.packages[pkg.Name] = pkg
+		if _, ok := p.packages[pkg.Name]; !ok {
+			p.packageList = append(p.packageList, pkg)
+			p.packages[pkg.Name] = pkg
+		}
+
 		p.testCases = nil
 		return
 	} else if p.currentPackage.Name != pkg.Name {
@@ -273,10 +281,11 @@ func (p *packageTracker) Write() {
 		}
 		p.testCases = nil
 	}
-	for _, pkg := range p.packages {
+	for _, pkg := range p.packageList {
 		p.target <- pkg
 	}
 	p.packages = map[string]*Package{}
+	p.packageList = []*Package{}
 	p.currentPackage = nil
 	p.testCasesByName = map[string]*TestCase{}
 }

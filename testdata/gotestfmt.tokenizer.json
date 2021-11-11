@@ -1,0 +1,72 @@
+[
+  {
+    "action": "skip",
+    "package": "github.com/haveyoudebuggedit/gotestfmt",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "bm8gdGVzdCBmaWxlcw==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "skip",
+    "package": "github.com/haveyoudebuggedit/gotestfmt/cmd/gotestfmt",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "bm8gdGVzdCBmaWxlcw==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/gotestfmt/parser",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": null,
+    "cached": true,
+    "coverage": null
+  },
+  {
+    "action": "skip",
+    "package": "github.com/haveyoudebuggedit/gotestfmt/renderer",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "bm8gdGVzdCBmaWxlcw==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "skip",
+    "package": "github.com/haveyoudebuggedit/gotestfmt/testutil",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "bm8gdGVzdCBmaWxlcw==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/gotestfmt/tokenizer",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": null,
+    "cached": true,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "",
+    "cached": false,
+    "coverage": null
+  }
+]
