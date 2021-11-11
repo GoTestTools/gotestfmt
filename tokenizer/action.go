@@ -29,4 +29,10 @@ const (
 	ActionCoverage Action = "coverage"
 	// ActionCoverageNoStatements indicates that there were no code statements to cover.
 	ActionCoverageNoStatements Action = "coverage_nostatements"
+	// ActionPassFinal is a final PASS line to indicate the entire package has passed.
+	ActionPassFinal Action = "pass-final"
+	// ActionFailFinal is a final FAIL line to indicate the entire package has failed.
+	ActionFailFinal Action = "fail-final"
+	// ActionSkipFinal is a final SKIP line to indicate the entire package has failed.
+	ActionSkipFinal Action = "skip-final"
 )

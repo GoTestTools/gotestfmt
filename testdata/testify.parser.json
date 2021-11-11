@@ -1,0 +1,26 @@
+{
+  "prefix": null,
+  "downloads": {
+    "packages": null,
+    "failed": false
+  },
+  "packages": [
+    {
+      "name": "github.com/haveyoudebuggedit/example",
+      "result": "FAIL",
+      "duration": "71ms",
+      "coverage": null,
+      "output": "",
+      "testcases": [
+        {
+          "name": "TestTestify",
+          "result": "FAIL",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    testify_test.go:10:\n                Error Trace:    testify_test.go:10\n                Error:          Not equal:\n                                expected: 50\n                                actual  : 48\n                Test:           TestTestify"
+        }
+      ],
+      "reason": ""
+    }
+  ]
+}

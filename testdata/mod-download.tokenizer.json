@@ -28,7 +28,7 @@
     "test": "TestNothing"
   },
   {
-    "action": "pass"
+    "action": "pass-final"
   },
   {
     "action": "pass",
