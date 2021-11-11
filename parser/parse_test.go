@@ -46,7 +46,6 @@ func TestParse(t *testing.T) {
 		t.Run(
 			base,
 			func(t *testing.T) {
-				t.Parallel()
 				sourceFile := path
 				expectedFile := strings.Replace(path, ".tokenizer.json", ".parser.json", 1)
 

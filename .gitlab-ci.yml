@@ -1,0 +1,26 @@
+docker-build:
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - |
+      docker build -f Dockerfile.gitlabci -t gotestfmt .
+      docker rm --force gotestfmt
+      docker run \
+        --name gotestfmt-$$ \
+        -e GITLAB_CI=${GITLAB_CI} \
+        gotestfmt \
+        /bin/sh -c "cd /source; go test -v ./... 2>&1 | tee /tmp/gotest.log | go run cmd/gotestfmt/main.go"
+      docker cp gotestfmt-$$:/tmp/gotest.log gotest.log
+      docker rm --force gotestfmt-$$
+  artifacts:
+    paths:
+      - gotest.log
+    expire_in: 1 week
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - Dockerfile.gitlabci

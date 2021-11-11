@@ -13,31 +13,39 @@ import (
 )
 
 //go:embed .gotestfmt/*.gotpl
+//go:embed .gotestfmt/*/*.gotpl
 var fs embed.FS
 
 func New(
-	templateDir string,
+	templateDirs []string,
 ) (GoTestFmt, error) {
-	downloadsTpl, err := ioutil.ReadFile(path.Join(templateDir, "downloads.gotpl"))
-	if err != nil {
-		downloadsTpl, err = fs.ReadFile(".gotestfmt/downloads.gotpl")
-		if err != nil {
-			panic(fmt.Errorf("bug: downloads.gotpl not found in binary (%w)", err))
-		}
-	}
+	downloadsTpl := findTemplate(templateDirs, "downloads.gotpl")
 
-	packageTpl, err := ioutil.ReadFile(path.Join(templateDir, "package.gotpl"))
-	if err != nil {
-		packageTpl, err = fs.ReadFile(".gotestfmt/package.gotpl")
-		if err != nil {
-			panic(fmt.Errorf("bug: package.gotpl not found in binary (%w)", err))
-		}
-	}
+	packageTpl := findTemplate(templateDirs, "package.gotpl")
 
 	return &goTestFmt{
 		downloadsTpl: downloadsTpl,
 		packageTpl:   packageTpl,
 	}, nil
+}
+
+func findTemplate(dirs []string, tpl string) []byte {
+	var lastError error
+	for _, dir := range dirs {
+		templateContents, err := ioutil.ReadFile(path.Join(dir, tpl))
+		if err == nil {
+			return templateContents
+		}
+		lastError = err
+	}
+	for _, dir := range dirs {
+		templateContents, err := fs.ReadFile(path.Join(dir, tpl))
+		if err == nil {
+			return templateContents
+		}
+		lastError = err
+	}
+	panic(fmt.Errorf("bug: %s not found in binary (%w)", tpl, lastError))
 }
 
 type GoTestFmt interface {

@@ -3,6 +3,7 @@ package parser
 import (
 	"fmt"
 	"regexp"
+	"time"
 
 	"github.com/haveyoudebuggedit/gotestfmt/tokenizer"
 )
@@ -256,9 +257,19 @@ func (p *packageTracker) SetPackage(pkg *Package) {
 	if pkg.Duration != 0 {
 		p.currentPackage.Duration = pkg.Duration
 	}
+	if pkg.StartTime != nil {
+		p.currentPackage.StartTime = pkg.StartTime
+	} else if p.currentPackage != nil {
+		t := time.Now()
+		p.currentPackage.StartTime = &t
+	}
 }
 
 func (p *packageTracker) Add(testCase *TestCase) {
+	if testCase.StartTime == nil {
+		t := time.Now()
+		testCase.StartTime = &t
+	}
 	p.lastTestCase = testCase
 	p.testCasesByName[testCase.Name] = testCase
 	if p.currentPackage != nil {
@@ -275,8 +286,15 @@ func (p *packageTracker) GetLastTestCase() *TestCase {
 func (p *packageTracker) Write() {
 	if p.currentPackage == nil {
 		if len(p.testCases) > 0 {
+			startTime := time.Now()
+			for _, testCase := range p.testCases {
+				if testCase.StartTime != nil && testCase.StartTime.Before(startTime) {
+					startTime = *testCase.StartTime
+				}
+			}
 			p.target <- &Package{
 				TestCases: p.testCases,
+				StartTime: &startTime,
 			}
 		}
 		p.testCases = nil
@@ -316,12 +334,19 @@ type downloadsTracker struct {
 	lastDownload        *Download
 	target              chan *Downloads
 	prefixChannel       chan string
+	startTime           *time.Time
+	endTime             *time.Time
 }
 
 func (d *downloadsTracker) Add(download *Download) {
 	if d.downloadsFinished {
 		panic(fmt.Errorf("tried to add download after downloads are already finished (%v)", download))
 	}
+	t := time.Now()
+	if d.startTime == nil {
+		d.startTime = &t
+	}
+	d.endTime = &t
 	packageID := fmt.Sprintf("%s@%s", download.Package, download.Version)
 	if _, ok := d.downloadsByPackage[packageID]; ok {
 		panic(fmt.Errorf("download already exists in tracker (%v)", download))
@@ -348,8 +373,10 @@ func (d *downloadsTracker) Write() {
 		}
 	}
 	d.target <- &Downloads{
-		Packages: d.downloadResultsList,
-		Failed:   failed,
+		Packages:  d.downloadResultsList,
+		Failed:    failed,
+		StartTime: d.startTime,
+		EndTime:   d.endTime,
 	}
 	d.downloadsFinished = true
 	d.downloadResultsList = nil

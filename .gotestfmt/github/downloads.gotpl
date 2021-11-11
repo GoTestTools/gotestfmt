@@ -3,6 +3,7 @@
 This template contains the format for a package download.
 */ -}}
 {{- if .Packages -}}
+    ::group::
     {{- if .Failed -}}
         {{ "\033" }}[0;31m❌
     {{- else -}}
@@ -26,4 +27,5 @@ This template contains the format for a package download.
             {{- "     " -}}{{ . -}}{{ "\n" -}}
         {{- end -}}
     {{- end -}}
+    ::endgroup::
 {{- end -}}
