@@ -1,0 +1,35 @@
+{
+  "prefix": null,
+  "downloads": {
+    "packages": null,
+    "failed": false
+  },
+  "packages": [
+    {
+      "name": "github.com/haveyoudebuggedit/gotestfmt/renderer",
+      "result": "SKIP",
+      "duration": "0s",
+      "coverage": null,
+      "output": "",
+      "testcases": null,
+      "reason": "no test files"
+    },
+    {
+      "name": "github.com/haveyoudebuggedit/gotestfmt/testutil",
+      "result": "PASS",
+      "duration": "5.003s",
+      "coverage": null,
+      "output": "",
+      "testcases": [
+        {
+          "name": "TestSleep",
+          "result": "PASS",
+          "duration": "5s",
+          "coverage": null,
+          "output": "    sleep_test.go:10: Now sleeping for 5 seconds...\n    sleep_test.go:12: Welcome back, now finishing test."
+        }
+      ],
+      "reason": ""
+    }
+  ]
+}
