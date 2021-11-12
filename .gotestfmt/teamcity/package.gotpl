@@ -1,0 +1,38 @@
+{{- /*gotype: github.com/haveyoudebuggedit/gotestfmt/parser.Package*/ -}}
+{{- /*
+This template contains the format for an individual package. GitHub actions does not currently support nested groups so
+we are creating a stylized header for each package.
+*/ -}}
+{{- $packageTitle := "📦 " + .Name -}}
+##teamcity[blockOpened name='{{ $packageTitle }}']{{- "\n" -}}
+{{- with .Reason -}}
+    🛑 {{ . -}}{{- "\n" -}}
+{{- end -}}
+{{- with .Output -}}
+    {{- . -}}{{- "\n" -}}
+{{- end -}}
+{{- with .TestCases -}}
+    {{- range . -}}
+        {{- $title := .Name + " (" + .Duration -}}
+        {{- with .Coverage -}}
+            {{- $title = ", coverage: " + . + "%" -}}
+        {{- end -}})
+        {{- $title = $title + ")" -}}
+        {{- if eq .Result "PASS" -}}
+            {{- $title = "✅ " + $title -}}
+        {{- else if eq .Result "SKIP" -}}
+            {{- $title = "🚧 " + $title -}}
+        {{- else -}}
+            {{- $title = "❌ " + $title -}}
+        {{- end -}}
+        {{- "\n" -}}
+
+        ##teamcity[blockOpened name='{{- $title -}}']{{- "\n" -}}
+        {{- with .Output -}}
+            {{- . -}}
+            {{- "\n" -}}
+        {{- end -}}
+        ##teamcity[blockClosed name='{{- $title -}}']{{- "\n" -}}
+    {{- end -}}
+{{- end -}}
+##teamcity[blockClosed name='{{ $packageTitle }}']{{- "\n" -}}

@@ -351,6 +351,7 @@ func parseLine(currentState state, line []byte, output chan<- Event) state {
 				}
 
 				evt := Event{
+					Received: time.Now(),
 					Action:   stateTransition.action,
 					Package:  string(extract(stateTransition.regexp, match, "Package")),
 					Version:  string(extract(stateTransition.regexp, match, "Version")),

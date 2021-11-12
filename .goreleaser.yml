@@ -14,6 +14,12 @@ archives:
     files:
       - LICENSE.md
       - README.md
+dockers:
+  - dockerfile: Dockerfile.goreleaser
+    image_templates:
+      - ghcr.io/haveyoudebuggedit/gotestfmt:{{ .Tag }}
+      - ghcr.io/haveyoudebuggedit/gotestfmt:v{{ .Major }}
+      - ghcr.io/haveyoudebuggedit/gotestfmt:latest
 gomod:
   proxy: true
   env:

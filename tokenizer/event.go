@@ -9,6 +9,8 @@ import (
 
 // Event is an event that occurred during output.
 type Event struct {
+	// Received is the time this event was seen.
+	Received time.Time `json:"-"`
 	// Action is the action that happened in this event.
 	Action Action `json:"action"`
 	// Package, if present, specifies the package being tested.

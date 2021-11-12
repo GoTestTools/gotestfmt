@@ -1,0 +1,29 @@
+{{- /*gotype: github.com/haveyoudebuggedit/gotestfmt/parser.Downloads*/ -}}
+{{- /*
+This template contains the format for a package download.
+*/ -}}
+{{- if .Packages -}}
+    {{- $title := "Dependency downloads" -}}
+    {{- if .Failed -}}
+        {{- $title = "❌ " + $title -}}
+    {{- else -}}
+        {{- $title = "📥 " + $title -}}
+    {{- end -}}
+    ##teamcity[blockOpened name='{{ $title }}']
+
+    {{- range .Packages -}}
+        {{- "   " -}}
+        {{- if .Failed -}}
+            ❌
+        {{- else -}}
+            📦
+        {{- end -}}
+        {{- " " -}}
+        {{- .Package }} {{ .Version -}}
+        {{ "\n" -}}
+        {{ with .Reason -}}
+            {{- "     " -}}{{ . -}}{{ "\n" -}}
+        {{- end -}}
+    {{- end -}}
+    ##teamcity[blockClosed name='{{ $$title }}']
+{{- end -}}

@@ -32,7 +32,11 @@ func Render(
 			if !ok {
 				break
 			}
-			result <- renderTemplate("downloads.gotpl", downloadsTemplate, downloads)
+			result <- renderTemplate(
+				"downloads.gotpl",
+				downloadsTemplate,
+				downloads,
+			)
 		}
 
 		for {
@@ -40,7 +44,11 @@ func Render(
 			if !ok {
 				break
 			}
-			result <- renderTemplate("package.gotpl", packagesTemplate, pkg)
+			result <- renderTemplate(
+				"package.gotpl",
+				packagesTemplate,
+				pkg,
+			)
 		}
 	}()
 	return result

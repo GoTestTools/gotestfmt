@@ -1,0 +1,44 @@
+{{- /*gotype: github.com/haveyoudebuggedit/gotestfmt/parser.Package*/ -}}
+{{- /*
+This template contains the format for an individual package. GitHub actions does not currently support nested groups so
+we are creating a stylized header for each package.
+*/ -}}
+{{- "\033" }}[0Ksection_start:{{ with .StartTime }}{{ .Unix }}{{ else }}0{{ end }}:{{ .ID }}{{ "\r\033" }}[0K
+{{- if eq .Result "PASS" -}}
+    {{- "\033" }}[0;32m
+{{- else if eq .Result "SKIP" -}}
+    {{- "\033" }}[0;33m
+{{- else -}}
+    {{- "\033" }}[0;31m
+{{- end -}}
+📦 {{ .Name }}{{ "\033" }}[0m{{- "\n" -}}
+{{- with .Reason }}
+  🛑 {{ . -}}{{- "\n" -}}
+{{- end -}}
+{{- with .Output -}}
+    {{- . -}}{{- "\n" -}}
+{{- end -}}
+{{- with .TestCases -}}
+    {{- range . -}}
+        {{- "\033[0K" }}section_start:{{ with .StartTime }}{{ .Unix }}{{ else }}0{{ end }}:{{ .ID }}[collapsed=true]{{- "\r\033[0K" -}}
+        {{- if eq .Result "PASS" -}}
+            {{- "\033[0;32m  " }}✅
+        {{- else if eq .Result "SKIP" -}}
+            {{- "\033[0;33m  " }}🚧
+        {{- else -}}
+            {{- "\033[0;31m  " }}❌
+        {{- end -}}
+        {{- " " }}{{- .Name -}}
+        {{- with .Coverage -}}{{- " \033" -}}[0;37m (coverage: {{ . }}%){{- end -}}
+        {{- "\033" -}}[0m
+        {{- "\n" -}}
+
+        {{- with .Output -}}
+            {{- . -}}
+            {{- "\n" -}}
+        {{- end -}}
+
+        {{- "\033[0K" }}section_end:{{ with .EndTime }}{{ .Unix }}{{ else }}0{{ end }}:{{ .ID }}{{ "\r\033[0K" }}{{- "\n" -}}
+    {{- end -}}
+{{- end -}}
+{{- "\033[0K" }}section_end:{{ with .EndTime }}{{ .Unix }}{{ else }}0{{end}}:{{ .ID }}{{ "\r\033[0K" }}{{- "\n" -}}

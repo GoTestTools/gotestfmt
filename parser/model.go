@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"strings"
 	"time"
 )
 
@@ -15,6 +16,8 @@ const (
 
 // TestCase is the representation for a single test case.
 type TestCase struct {
+	// StartTime marks the earliest time this test case was seen in the log output.
+	StartTime *time.Time `json:"-"`
 	// Name is the name of a test case. It may contain slashes (`/`) if this test case is for a subtest.
 	Name string
 	// Result is the result of this test case.
@@ -28,8 +31,24 @@ type TestCase struct {
 	Output string
 }
 
+// ID returns the Name of the test case without slashes
+func (t *TestCase) ID() string {
+	return strings.Replace(t.Name, "/", "_", -1)
+}
+
+// EndTime returns the calculated end time of the test case
+func (t *TestCase) EndTime() *time.Time {
+	if t.StartTime == nil {
+		return nil
+	}
+	endTime := (*t.StartTime).Add(t.Duration)
+	return &endTime
+}
+
 // Package is the structure for all tests in a package.
 type Package struct {
+	// StartTime marks the earliest time this package was seen in the log output.
+	StartTime *time.Time `json:"-"`
 	// Name contains the name of the package under test.
 	Name string
 	// Result is the result of the sum of all tests in this package.
@@ -45,6 +64,22 @@ type Package struct {
 	TestCases []*TestCase
 	// Reason is a description of why the Result happened. Empty in most cases.
 	Reason string
+}
+
+func (p *Package) EndTime() *time.Time {
+	if p.StartTime == nil {
+		return nil
+	}
+	t := p.StartTime.Add(p.Duration)
+	return &t
+}
+
+// ID returns the Name of the package without dots and slashes
+func (p *Package) ID() string {
+	return strings.Replace(
+		strings.Replace(p.Name, ".", "_", -1),
+		"/", "_", -1,
+	)
 }
 
 type Download struct {
@@ -64,6 +99,10 @@ type Downloads struct {
 	Packages []*Download `json:"packages"`
 	// Failed indicates that one or more package downloads failed.
 	Failed bool `json:"failed"`
+	// StartTime indicates the time when the downloads started.
+	StartTime *time.Time `json:"-"`
+	// EndTime indicates when the downloads finished.
+	EndTime *time.Time `json:"-"`
 }
 
 // ParseResult is an overall structure for parser results, containing the prefix text, downloads and packages.

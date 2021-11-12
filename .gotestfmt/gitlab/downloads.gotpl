@@ -1,0 +1,31 @@
+{{- /*gotype: github.com/haveyoudebuggedit/gotestfmt/parser.Downloads*/ -}}
+{{- /*
+This template contains the format for a package download.
+*/ -}}
+{{- if .Packages -}}
+    {{- "\033" }}[0Ksection_start:{{ with .StartTime }}{{ .Unix }}{{ else }}0{{ end }}:dependency_downloads{{ "\r\033" }}[0K{{- "\n" -}}
+    {{- if .Failed -}}
+        {{ "\033" }}[0;31m❌
+    {{- else -}}
+        {{ "\033" }}[0;34m📥
+    {{- end -}}
+    {{ " " }}Dependency downloads
+    {{- "\033" }}[0m{{ "\n" -}}
+
+    {{- range .Packages -}}
+        {{- "   " -}}
+        {{- if .Failed -}}
+            {{ "\033" }}[0;31m❌
+        {{- else -}}
+            📦
+        {{- end -}}
+        {{- " " -}}
+        {{- .Package }} {{ .Version -}}
+        {{- "\033" }}[0m
+        {{ "\n" -}}
+        {{ with .Reason -}}
+            {{- "     " -}}{{ . -}}{{ "\n" -}}
+        {{- end -}}
+    {{- end -}}
+    {{- "\033" }}[0Ksection_start:{{ with .EndTime }}{{ .Unix }}{{ else }}0{{ end }}:dependency_downloads{{ "\r\033" }}[0K{{- "\n" -}}
+{{- end -}}

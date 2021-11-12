@@ -4,7 +4,29 @@ Are you tired of scrolling through endless Golang test logs in GitHub Actions (o
 
 ![An animation showcasing that gotestfmt transforms a text log into an interactive log with folding sections.](https://debugged.it/projects/gotestfmt/gotestfmt.svg)
 
-Then this is the tool for you. Here's how you use it with GitHub Actions:
+Then this is the tool for you. Run it locally, or in any CI system with the following command line like this:
+
+```bash
+set -euo pipefail
+go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+```
+
+Tadam, your tests will now show up in a beautifully formatted fashion. Plug it into your CI, and you're done.
+
+**Note:** Please always save the original log. You will need it if you have to file a bug report for gotestfmt.
+
+## Setting it up in your CI system
+
+We have support for several CI systems, and you can also customize the output to match your system. Gotestfmt detects the CI system based on environment variables. If it can't detect the CI system it will try to create a generic colored test output. You can force the CI output with the `-ci github|gitlab|...` option.
+
+- [GitHub Actions](#github-actions)
+- [GitLab CI](#gitlab-ci)
+- [CircleCI](#circleci)
+- [Add your own](#add-your-own-ci)
+
+### GitHub Actions
+
+For GitHub Actions we provide [gotestfmt-action](https://github.com/haveyoudebuggedit/gotestfmt-action), making it easy to use. Here's how you can set it up:
 
 ```yaml
 jobs:
@@ -45,33 +67,106 @@ jobs:
           if-no-files-found: error
 ```
 
-Tadam, your tests will now show up in a beautifully formatted fashion in GitHub Actions and the original log will be uploaded as an artifact next to the test run. Alternatively, you can grab the binary from [the releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and run it in a different CI:
+Gotestfmt provides specialized output for GitHub Actions based on the presence of the `GITHUB_WORKFLOW` environment variable. You can also set gotestfmt to run in GitHub Actions mode by providing the `-ci github` option.
 
-```bash
-set -euo pipefail
-go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+In GitHub Actions mode gotestfmt will look for the rendering templates in the `.gotestfmt/github` and `.gotestfmt` folders, which can be [customized](#customizing-the-output).
+
+### GitLab CI
+
+There are multiple ways to run gotestfmt in GitLab CI. You can simply download it from the [releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases) and use it that way, but we would recommend creating a custom container image to run the tests as follows:
+
+```Dockerfile
+# Include gotestfmt as a base image for building
+FROM ghcr.io/haveyoudebuggedit/gotestfmt:latest AS gotestfmt
+
+# Use the golang base image
+FROM golang
+# Copy gotestfmt into the golang image
+COPY --from gotestfmt /gotestfmt /usr/local/bin/
 ```
 
-**Note:** Please always save the original log. You will need it if you have to file a bug report.
+You can then run the tests within this image with the following command:   
 
-For the full list of options for GitHub Actions please see the [gotestfmt-action](https://github.com/haveyoudebuggedit/gotestfmt-action) repository.
+```bash
+go test -v ./... | /usr/local/bin/gotestfmt
+```
 
-## How does it work?
+To put it all together, you can use the following `.gitlab-ci.yaml`:
 
-You can run your tests as normal. The output is piped to gotestfmt which parses and reformats it.
+```yaml
+docker-build:
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - |
+      docker build -t gotestfmt .
+      docker run \
+        -v $(pwd):/source \
+        -v /tmp:/tmp |
+        -e GITLAB_CI=${GITLAB_CI} \
+        gotestfmt \
+        /bin/sh -c "cd /source; go test -v ./... 2>&1 | tee /tmp/gotest.log | /usr/local/bin/gotestfmt"
+  artifacts:
+    paths:
+      - /tmp/gotest.log
+    expire_in: 1 week
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - Dockerfile
+```
 
-## Customizing the output
+You can, of course, customize this to your liking. We also recommend mirroring the `gotestfmt` image to your local registry to avoid rate limiting errors. See the [GitLab blog](https://about.gitlab.com/blog/2020/10/30/mitigating-the-impact-of-docker-hub-pull-requests-limits/) on how to do this.
+
+Gotestfmt detects running in GitLab CI based on the `GITLAB_CI` environment variable. You can also force gotestfmt to run in GitLab CI mode by passing the `-c gitlab` option.
+
+### CircleCI
+
+There is no special template for CircleCI since it doesn't support advanced features like log folding. You can set up Circle CI by using the `gotestfmt` container directly:
+
+```yaml
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/golang:1.16
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Run tests
+          command: go test -v ./... 2>&1 | tee /tmp/gotest.log | docker run -i ghcr.io/haveyoudebuggedit/gotestfmt:latest
+      - store_artifacts:
+          path: /tmp/gotest.log
+          destination: gotest.log
+workflows:
+  version: 2
+  build-workflow:
+    jobs:
+      - test
+```
+
+### Add your own CI
 
 You can, of course, customize the output to match your CI system. This can be done by creating a folder named `.gotestfmt` in your project and adding the files below. You can find the default templates in the [.gotestfmt](.gotestfmt) folder in this repository.
 
-### downloads.tpl
+When running on a well-known CI system, such as GitHub Actions, gotestfmt will detect that and look in the specific subfolder. If you think a specific CI system should have a custom template, please send us a pull request to this repository.
+
+#### downloads.tpl
 
 This file contains the output fragment showing the package downloads in the Go template format. It has the following variables available:
 
 | Variable | Type | Description |
 |----------|------|-------------|
 | `.Failed` | `bool` | Indicates an overall failure. |
-| `.Packages` | `[]Package` | A list of packages that have been processed.
+| `.Packages` | `[]Package` | A list of packages that have been processed. |
+| `.StartTime` | `*time.Time` | The time the first download line was seen. May be empty. |
+| `.EndTime` | `*time.Time` | The time the last download line was seen. May be empty. |
 
 The `Package` items have the following format:
 
@@ -82,7 +177,7 @@ The `Package` items have the following format:
 | `.Failed` | `bool` | If the package download has failed. |
 | `.Reason` | `string` | Text explaining the failure. |
 
-## package.tpl
+#### package.tpl
 
 This template is the output format for the results of a single package and the tests in it. If multiple packages are tested, this template is called multiple times in a row. It has the following fields:
 
@@ -95,6 +190,8 @@ This template is the output format for the results of a single package and the t
 | `.Output` | `string` | Additional output from failures. (e.g. syntax error indications) |
 | `.TestCases` | `[]TestCase` | A list of test case results. |
 | `.Reason` | `string` | Text explaining the failure. Empty in most cases. |
+| `.StartTime` | `*time.Time` | A pointer to a time object when the package was first seen in the output. May be nil. |
+| `.EndTime` | `*time.Time` | A pointer to the time object when the package was last seen in the output. May be nil. |
 
 Test cases have the following format:
 
@@ -105,8 +202,12 @@ Test cases have the following format:
 | `.Duration` | `time.Duration` | Duration of all test runs in this package. |
 | `.Coverage` | `float64` | If coverage data was provided, this indicates the code coverage percentage. Contains a negative number if no coverage data is available. |
 | `.Output` | `string` | Log output from the test. |
+| `.StartTime` | `*time.Time` | A pointer to a time object when the test case was first seen in the output. May be nil. |
+| `.EndTime` | `*time.Time` | A pointer to the time object when the test case was last seen in the output. May be nil. |
 
 ## Architecture
+
+Gotestfmt takes the output from `go test`, parses it and reformats it with the templates located in the `.gotestfmt` directory, or baked into the application.
 
 This application has 3 main pieces: the tokenizer, the parser, and the renderer. All of them run in separate goroutines and pipeline data using channels.
 

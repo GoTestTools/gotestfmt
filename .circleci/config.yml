@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.16
+    steps:
+      - checkout
+      - run:
+          name: Self-test
+          command: go test ./... 2>&1 | go run cmd/gotestfmt/main.go
+      - run:
+          name: Self-test (verbose)
+          command: go test -v ./... 2>&1 | tee /tmp/gotest.log | go run cmd/gotestfmt/main.go
+      - store_artifacts:
+          path: /tmp/gotest.log
+          destination: gotest.log
+  test:
+    docker:
+      - image: circleci/golang:1.16
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Container test
+          command: go test -v ./... 2>&1 | docker run -i ghcr.io/haveyoudebuggedit/gotestfmt:latest
+workflows:
+  version: 2
+  build-workflow:
+    jobs:
+      - build
+      - test
