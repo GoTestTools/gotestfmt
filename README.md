@@ -69,7 +69,7 @@ jobs:
 
 Gotestfmt provides specialized output for GitHub Actions based on the presence of the `GITHUB_WORKFLOW` environment variable. You can also set gotestfmt to run in GitHub Actions mode by providing the `-ci github` option.
 
-In GitHub Actions mode gotestfmt will look for the rendering templates in the `.gotestfmt/github` and `.gotestfmt` folders, which can be [customized](#customizing-the-output).
+In GitHub Actions mode gotestfmt will look for the rendering templates in the `.gotestfmt/github` and `.gotestfmt` folders, which can be [customized](#add-your-own-ci).
 
 ### GitLab CI
 
