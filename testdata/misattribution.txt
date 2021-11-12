@@ -1,0 +1,7 @@
+?       github.com/haveyoudebuggedit/gotestfmt/renderer [no test files]
+=== RUN   TestSleep
+    sleep_test.go:10: Now sleeping for 5 seconds...
+    sleep_test.go:12: Welcome back, now finishing test.
+--- PASS: TestSleep (5.00s)
+PASS
+ok      github.com/haveyoudebuggedit/gotestfmt/testutil 5.003s

@@ -211,6 +211,7 @@ func finish(evt tokenizer.Event, pkgTracker *packageTracker, result Result) {
 				Coverage: evt.Coverage,
 			},
 		)
+		pkgTracker.currentPackage = nil
 	}
 }
 

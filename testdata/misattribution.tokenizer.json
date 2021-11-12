@@ -1,0 +1,72 @@
+[
+  {
+    "action": "skip",
+    "package": "github.com/haveyoudebuggedit/gotestfmt/renderer",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "bm8gdGVzdCBmaWxlcw==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "",
+    "version": "",
+    "test": "TestSleep",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIHNsZWVwX3Rlc3QuZ286MTA6IE5vdyBzbGVlcGluZyBmb3IgNSBzZWNvbmRzLi4u",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "ICAgIHNsZWVwX3Rlc3QuZ286MTI6IFdlbGNvbWUgYmFjaywgbm93IGZpbmlzaGluZyB0ZXN0Lg==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "pass",
+    "package": "",
+    "version": "",
+    "test": "TestSleep",
+    "elapsed": "5s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "pass-final",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/gotestfmt/testutil",
+    "version": "",
+    "test": "",
+    "elapsed": "5.003s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  }
+]
