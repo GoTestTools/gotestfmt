@@ -1,10 +1,13 @@
---- FAIL: TestTestify (0.00s)
-    testify_test.go:10:
-                Error Trace:    testify_test.go:10
-                Error:          Not equal:
-                                expected: 50
-                                actual  : 48
-                Test:           TestTestify
-FAIL
-FAIL    github.com/haveyoudebuggedit/example    0.071s
-FAIL
+{"Time":"2021-12-05T07:01:59.782579+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify"}
+{"Time":"2021-12-05T07:01:59.7831013+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify","Output":"=== RUN   TestTestify\n"}
+{"Time":"2021-12-05T07:01:59.7831013+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify","Output":"    testify_test.go:10: \n"}
+{"Time":"2021-12-05T07:01:59.7831013+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify","Output":"        \tError Trace:\ttestify_test.go:10\n"}
+{"Time":"2021-12-05T07:01:59.7840992+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify","Output":"        \tError:      \tNot equal: \n"}
+{"Time":"2021-12-05T07:01:59.7840992+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify","Output":"        \t            \texpected: 50\n"}
+{"Time":"2021-12-05T07:01:59.7840992+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify","Output":"        \t            \tactual  : 48\n"}
+{"Time":"2021-12-05T07:01:59.7840992+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify","Output":"        \tTest:       \tTestTestify\n"}
+{"Time":"2021-12-05T07:01:59.7840992+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify","Output":"--- FAIL: TestTestify (0.00s)\n"}
+{"Time":"2021-12-05T07:01:59.7840992+01:00","Action":"fail","Package":"github.com/haveyoudebuggedit/example","Test":"TestTestify","Elapsed":0}
+{"Time":"2021-12-05T07:01:59.7840992+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"FAIL\n"}
+{"Time":"2021-12-05T07:01:59.7900979+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"FAIL\tgithub.com/haveyoudebuggedit/example\t0.162s\n"}
+{"Time":"2021-12-05T07:01:59.7900979+01:00","Action":"fail","Package":"github.com/haveyoudebuggedit/example","Elapsed":0.162}

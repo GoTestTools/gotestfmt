@@ -1,6 +1,0 @@
-?       github.com/haveyoudebuggedit/gotestfmt  [no test files]
-?       github.com/haveyoudebuggedit/gotestfmt/cmd/gotestfmt    [no test files]
-ok      github.com/haveyoudebuggedit/gotestfmt/parser   (cached)
-?       github.com/haveyoudebuggedit/gotestfmt/renderer [no test files]
-?       github.com/haveyoudebuggedit/gotestfmt/testutil [no test files]
-ok      github.com/haveyoudebuggedit/gotestfmt/tokenizer        (cached)

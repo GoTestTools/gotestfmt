@@ -1,5 +1,8 @@
-=== RUN   TestNothing
---- PASS: TestNothing (0.00s)
-PASS
-coverage: 57.8% of statements
-ok      github.com/haveyoudebuggedit/example    (cached)        coverage: 57.8% of statements
+{"Time":"2021-12-05T07:39:07.2048256+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestHello"}
+{"Time":"2021-12-05T07:39:07.2058673+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestHello","Output":"=== RUN   TestHello\n"}
+{"Time":"2021-12-05T07:39:07.2058673+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestHello","Output":"--- PASS: TestHello (0.00s)\n"}
+{"Time":"2021-12-05T07:39:07.2068666+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Test":"TestHello","Elapsed":0}
+{"Time":"2021-12-05T07:39:07.2068666+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"PASS\n"}
+{"Time":"2021-12-05T07:39:07.2068666+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"coverage: 100.0% of statements\n"}
+{"Time":"2021-12-05T07:39:07.211866+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"ok  \tgithub.com/haveyoudebuggedit/example\t0.102s\tcoverage: 100.0% of statements\n"}
+{"Time":"2021-12-05T07:39:07.2218653+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Elapsed":0.112}

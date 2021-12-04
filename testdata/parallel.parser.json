@@ -6,19 +6,19 @@
     {
       "name": "github.com/haveyoudebuggedit/example",
       "result": "PASS",
-      "duration": "10.048s",
+      "duration": "10.01s",
       "testcases": [
         {
           "name": "TestParallel1",
           "result": "PASS",
           "output": "    parallel_test.go:10: Test message 1\n    parallel_test.go:12: Test message 2",
-          "duration": "5.01s"
+          "duration": "5s"
         },
         {
           "name": "TestParallel2",
           "result": "PASS",
           "output": "    parallel_test.go:18: Test message 1\n    parallel_test.go:20: Test message 2",
-          "duration": "10.02s"
+          "duration": "10.01s"
         }
       ]
     }

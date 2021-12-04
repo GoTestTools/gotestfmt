@@ -21,18 +21,25 @@
   },
   {
     "action": "run",
-    "test": "TestNothing"
+    "test": "TestNothing",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action": "pass",
-    "test": "TestNothing"
+    "test": "TestNothing",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
-    "action": "pass-final"
+    "action": "pass-final",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action": "pass",
     "package": "github.com/haveyoudebuggedit/example",
-    "elapsed": "0.027s"
+    "elapsed": "0.105s",
+    "json": true
   }
 ]

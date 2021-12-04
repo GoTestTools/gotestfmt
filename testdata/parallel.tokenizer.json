@@ -1,68 +1,178 @@
 [
   {
     "action": "run",
-    "test": "TestParallel1"
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel1",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
   },
   {
     "action": "pause",
-    "test": "TestParallel1"
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel1",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
   },
   {
     "action": "run",
-    "test": "TestParallel2"
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel2",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
   },
   {
     "action": "pause",
-    "test": "TestParallel2"
-  },
-  {
-    "action": "cont",
-    "test": "TestParallel1"
-  },
-  {
-    "action": "stdout",
-    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MTA6IFRlc3QgbWVzc2FnZSAx"
-  },
-  {
-    "action": "cont",
-    "test": "TestParallel2"
-  },
-  {
-    "action": "cont",
-    "test": "TestParallel1"
-  },
-  {
-    "action": "stdout",
-    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MTI6IFRlc3QgbWVzc2FnZSAy"
-  },
-  {
-    "action": "pass",
-    "test": "TestParallel1",
-    "elapsed": "5.010s"
-  },
-  {
-    "action": "cont",
-    "test": "TestParallel2"
-  },
-  {
-    "action": "stdout",
-    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MTg6IFRlc3QgbWVzc2FnZSAx"
-  },
-  {
-    "action": "stdout",
-    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MjA6IFRlc3QgbWVzc2FnZSAy"
-  },
-  {
-    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
     "test": "TestParallel2",
-    "elapsed": "10.020s"
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
   },
   {
-    "action": "pass-final"
+    "action": "cont",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel1",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "stdout",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel1",
+    "elapsed": "0s",
+    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MTA6IFRlc3QgbWVzc2FnZSAx",
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "cont",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel2",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "stdout",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel2",
+    "elapsed": "0s",
+    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MTg6IFRlc3QgbWVzc2FnZSAx",
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "cont",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel1",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "stdout",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel1",
+    "elapsed": "0s",
+    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MTI6IFRlc3QgbWVzc2FnZSAy",
+    "cached": false,
+    "coverage": null,
+    "json": true
   },
   {
     "action": "pass",
     "package": "github.com/haveyoudebuggedit/example",
-    "elapsed": "10.048s"
+    "version": "",
+    "test": "TestParallel1",
+    "elapsed": "5s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "cont",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel2",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "stdout",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel2",
+    "elapsed": "0s",
+    "output": "ICAgIHBhcmFsbGVsX3Rlc3QuZ286MjA6IFRlc3QgbWVzc2FnZSAy",
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestParallel2",
+    "elapsed": "10.01s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass-final",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "",
+    "elapsed": "10.01s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
   }
 ]

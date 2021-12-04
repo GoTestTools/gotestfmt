@@ -1,0 +1,46 @@
+[
+  {
+    "action": "run",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestSkip",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "skip",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "TestSkip",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass-final",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": null,
+    "cached": true,
+    "coverage": null,
+    "json": true
+  }
+]

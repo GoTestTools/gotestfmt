@@ -2,11 +2,13 @@ package tokenizer
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -67,6 +69,12 @@ var stateMachine = []stateChange{
 	{
 		regexp.MustCompile(`^=== RUN\s+(?P<Test>.*)$`),
 		stateRun,
+		ActionRun,
+		stateRun,
+	},
+	{
+		regexp.MustCompile(`^=== RUN\s+(?P<Test>.*)$`),
+		stateBetweenTests,
 		ActionRun,
 		stateRun,
 	},
@@ -328,7 +336,29 @@ func decode(input io.Reader, output chan<- Event) {
 	_ = parseLine(currentState, lastBuffer, output)
 }
 
+func tryParseJSONLine(line []byte) *jsonTestEvent {
+	if len(line) == 0 || line[0] != 123 {
+		return nil
+	}
+
+	// Try to decode JSON line
+	decoder := json.NewDecoder(bytes.NewReader(line))
+	jsonLine := &jsonTestEvent{}
+	if err := decoder.Decode(jsonLine); err != nil {
+		return nil
+	}
+	return jsonLine
+}
+
 func parseLine(currentState state, line []byte, output chan<- Event) state {
+	jsonLine := tryParseJSONLine(line)
+	if jsonLine != nil {
+		if jsonLine.Output == nil {
+			return currentState
+		}
+		line = []byte(strings.TrimRight(*jsonLine.Output, "\r\n"))
+	}
+
 	for _, stateTransition := range stateMachine {
 		if stateTransition.inputState != currentState {
 			continue
@@ -350,16 +380,34 @@ func parseLine(currentState state, line []byte, output chan<- Event) state {
 					coveragePtr = &coverage
 				}
 
+				pkg := string(extract(stateTransition.regexp, match, "Package"))
+				if jsonLine != nil && pkg == "" {
+					pkg = jsonLine.Package
+				}
+				version := string(extract(stateTransition.regexp, match, "Version"))
+				test := string(extract(stateTransition.regexp, match, "Test"))
+				if jsonLine != nil && test == "" {
+					test = jsonLine.Test
+				}
+				cached := string(extract(stateTransition.regexp, match, "Cached")) == "cached"
+				received := time.Now()
+				if jsonLine != nil && jsonLine.Time != nil {
+					received = *jsonLine.Time
+				}
+				if jsonLine != nil && jsonLine.Elapsed != nil && *jsonLine.Elapsed > 0 {
+					elapsed = time.Duration(*jsonLine.Elapsed * float64(time.Second))
+				}
 				evt := Event{
-					Received: time.Now(),
+					Received: received,
 					Action:   stateTransition.action,
-					Package:  string(extract(stateTransition.regexp, match, "Package")),
-					Version:  string(extract(stateTransition.regexp, match, "Version")),
-					Test:     string(extract(stateTransition.regexp, match, "Test")),
-					Cached:   string(extract(stateTransition.regexp, match, "Cached")) == "cached",
+					Package:  pkg,
+					Version:  version,
+					Test:     test,
+					Cached:   cached,
 					Coverage: coveragePtr,
 					Elapsed:  elapsed,
 					Output:   extract(stateTransition.regexp, match, "Output"),
+					JSON:     jsonLine != nil,
 				}
 
 				output <- evt
@@ -387,4 +435,13 @@ func extract(r *regexp.Regexp, match [][]byte, name string) []byte {
 		return nil
 	}
 	return match[idx]
+}
+
+type jsonTestEvent struct {
+	Time    *time.Time `json:",omitempty"`
+	Action  string
+	Package string   `json:",omitempty"`
+	Test    string   `json:",omitempty"`
+	Elapsed *float64 `json:",omitempty"`
+	Output  *string  `json:",omitempty"`
 }

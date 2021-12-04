@@ -1,5 +1,8 @@
-=== RUN   TestNothing
---- PASS: TestNothing (0.00s)
-PASS
-coverage: [no statements]
-ok      github.com/haveyoudebuggedit/example    0.024s  coverage: [no statements]
+{"Time":"2021-12-05T06:52:51.0659309+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestNothing"}
+{"Time":"2021-12-05T06:52:51.0664674+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestNothing","Output":"=== RUN   TestNothing\n"}
+{"Time":"2021-12-05T06:52:51.0670068+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestNothing","Output":"--- PASS: TestNothing (0.00s)\n"}
+{"Time":"2021-12-05T06:52:51.0670068+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Test":"TestNothing","Elapsed":0}
+{"Time":"2021-12-05T06:52:51.0675327+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"PASS\n"}
+{"Time":"2021-12-05T06:52:51.0675327+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"coverage: [no statements]\n"}
+{"Time":"2021-12-05T06:52:51.0726828+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"ok  \tgithub.com/haveyoudebuggedit/example\t0.101s\tcoverage: [no statements]\n"}
+{"Time":"2021-12-05T06:52:51.0810939+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Elapsed":0.11}

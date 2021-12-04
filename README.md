@@ -8,12 +8,14 @@ Then this is the tool for you. Run it locally, or in any CI system with the foll
 
 ```bash
 set -euo pipefail
-go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+go test -json -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
 ```
 
 Tadam, your tests will now show up in a beautifully formatted fashion. Plug it into your CI, and you're done.
 
 **Note:** Please always save the original log. You will need it if you have to file a bug report for gotestfmt.
+
+**⚠️ With version 2.0 gotestfmt switched to supporting only JSON output. Please add the `-json` flag to your `go test` command line!**
 
 ## Setting it up in your CI system
 
@@ -55,7 +57,7 @@ jobs:
       - name: Run tests
         run: |
           set -euo pipefail
-          go test -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+          go test -json -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
 
       # Upload the original go test log as an artifact for later review.
       - name: Upload test log
@@ -88,7 +90,7 @@ COPY --from gotestfmt /gotestfmt /usr/local/bin/
 You can then run the tests within this image with the following command:   
 
 ```bash
-go test -v ./... | /usr/local/bin/gotestfmt
+go test -json -v ./... | /usr/local/bin/gotestfmt
 ```
 
 To put it all together, you can use the following `.gitlab-ci.yaml`:
@@ -109,7 +111,7 @@ docker-build:
         -v /tmp:/tmp |
         -e GITLAB_CI=${GITLAB_CI} \
         gotestfmt \
-        /bin/sh -c "cd /source; go test -v ./... 2>&1 | tee /tmp/gotest.log | /usr/local/bin/gotestfmt"
+        /bin/sh -c "cd /source; go test -json -v ./... 2>&1 | tee /tmp/gotest.log | /usr/local/bin/gotestfmt"
   artifacts:
     paths:
       - /tmp/gotest.log
@@ -140,7 +142,7 @@ jobs:
           version: 19.03.13
       - run:
           name: Run tests
-          command: go test -v ./... 2>&1 | tee /tmp/gotest.log | docker run -i ghcr.io/haveyoudebuggedit/gotestfmt:latest
+          command: go test -json -v ./... 2>&1 | tee /tmp/gotest.log | docker run -i ghcr.io/haveyoudebuggedit/gotestfmt:latest
       - store_artifacts:
           path: /tmp/gotest.log
           destination: gotest.log

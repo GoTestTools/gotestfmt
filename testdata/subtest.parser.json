@@ -6,7 +6,7 @@
     {
       "name": "github.com/haveyoudebuggedit/example",
       "result": "FAIL",
-      "duration": "0.020s",
+      "duration": "0.103s",
       "testcases": [
         {
           "name": "TestSubtest",

@@ -1,0 +1,7 @@
+{"Time":"2021-12-05T07:00:44.938993+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestSkip"}
+{"Time":"2021-12-05T07:00:44.93952+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSkip","Output":"=== RUN   TestSkip\n"}
+{"Time":"2021-12-05T07:00:44.9400465+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSkip","Output":"--- SKIP: TestSkip (0.00s)\n"}
+{"Time":"2021-12-05T07:00:44.9400465+01:00","Action":"skip","Package":"github.com/haveyoudebuggedit/example","Test":"TestSkip","Elapsed":0}
+{"Time":"2021-12-05T07:00:44.9400465+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"PASS\n"}
+{"Time":"2021-12-05T07:00:44.9405733+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"ok  \tgithub.com/haveyoudebuggedit/example\t(cached)\n"}
+{"Time":"2021-12-05T07:00:44.9405733+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Elapsed":0.002}

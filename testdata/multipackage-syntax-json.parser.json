@@ -1,0 +1,32 @@
+{
+  "downloads": {
+    "failed": false
+  },
+  "packages": [
+    {
+      "name": "github.com/haveyoudebuggedit/example",
+      "result": "FAIL",
+      "duration": "0s",
+      "coverage": null,
+      "output": "nothing_test.go:7:11: expected '(', found Nothing",
+      "reason": "setup failed"
+    },
+    {
+      "name": "github.com/haveyoudebuggedit/example/second",
+      "result": "PASS",
+      "duration": "2ms",
+      "coverage": null,
+      "output": "",
+      "testcases": [
+        {
+          "name": "TestNothing",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": ""
+        }
+      ],
+      "reason": ""
+    }
+  ]
+}

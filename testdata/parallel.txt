@@ -1,16 +1,27 @@
-=== RUN   TestParallel1
-=== PAUSE TestParallel1
-=== RUN   TestParallel2
-=== PAUSE TestParallel2
-=== CONT  TestParallel1
-    parallel_test.go:10: Test message 1
-=== CONT  TestParallel2
-=== CONT  TestParallel1
-    parallel_test.go:12: Test message 2
---- PASS: TestParallel1 (5.01s)
-=== CONT  TestParallel2
-    parallel_test.go:18: Test message 1
-    parallel_test.go:20: Test message 2
---- PASS: TestParallel2 (10.02s)
-PASS
-ok      github.com/haveyoudebuggedit/example    10.048s
+{"Time":"2021-12-04T16:33:13.602687968+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1"}
+{"Time":"2021-12-04T16:33:13.60280686+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1","Output":"=== RUN   TestParallel1\n"}
+{"Time":"2021-12-04T16:33:13.602853207+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1","Output":"=== PAUSE TestParallel1\n"}
+{"Time":"2021-12-04T16:33:13.602874287+01:00","Action":"pause","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1"}
+{"Time":"2021-12-04T16:33:13.602895597+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2"}
+{"Time":"2021-12-04T16:33:13.602916766+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2","Output":"=== RUN   TestParallel2\n"}
+{"Time":"2021-12-04T16:33:13.602923819+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2","Output":"=== PAUSE TestParallel2\n"}
+{"Time":"2021-12-04T16:33:13.602940461+01:00","Action":"pause","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2"}
+{"Time":"2021-12-04T16:33:13.60296684+01:00","Action":"cont","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1"}
+{"Time":"2021-12-04T16:33:13.602986487+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1","Output":"=== CONT  TestParallel1\n"}
+{"Time":"2021-12-04T16:33:13.603007536+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1","Output":"    parallel_test.go:10: Test message 1\n"}
+{"Time":"2021-12-04T16:33:13.603029497+01:00","Action":"cont","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2"}
+{"Time":"2021-12-04T16:33:13.603049966+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2","Output":"=== CONT  TestParallel2\n"}
+{"Time":"2021-12-04T16:33:18.606953185+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2","Output":"    parallel_test.go:18: Test message 1\n"}
+{"Time":"2021-12-04T16:33:18.607013277+01:00","Action":"cont","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1"}
+{"Time":"2021-12-04T16:33:18.60702008+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1","Output":"=== CONT  TestParallel1\n"}
+{"Time":"2021-12-04T16:33:18.60705236+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1","Output":"    parallel_test.go:12: Test message 2\n"}
+{"Time":"2021-12-04T16:33:18.607088618+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1","Output":"--- PASS: TestParallel1 (5.00s)\n"}
+{"Time":"2021-12-04T16:33:23.611091294+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel1","Elapsed":5}
+{"Time":"2021-12-04T16:33:23.61114797+01:00","Action":"cont","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2"}
+{"Time":"2021-12-04T16:33:23.611154402+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2","Output":"=== CONT  TestParallel2\n"}
+{"Time":"2021-12-04T16:33:23.61115889+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2","Output":"    parallel_test.go:20: Test message 2\n"}
+{"Time":"2021-12-04T16:33:23.61116407+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2","Output":"--- PASS: TestParallel2 (10.01s)\n"}
+{"Time":"2021-12-04T16:33:23.611166304+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Test":"TestParallel2","Elapsed":10.01}
+{"Time":"2021-12-04T16:33:23.611169851+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"PASS\n"}
+{"Time":"2021-12-04T16:33:23.611488959+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"ok  \tgithub.com/haveyoudebuggedit/example\t10.010s\n"}
+{"Time":"2021-12-04T16:33:23.611781026+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Elapsed":10.01}
