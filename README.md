@@ -17,6 +17,22 @@ Tadam, your tests will now show up in a beautifully formatted fashion. Plug it i
 
 **⚠️ With version 2.0 gotestfmt switched to supporting only JSON output. Please add the `-json` flag to your `go test` command line!**
 
+## Table of Contents
+
+- [Setting it up in your CI system](#setting-it-up-in-your-ci-system)
+  - [GitHub Actions](#github-actions)
+  - [GitLab CI](#gitlab-ci)
+  - [CircleCI](#circleci)
+  - [Add your own CI](#add-your-own-ci)
+    - [downloads.tpl](#downloadstpl)
+    - [package.tpl](#packagetpl)
+    - [Render settings](#render-settings)
+- [FAQ](#faq)
+    - [How do I make the output less verbose?](#how-do-i-make-the-output-less-verbose)
+- [Architecture](#architecture)
+- [Building](#building)
+- [License](#license)
+
 ## Setting it up in your CI system
 
 We have support for several CI systems, and you can also customize the output to match your system. Gotestfmt detects the CI system based on environment variables. If it can't detect the CI system it will try to create a generic colored test output. You can force the CI output with the `-ci github|gitlab|...` option.
@@ -169,6 +185,7 @@ This file contains the output fragment showing the package downloads in the Go t
 | `.Packages` | `[]Package` | A list of packages that have been processed. |
 | `.StartTime` | `*time.Time` | The time the first download line was seen. May be empty. |
 | `.EndTime` | `*time.Time` | The time the last download line was seen. May be empty. |
+| `.Settings` | `RenderSettings` | The render settings (what to hide, etc, see below)/ |
 
 The `Package` items have the following format:
 
@@ -194,6 +211,7 @@ This template is the output format for the results of a single package and the t
 | `.Reason` | `string` | Text explaining the failure. Empty in most cases. |
 | `.StartTime` | `*time.Time` | A pointer to a time object when the package was first seen in the output. May be nil. |
 | `.EndTime` | `*time.Time` | A pointer to the time object when the package was last seen in the output. May be nil. |
+| `.Settings` | `RenderSettings` | The render settings (what to hide, etc, see below)/ |
 
 Test cases have the following format:
 
@@ -206,6 +224,31 @@ Test cases have the following format:
 | `.Output` | `string` | Log output from the test. |
 | `.StartTime` | `*time.Time` | A pointer to a time object when the test case was first seen in the output. May be nil. |
 | `.EndTime` | `*time.Time` | A pointer to the time object when the test case was last seen in the output. May be nil. |
+
+#### Render settings
+
+Render settings are available in all templates. They have the following fields:
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `.HideSuccessfulDownloads` | `bool` | Hide successful package downloads from the output. |
+| `.HideSuccessfulPackages` | `bool` | Hide all packages that have only successful tests from the output. |
+| `.HideEmptyPackages` | `bool` | Hide the packages from the output that have no test cases. |
+| `.HideSuccessfulTests` | `bool` | Hide all tests from the output that are successful. |
+
+## FAQ
+
+### How do I make the output less verbose?
+
+By default, `gotestfmt` will output all tests and their logs. However, you can use the `-hide` function to hide certain aspects of the output. It accepts a comma-separated list of the following values:
+
+- **`successful-tests`:** Hide successful tests.
+- **`successful-downloads`:** Hide successful dependency downloads.
+- **`successful-packages`:** Hide packages with only successful tests.
+- **`empty-packages`:** Hide packages that have no tests.
+- **`all`:** Hide all non-error items.
+
+⚠️ This feature depends on the template you use. If you customized your template please make sure to check the [Render settings](#render-settings) object in your code.
 
 ## Architecture
 

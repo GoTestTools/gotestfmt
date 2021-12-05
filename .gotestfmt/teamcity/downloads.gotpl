@@ -2,28 +2,33 @@
 {{- /*
 This template contains the format for a package download.
 */ -}}
+{{- $settings := .Settings -}}
 {{- if .Packages -}}
-    {{- $title := "Dependency downloads" -}}
-    {{- if .Failed -}}
-        {{- $title = "❌ " + $title -}}
-    {{- else -}}
-        {{- $title = "📥 " + $title -}}
-    {{- end -}}
-    ##teamcity[blockOpened name='{{ $title }}']
-
-    {{- range .Packages -}}
-        {{- "   " -}}
+    {{- if or (not $settings.HideSuccessfulDownloads) .Failed -}}
+        {{- $title := "Dependency downloads" -}}
         {{- if .Failed -}}
-            ❌
+            {{- $title = print "❌ " $title -}}
         {{- else -}}
-            📦
+            {{- $title = print "📥 " $title -}}
         {{- end -}}
-        {{- " " -}}
-        {{- .Package }} {{ .Version -}}
-        {{- "\n" -}}
-        {{ with .Reason -}}
-            {{- "     " -}}{{ . -}}{{ "\n" -}}
+        ##teamcity[blockOpened name='{{ $title }}']
+
+        {{- range .Packages -}}
+            {{- if or (not $settings.HideSuccessfulDownloads) .Failed -}}
+                {{- "   " -}}
+                {{- if .Failed -}}
+                    ❌
+                {{- else -}}
+                    📦
+                {{- end -}}
+                {{- " " -}}
+                {{- .Package }} {{ .Version -}}
+                {{- "\n" -}}
+                {{ with .Reason -}}
+                    {{- "     " -}}{{ . -}}{{ "\n" -}}
+                {{- end -}}
+            {{- end -}}
         {{- end -}}
+        ##teamcity[blockClosed name='{{ $$title }}']
     {{- end -}}
-    ##teamcity[blockClosed name='{{ $$title }}']
 {{- end -}}

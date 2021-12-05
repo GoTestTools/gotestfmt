@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/haveyoudebuggedit/gotestfmt/v2"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/renderer"
 )
 
 // ciEnvironments maps environment variables to directories to check for templates.
@@ -25,12 +27,75 @@ var ciEnvironments = map[string][]string{
 	},
 }
 
+type hide string
+
+const (
+	hideDownloads     hide = "successful-downloads"
+	hidePackages      hide = "successful-packages"
+	hideEmptyPackages hide = "empty-packages"
+	hideTests         hide = "successful-tests"
+	hideAll           hide = "all"
+)
+
+var hideDescriptions = map[hide]string{
+	hideDownloads:     "Hide successful dependency downloads",
+	hidePackages:      "Hide packages with only successful tests",
+	hideEmptyPackages: "Hide packages that have no tests",
+	hideTests:         "Hide successful tests",
+	hideAll:           "Hide all non-error items",
+}
+
+func validHideValues() string {
+	result := make([]string, len(hideDescriptions))
+	i := 0
+	for h := range hideDescriptions {
+		result[i] = string(h)
+		i++
+	}
+	return strings.Join(result, ", ")
+}
+
+func configFromHide(hideText string) (cfg renderer.RenderSettings, err error) {
+	if hideText == "" {
+		return renderer.RenderSettings{}, nil
+	}
+	for _, hidePart := range strings.SplitN(hideText, ",", -1) {
+		switch p := hide(strings.TrimSpace(hidePart)); p {
+		case hideDownloads:
+			cfg.HideSuccessfulDownloads = true
+		case hidePackages:
+			cfg.HideSuccessfulPackages = true
+		case hideEmptyPackages:
+			cfg.HideEmptyPackages = true
+		case hideTests:
+			cfg.HideSuccessfulTests = true
+		case hideAll:
+			cfg.HideSuccessfulDownloads = true
+			cfg.HideSuccessfulPackages = true
+			cfg.HideEmptyPackages = true
+			cfg.HideSuccessfulTests = true
+		default:
+			return cfg, fmt.Errorf("invalid value for -hide: %s (valid values are: %s)", p, validHideValues())
+		}
+	}
+	return cfg, nil
+}
+
+func hideDescription() string {
+	description := "Comma-separated list of things to hide from the output. The following options are valid:\n"
+	for h, d := range hideDescriptions {
+		description = description + fmt.Sprintf("- %s: %s\n", h, d)
+	}
+	return description
+}
+
 func main() {
 	dirs := []string{
 		"./.gotestfmt",
 	}
 	ci := ""
 	inputFile := "-"
+	hide := ""
 	flag.StringVar(
 		&ci,
 		"ci",
@@ -42,6 +107,12 @@ func main() {
 		"input",
 		inputFile,
 		"Read build log from file. Defaults to standard input.",
+	)
+	flag.StringVar(
+		&hide,
+		"hide",
+		hide,
+		hideDescription(),
 	)
 	flag.Parse()
 
@@ -56,6 +127,11 @@ func main() {
 				dirs = directories
 			}
 		}
+	}
+
+	cfg, err := configFromHide(hide)
+	if err != nil {
+		panic(err)
 	}
 
 	format, err := gotestfmt.New(
@@ -77,5 +153,5 @@ func main() {
 		input = fh
 	}
 
-	format.Format(input, os.Stdout)
+	format.FormatWithConfig(input, os.Stdout, cfg)
 }

@@ -3,36 +3,41 @@
 This template contains the format for an individual package. GitHub actions does not currently support nested groups so
 we are creating a stylized header for each package.
 */ -}}
-{{- $packageTitle := "📦 " + .Name -}}
-##teamcity[blockOpened name='{{ $packageTitle }}']{{- "\n" -}}
-{{- with .Reason -}}
-    🛑 {{ . -}}{{- "\n" -}}
-{{- end -}}
-{{- with .Output -}}
-    {{- . -}}{{- "\n" -}}
-{{- end -}}
-{{- with .TestCases -}}
-    {{- range . -}}
-        {{- $title := .Name + " (" + .Duration -}}
-        {{- with .Coverage -}}
-            {{- $title = ", coverage: " + . + "%" -}}
-        {{- end -}})
-        {{- $title = $title + ")" -}}
-        {{- if eq .Result "PASS" -}}
-            {{- $title = "✅ " + $title -}}
-        {{- else if eq .Result "SKIP" -}}
-            {{- $title = "🚧 " + $title -}}
-        {{- else -}}
-            {{- $title = "❌ " + $title -}}
-        {{- end -}}
-        {{- "\n" -}}
-
-        ##teamcity[blockOpened name='{{- $title -}}']{{- "\n" -}}
-        {{- with .Output -}}
-            {{- . -}}
-            {{- "\n" -}}
-        {{- end -}}
-        ##teamcity[blockClosed name='{{- $title -}}']{{- "\n" -}}
+{{- $settings := .Settings -}}
+{{- if and (or (not $settings.HideSuccessfulPackages) (ne .Result "PASS")) (or (not $settings.HideEmptyPackages) (ne .Result "SKIP") (ne (len .TestCases) 0)) -}}
+    {{- $packageTitle := print "📦 " .Name -}}
+    ##teamcity[blockOpened name='{{ $packageTitle }}']{{- "\n" -}}
+    {{- with .Reason -}}
+        {{- "  " -}}🛑 {{ . -}}{{- "\n" -}}
     {{- end -}}
+    {{- with .Output -}}
+        {{- . -}}{{- "\n" -}}
+    {{- end -}}
+    {{- with .TestCases -}}
+        {{- range . -}}
+            {{- if or (not $settings.HideSuccessfulTests) (ne .Result "PASS") -}}
+                {{- $title := print .Name " (" .Duration -}}
+                {{- with .Coverage -}}
+                    {{- $title = print ", coverage: " . "%" -}}
+                {{- end -}})
+                {{- $title = print $title ")" -}}
+                {{- if eq .Result "PASS" -}}
+                    {{- $title = print "✅ " $title -}}
+                {{- else if eq .Result "SKIP" -}}
+                    {{- $title = print "🚧 " $title -}}
+                {{- else -}}
+                    {{- $title = print "❌ " $title -}}
+                {{- end -}}
+                {{- "\n" -}}
+
+                ##teamcity[blockOpened name='{{- $title -}}']{{- "\n" -}}
+                {{- with .Output -}}
+                    {{- . -}}
+                    {{- "\n" -}}
+                {{- end -}}
+                ##teamcity[blockClosed name='{{- $title -}}']{{- "\n" -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+    ##teamcity[blockClosed name='{{ $packageTitle }}']{{- "\n" -}}
 {{- end -}}
-##teamcity[blockClosed name='{{ $packageTitle }}']{{- "\n" -}}
