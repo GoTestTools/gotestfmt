@@ -64,19 +64,6 @@ func TestParse(t *testing.T) {
 					t.Skipf("Failed to decode test input: %s (%v)", sourceFile, err)
 				}
 
-				var expectedOutput parser.ParseResult
-				expectedFh, err := os.Open(expectedFile)
-				if err != nil {
-					t.Skipf("Failed to open test expectation: %s (%v)", expectedFile, err)
-				}
-				defer func() {
-					_ = expectedFh.Close()
-				}()
-				expectedDecoder := json.NewDecoder(expectedFh)
-				if err := expectedDecoder.Decode(&expectedOutput); err != nil {
-					t.Skipf("Failed to decode test expectation: %s (%v)", expectedFile, err)
-				}
-
 				parserInput := make(chan tokenizer.Event)
 				parserResult := parser.ParseResult{}
 				prefixes, downloads, packages := parser.Parse(parserInput)
@@ -110,6 +97,31 @@ func TestParse(t *testing.T) {
 				}
 				close(parserInput)
 				<-readerDone
+
+				var expectedOutput parser.ParseResult
+				expectedFh, err := os.Open(expectedFile)
+				if err != nil {
+					t.Logf("Failed to open test expectation, dumping actual result in %s...", expectedFile+".actual")
+					expectedFh, err = os.Create(expectedFile + ".actual")
+					if err != nil {
+						t.Fatalf("Failed to open %s for writing (%v).", expectedFile+".actual", err)
+					}
+					encoder := json.NewEncoder(expectedFh)
+					if err := encoder.Encode(parserResult); err != nil {
+						t.Fatalf("Failed to encode actual test result to %s (%v)", expectedFile+".actual", err)
+					}
+					if err := expectedFh.Close(); err != nil {
+						t.Fatalf("Failed to close actual test result file %s (%v)", expectedFile+".actual", err)
+					}
+					t.Skipf("Failed to open test expectation: %s (%v)", expectedFile, err)
+				}
+				defer func() {
+					_ = expectedFh.Close()
+				}()
+				expectedDecoder := json.NewDecoder(expectedFh)
+				if err := expectedDecoder.Decode(&expectedOutput); err != nil {
+					t.Skipf("Failed to decode test expectation: %s (%v)", expectedFile, err)
+				}
 
 				diff := testutil.Diff(expectedOutput, parserResult)
 				if diff != "" {

@@ -21,7 +21,7 @@ This template contains the format for a package download.
         {{- " " -}}
         {{- .Package }} {{ .Version -}}
         {{- "\033" }}[0m
-        {{ "\n" -}}
+        {{- "\n" -}}
         {{ with .Reason -}}
             {{- "     " -}}{{ . -}}{{ "\n" -}}
         {{- end -}}
