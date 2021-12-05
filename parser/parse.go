@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/haveyoudebuggedit/gotestfmt/tokenizer"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/tokenizer"
 )
 
 // Parse creates a new formatter that reads the go test output from the input reader, formats it and writes

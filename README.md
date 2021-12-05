@@ -48,7 +48,7 @@ jobs:
 
       # Install gotestfmt on the VM running the action.
       - name: Set up gotestfmt
-        uses: haveyoudebuggedit/gotestfmt-action@v1
+        uses: haveyoudebuggedit/gotestfmt-action@v2
         with:
           # Optional: pass GITHUB_TOKEN to avoid rate limiting.
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -7,9 +7,9 @@ import (
 	"io/ioutil"
 	"path"
 
-	"github.com/haveyoudebuggedit/gotestfmt/parser"
-	"github.com/haveyoudebuggedit/gotestfmt/renderer"
-	"github.com/haveyoudebuggedit/gotestfmt/tokenizer"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/parser"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/renderer"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/tokenizer"
 )
 
 //go:embed .gotestfmt/*.gotpl

@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/haveyoudebuggedit/gotestfmt"
+	"github.com/haveyoudebuggedit/gotestfmt/v2"
 )
 
 // ciEnvironments maps environment variables to directories to check for templates.

@@ -11,8 +11,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/haveyoudebuggedit/gotestfmt/testutil"
-	"github.com/haveyoudebuggedit/gotestfmt/tokenizer"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/testutil"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/tokenizer"
 )
 
 // TestTokenization reads the *.txt and *.tokenizer.json files from the ../testdata directory, then runs
