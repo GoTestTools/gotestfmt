@@ -57,9 +57,35 @@ func TestTokenization(t *testing.T) {
 				if err != nil {
 					t.Fatalf("failed to read source file %s (%v)", source, err)
 				}
+				reader := tokenizer.Tokenize(bytes.NewReader(source))
+				var events []tokenizer.Event
+				for {
+					event, ok := <-reader
+					if !ok {
+						break
+					}
+					events = append(events, event)
+				}
 				expectedFh, err := os.Open(expectedFile)
 				if err != nil {
-					t.Fatalf("failed to read expected file %s (%v)", expectedFile, err)
+					t.Logf(
+						"Failed to read expected file %s, writing actual output to %s (%v).",
+						expectedFile,
+						expectedFile+".actual",
+						err,
+					)
+					expectedFh, err = os.Create(expectedFile + ".actual")
+					if err != nil {
+						t.Fatalf("Failed to create expectation file %s (%v).", expectedFile+".actual", err)
+					}
+					encoder := json.NewEncoder(expectedFh)
+					if err := encoder.Encode(events); err != nil {
+						t.Fatalf("Failed to encode actual events (%v).", err)
+					}
+					if err := expectedFh.Close(); err != nil {
+						t.Fatalf("Failed to close expectation file %s (%v).", expectedFile+".actual", err)
+					}
+					t.Skipf("Expectation file %s is not present, skipping test.", expectedFile)
 				}
 				defer func() {
 					_ = expectedFh.Close()
@@ -69,15 +95,6 @@ func TestTokenization(t *testing.T) {
 				var expectedOutput []tokenizer.Event
 				if err := decoder.Decode(&expectedOutput); err != nil {
 					t.Fatalf("failed to decode expected file %s (%v)", expectedFile, err)
-				}
-				reader := tokenizer.Tokenize(bytes.NewReader(source))
-				var events []tokenizer.Event
-				for {
-					event, ok := <-reader
-					if !ok {
-						break
-					}
-					events = append(events, event)
 				}
 				diff := testutil.Diff(expectedOutput, events)
 				if diff != "" {

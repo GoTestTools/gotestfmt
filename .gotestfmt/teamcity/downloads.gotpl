@@ -20,7 +20,7 @@ This template contains the format for a package download.
         {{- end -}}
         {{- " " -}}
         {{- .Package }} {{ .Version -}}
-        {{ "\n" -}}
+        {{- "\n" -}}
         {{ with .Reason -}}
             {{- "     " -}}{{ . -}}{{ "\n" -}}
         {{- end -}}

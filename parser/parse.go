@@ -314,6 +314,9 @@ func (p *packageTracker) Write() {
 		)
 		for _, tc := range pkg.TestCases {
 			tc.Output = strings.TrimRight(tc.Output, "\n")
+			if tc.Result == "" {
+				tc.Result = ResultPass
+			}
 		}
 	}
 	for _, pkg := range p.packages {

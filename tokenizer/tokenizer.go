@@ -194,6 +194,12 @@ var stateMachine = []stateChange{
 	},
 	{
 		regexp.MustCompile(`^FAIL\s+(?P<Package>[^\s]+)\s+(?P<Elapsed>[^\s]*)$`),
+		stateRun,
+		ActionFail,
+		stateBetweenTests,
+	},
+	{
+		regexp.MustCompile(`^FAIL\s+(?P<Package>[^\s]+)\s+(?P<Elapsed>[^\s]*)$`),
 		stateBetweenTests,
 		ActionFail,
 		stateBetweenTests,
@@ -211,6 +217,12 @@ var stateMachine = []stateChange{
 		stateBetweenTests,
 	},
 	{
+		regexp.MustCompile(`^PASS\s+(?P<Package>[^\s]+)\s+\(((?P<Elapsed>[0-9.smh]+)|(?P<Cached>cached))\)$`),
+		stateRun,
+		ActionPass,
+		stateBetweenTests,
+	},
+	{
 		regexp.MustCompile(`^PASS\s+(?P<Package>[^\s]+)\s+\(((?P<Elapsed>[^\s]*)|(?P<Cached>cached))\)$`),
 		stateBetweenTests,
 		ActionPass,
@@ -224,6 +236,12 @@ var stateMachine = []stateChange{
 	},
 	{
 		regexp.MustCompile(`^SKIP\s+(?P<Package>[^\s]+)\s+\(((?P<Elapsed>[^\s]*)|(?P<Cached>cached))\)$`),
+		stateRun,
+		ActionSkip,
+		stateBetweenTests,
+	},
+	{
+		regexp.MustCompile(`^SKIP\s+(?P<Package>[^\s]+)\s+\(((?P<Elapsed>[^\s]*)|(?P<Cached>cached))\)$`),
 		stateBetweenTests,
 		ActionSkip,
 		stateBetweenTests,
@@ -236,6 +254,12 @@ var stateMachine = []stateChange{
 	},
 	{
 		regexp.MustCompile(`^FAIL$`),
+		stateRun,
+		ActionFailFinal,
+		stateBetweenTests,
+	},
+	{
+		regexp.MustCompile(`^FAIL$`),
 		stateBetweenTests,
 		ActionFailFinal,
 		stateBetweenTests,
@@ -248,6 +272,12 @@ var stateMachine = []stateChange{
 	},
 	{
 		regexp.MustCompile(`^PASS$`),
+		stateRun,
+		ActionPassFinal,
+		stateBetweenTests,
+	},
+	{
+		regexp.MustCompile(`^PASS$`),
 		stateBetweenTests,
 		ActionPassFinal,
 		stateBetweenTests,
@@ -255,6 +285,12 @@ var stateMachine = []stateChange{
 	{
 		regexp.MustCompile(`^SKIP$`),
 		stateInit,
+		ActionSkipFinal,
+		stateBetweenTests,
+	},
+	{
+		regexp.MustCompile(`^SKIP$`),
+		stateRun,
 		ActionSkipFinal,
 		stateBetweenTests,
 	},
