@@ -11,7 +11,7 @@ set -euo pipefail
 go test -json -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
 ```
 
-Tadam, your tests will now show up in a beautifully formatted fashion. Plug it into your CI, and you're done.
+Tadam, your tests will now show up in a beautifully formatted fashion. Plug it into your CI and you're done.
 
 **Note:** Please always save the original log. You will need it if you have to file a bug report for gotestfmt.
 
