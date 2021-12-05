@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"text/template"
 
-	"github.com/haveyoudebuggedit/gotestfmt/parser"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/parser"
 )
 
 // Render takes the two input channels from the parser and renders them into text output fragments.

@@ -9,9 +9,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/haveyoudebuggedit/gotestfmt/parser"
-	"github.com/haveyoudebuggedit/gotestfmt/testutil"
-	"github.com/haveyoudebuggedit/gotestfmt/tokenizer"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/parser"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/testutil"
+	"github.com/haveyoudebuggedit/gotestfmt/v2/tokenizer"
 )
 
 // TestParse takes the *.tokenizer.json and *.parser.json files in ../testdata, runs the tokenizer files as input
