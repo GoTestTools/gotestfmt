@@ -1,57 +1,82 @@
 [
   {
     "action": "run",
-    "test":   "TestSubtest"
+    "test":   "TestSubtest",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action": "run",
-    "test":   "TestSubtest/test1"
+    "test":   "TestSubtest/test1",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action": "stdout",
-    "output": "ICAgIHN1YnRlc3RfdGVzdC5nbzo5OiBIZWxsbyB3b3JsZCE="
+    "output": "ICAgIHN1YnRlc3RfdGVzdC5nbzo5OiBIZWxsbyB3b3JsZCE=",
+    "package": "github.com/haveyoudebuggedit/example",
+    "test":   "TestSubtest/test1",
+    "json": true
   },
   {
     "action": "run",
-    "test":   "TestSubtest/test2"
+    "test":   "TestSubtest/test2",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action": "stdout",
-    "output": "ICAgIHN1YnRlc3RfdGVzdC5nbzoxMjogSGVyZSdzIGFuIGVycm9yLg=="
+    "output": "ICAgIHN1YnRlc3RfdGVzdC5nbzoxMjogSGVyZSdzIGFuIGVycm9yLg==",
+    "package": "github.com/haveyoudebuggedit/example",
+    "test":   "TestSubtest/test2",
+    "json": true
   },
   {
     "action": "run",
-    "test":   "TestSubtest/test3"
+    "test":   "TestSubtest/test3",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action": "stdout",
-    "output": "ICAgIHN1YnRlc3RfdGVzdC5nbzoxNTogTGV0J3Mgc2tpcCB0aGlzIG9uZS4uLg=="
-  },
-  {
-    "action": "fail",
-    "test":   "TestSubtest"
-  },
-  {
-    "action": "pass",
-    "test":   "TestSubtest/test1"
-  },
-  {
-    "action": "fail",
-    "test":   "TestSubtest/test2"
-  },
-  {
-    "action": "skip",
-    "test":   "TestSubtest/test3"
-  },
-  {
-    "action": "fail-final"
+    "output": "ICAgIHN1YnRlc3RfdGVzdC5nbzoxNTogTGV0J3Mgc2tpcCB0aGlzIG9uZS4uLg==",
+    "package": "github.com/haveyoudebuggedit/example",
+    "test": "TestSubtest/test3",
+    "json": true
   },
   {
     "action": "fail",
     "package": "github.com/haveyoudebuggedit/example",
-    "elapsed": "0.020s"
+    "test":   "TestSubtest",
+    "json": true
   },
   {
-    "action": "fail-final"
+    "action": "pass",
+    "test":   "TestSubtest/test1",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
+  },
+  {
+    "action": "fail",
+    "test":   "TestSubtest/test2",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
+  },
+  {
+    "action": "skip",
+    "test":   "TestSubtest/test3",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
+  },
+  {
+    "action": "fail-final",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
+  },
+  {
+    "action": "fail",
+    "package": "github.com/haveyoudebuggedit/example",
+    "elapsed": "0.103s",
+    "json": true
   }
 ]

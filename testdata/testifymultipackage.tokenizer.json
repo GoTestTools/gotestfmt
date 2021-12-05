@@ -1,98 +1,167 @@
 [
   {
-    "action": "pass",
+    "action": "run",
     "package": "github.com/haveyoudebuggedit/example/subpackage1",
-    "version": "",
-    "test": "",
-    "elapsed": "75ms",
-    "output": null,
-    "cached": false,
-    "coverage": null
-  },
-  {
-    "action": "fail",
-    "package": "",
     "version": "",
     "test": "TestTestify",
     "elapsed": "0s",
     "output": null,
     "cached": false,
-    "coverage": null
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "run",
+    "package": "github.com/haveyoudebuggedit/example/subpackage2",
+    "version": "",
+    "test": "TestTestify",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example/subpackage1",
+    "version": "",
+    "test": "TestTestify",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
   },
   {
     "action": "stdout",
-    "package": "",
+    "package": "github.com/haveyoudebuggedit/example/subpackage2",
+    "version": "",
+    "test": "TestTestify",
+    "elapsed": "0s",
+    "output": "ICAgIHRlc3RpZnlfdGVzdC5nbzoxMDog",
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass-final",
+    "package": "github.com/haveyoudebuggedit/example/subpackage1",
     "version": "",
     "test": "",
     "elapsed": "0s",
-    "output": "ICAgIHRlc3RpZnlfdGVzdC5nbzoxMDo=",
+    "output": null,
     "cached": false,
-    "coverage": null
+    "coverage": null,
+    "json": true
   },
   {
     "action": "stdout",
-    "package": "",
+    "package": "github.com/haveyoudebuggedit/example/subpackage2",
     "version": "",
-    "test": "",
+    "test": "TestTestify",
     "elapsed": "0s",
-    "output": "ICAgICAgICAgICAgICAgIEVycm9yIFRyYWNlOiAgICB0ZXN0aWZ5X3Rlc3QuZ286MTA=",
+    "output": "ICAgICAgICAJRXJyb3IgVHJhY2U6CXRlc3RpZnlfdGVzdC5nbzoxMA==",
     "cached": false,
-    "coverage": null
+    "coverage": null,
+    "json": true
   },
   {
     "action": "stdout",
-    "package": "",
+    "package": "github.com/haveyoudebuggedit/example/subpackage2",
     "version": "",
-    "test": "",
+    "test": "TestTestify",
     "elapsed": "0s",
-    "output": "ICAgICAgICAgICAgICAgIEVycm9yOiAgICAgICAgICBOb3QgZXF1YWw6",
+    "output": "ICAgICAgICAJRXJyb3I6ICAgICAgCU5vdCBlcXVhbDog",
     "cached": false,
-    "coverage": null
+    "coverage": null,
+    "json": true
   },
   {
     "action": "stdout",
-    "package": "",
+    "package": "github.com/haveyoudebuggedit/example/subpackage2",
     "version": "",
-    "test": "",
+    "test": "TestTestify",
     "elapsed": "0s",
-    "output": "ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBleHBlY3RlZDogNTA=",
+    "output": "ICAgICAgICAJICAgICAgICAgICAgCWV4cGVjdGVkOiA1MA==",
     "cached": false,
-    "coverage": null
+    "coverage": null,
+    "json": true
   },
   {
     "action": "stdout",
-    "package": "",
+    "package": "github.com/haveyoudebuggedit/example/subpackage2",
     "version": "",
-    "test": "",
+    "test": "TestTestify",
     "elapsed": "0s",
-    "output": "ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBhY3R1YWwgIDogNDg=",
+    "output": "ICAgICAgICAJICAgICAgICAgICAgCWFjdHVhbCAgOiA0OA==",
     "cached": false,
-    "coverage": null
+    "coverage": null,
+    "json": true
   },
   {
     "action": "stdout",
-    "package": "",
+    "package": "github.com/haveyoudebuggedit/example/subpackage2",
+    "version": "",
+    "test": "TestTestify",
+    "elapsed": "0s",
+    "output": "ICAgICAgICAJVGVzdDogICAgICAgCVRlc3RUZXN0aWZ5",
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "fail",
+    "package": "github.com/haveyoudebuggedit/example/subpackage2",
+    "version": "",
+    "test": "TestTestify",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "fail-final",
+    "package": "github.com/haveyoudebuggedit/example/subpackage2",
     "version": "",
     "test": "",
     "elapsed": "0s",
-    "output": "ICAgICAgICAgICAgICAgIFRlc3Q6ICAgICAgICAgICBUZXN0VGVzdGlmeQ==",
+    "output": null,
     "cached": false,
-    "coverage": null
-  },
-  {
-    "action": "fail-final"
+    "coverage": null,
+    "json": true
   },
   {
     "action": "fail",
     "package": "github.com/haveyoudebuggedit/example/subpackage2",
     "version": "",
     "test": "",
-    "elapsed": "75ms",
+    "elapsed": "168ms",
     "output": null,
     "cached": false,
-    "coverage": null
+    "coverage": null,
+    "json": true
   },
   {
-    "action": "fail-final"
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example/subpackage1",
+    "version": "",
+    "test": "",
+    "elapsed": "168ms",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "",
+    "cached": false,
+    "coverage": null,
+    "json": false
   }
 ]

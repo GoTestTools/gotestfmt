@@ -1,11 +1,20 @@
-ok      github.com/haveyoudebuggedit/example/subpackage1        0.075s
---- FAIL: TestTestify (0.00s)
-    testify_test.go:10:
-                Error Trace:    testify_test.go:10
-                Error:          Not equal:
-                                expected: 50
-                                actual  : 48
-                Test:           TestTestify
-FAIL
-FAIL    github.com/haveyoudebuggedit/example/subpackage2        0.075s
-FAIL
+{"Time":"2021-12-05T07:02:32.554971+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify"}
+{"Time":"2021-12-05T07:02:32.554971+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example/subpackage1","Test":"TestTestify"}
+{"Time":"2021-12-05T07:02:32.5554993+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage1","Test":"TestTestify","Output":"=== RUN   TestTestify\n"}
+{"Time":"2021-12-05T07:02:32.5554993+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify","Output":"=== RUN   TestTestify\n"}
+{"Time":"2021-12-05T07:02:32.5554993+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage1","Test":"TestTestify","Output":"--- PASS: TestTestify (0.00s)\n"}
+{"Time":"2021-12-05T07:02:32.5564942+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify","Output":"    testify_test.go:10: \n"}
+{"Time":"2021-12-05T07:02:32.5564942+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example/subpackage1","Test":"TestTestify","Elapsed":0}
+{"Time":"2021-12-05T07:02:32.5564942+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage1","Output":"PASS\n"}
+{"Time":"2021-12-05T07:02:32.5564942+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify","Output":"        \tError Trace:\ttestify_test.go:10\n"}
+{"Time":"2021-12-05T07:02:32.5564942+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify","Output":"        \tError:      \tNot equal: \n"}
+{"Time":"2021-12-05T07:02:32.5574943+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify","Output":"        \t            \texpected: 50\n"}
+{"Time":"2021-12-05T07:02:32.5574943+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify","Output":"        \t            \tactual  : 48\n"}
+{"Time":"2021-12-05T07:02:32.5574943+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify","Output":"        \tTest:       \tTestTestify\n"}
+{"Time":"2021-12-05T07:02:32.5574943+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify","Output":"--- FAIL: TestTestify (0.00s)\n"}
+{"Time":"2021-12-05T07:02:32.5574943+01:00","Action":"fail","Package":"github.com/haveyoudebuggedit/example/subpackage2","Test":"TestTestify","Elapsed":0}
+{"Time":"2021-12-05T07:02:32.5574943+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Output":"FAIL\n"}
+{"Time":"2021-12-05T07:02:32.5621827+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage2","Output":"FAIL\tgithub.com/haveyoudebuggedit/example/subpackage2\t0.168s\n"}
+{"Time":"2021-12-05T07:02:32.5621827+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/subpackage1","Output":"ok  \tgithub.com/haveyoudebuggedit/example/subpackage1\t0.168s\n"}
+{"Time":"2021-12-05T07:02:32.5621827+01:00","Action":"fail","Package":"github.com/haveyoudebuggedit/example/subpackage2","Elapsed":0.168}
+{"Time":"2021-12-05T07:02:32.5731844+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example/subpackage1","Elapsed":0.179}

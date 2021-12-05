@@ -29,6 +29,8 @@ type TestCase struct {
 	Coverage *float64
 	// Output is the log output of this test case.
 	Output string
+	// Cached indicates that the test results are cached and the tests have not actually been run.
+	Cached bool
 }
 
 // ID returns the Name of the test case without slashes
@@ -62,8 +64,12 @@ type Package struct {
 	Output string
 	// TestCases is a list of test cases run in this package. Subtests are included as separate test cases.
 	TestCases []*TestCase
+	// TestCasesByName holds the test cases mapped by name.
+	TestCasesByName map[string]*TestCase
 	// Reason is a description of why the Result happened. Empty in most cases.
 	Reason string
+	// Cached indicates that the results came from the go test cache.
+	Cached bool
 }
 
 func (p *Package) EndTime() *time.Time {
@@ -95,7 +101,7 @@ type Download struct {
 
 // Downloads is the context for TemplatePackageDownloads.
 type Downloads struct {
-	// Packages is a list of packages
+	// Packages is a list of packagesByName
 	Packages []*Download `json:"packages"`
 	// Failed indicates that one or more package downloads failed.
 	Failed bool `json:"failed"`
@@ -105,7 +111,7 @@ type Downloads struct {
 	EndTime *time.Time `json:"-"`
 }
 
-// ParseResult is an overall structure for parser results, containing the prefix text, downloads and packages.
+// ParseResult is an overall structure for parser results, containing the prefix text, downloads and packagesByName.
 type ParseResult struct {
 	Prefix    []string  `json:"prefix"`
 	Downloads Downloads `json:"downloads"`

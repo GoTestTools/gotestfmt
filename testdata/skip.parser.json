@@ -1,0 +1,24 @@
+{
+  "downloads": {
+    "failed": false
+  },
+  "packages": [
+    {
+      "name": "github.com/haveyoudebuggedit/example",
+      "result": "PASS",
+      "duration": "0s",
+      "coverage": null,
+      "output": "",
+      "testcases": [
+        {
+          "name": "TestSkip",
+          "result": "SKIP",
+          "duration": "0s",
+          "coverage": null,
+          "output": ""
+        }
+      ],
+      "reason": ""
+    }
+  ]
+}

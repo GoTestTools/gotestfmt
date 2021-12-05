@@ -13,7 +13,7 @@ docker-build:
         --name gotestfmt-$$ \
         -e GITLAB_CI=${GITLAB_CI} \
         gotestfmt \
-        /bin/sh -c "cd /source; go test -v ./... 2>&1 | tee /tmp/gotest.log | go run cmd/gotestfmt/main.go"
+        /bin/sh -c "cd /source; go test -json -v ./... 2>&1 | tee /tmp/gotest.log | go run cmd/gotestfmt/main.go"
       docker cp gotestfmt-$$:/tmp/gotest.log gotest.log
       docker rm --force gotestfmt-$$
   artifacts:

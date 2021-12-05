@@ -1,0 +1,10 @@
+# github.com/haveyoudebuggedit/example
+nothing_test.go:7:11: expected '(', found Nothing
+FAIL    github.com/haveyoudebuggedit/example [setup failed]
+{"Time":"2021-11-27T10:23:01.309620888+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example/second","Test":"TestNothing"}
+{"Time":"2021-11-27T10:23:01.309734731+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/second","Test":"TestNothing","Output":"=== RUN   TestNothing\n"}
+{"Time":"2021-11-27T10:23:01.3097659+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/second","Test":"TestNothing","Output":"--- PASS: TestNothing (0.00s)\n"}
+{"Time":"2021-11-27T10:23:01.309786588+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example/second","Test":"TestNothing","Elapsed":0}
+{"Time":"2021-11-27T10:23:01.309799132+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/second","Output":"PASS\n"}
+{"Time":"2021-11-27T10:23:01.309994377+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example/second","Output":"ok  \tgithub.com/haveyoudebuggedit/example/second\t0.002s\n"}
+{"Time":"2021-11-27T10:23:01.310211915+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example/second","Elapsed":0.002}

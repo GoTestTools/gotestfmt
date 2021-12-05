@@ -27,6 +27,8 @@ type Event struct {
 	Cached bool `json:"cached"`
 	// Coverage shows the code coverage.
 	Coverage *float64 `json:"coverage"`
+	// JSON indicates if the event was sent using a JSON-encoded test.
+	JSON bool `json:"json"`
 }
 
 func (e Event) Equals(o Event) bool {
@@ -36,6 +38,7 @@ func (e Event) Equals(o Event) bool {
 		e.Test == o.Test &&
 		e.Elapsed == o.Elapsed &&
 		e.Cached == o.Cached &&
+		e.JSON == o.JSON &&
 		(e.Coverage == o.Coverage ||
 			(e.Coverage != nil && o.Coverage != nil && *e.Coverage == *o.Coverage)) &&
 		bytes.Equal(e.Output, o.Output)
@@ -66,6 +69,8 @@ type tmpEvent struct {
 	Cached bool `json:"cached"`
 	// Coverage shows the code coverage.
 	Coverage *float64 `json:"coverage"`
+	// JSON indicates that the event was JSON-encoded.
+	JSON bool `json:"json"`
 }
 
 func (e *Event) UnmarshalJSON(data []byte) error {
@@ -91,6 +96,7 @@ func (e *Event) UnmarshalJSON(data []byte) error {
 	e.Output = tmp.Output
 	e.Cached = tmp.Cached
 	e.Coverage = tmp.Coverage
+	e.JSON = tmp.JSON
 	return nil
 }
 
@@ -104,6 +110,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		Output:   e.Output,
 		Cached:   e.Cached,
 		Coverage: e.Coverage,
+		JSON:     e.JSON,
 	}
 	return json.Marshal(tmp)
 }

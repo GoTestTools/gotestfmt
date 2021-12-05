@@ -1,21 +1,30 @@
 [
   {
     "action": "run",
-    "test":   "TestNothing"
+    "test":   "TestNothing",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action": "pass",
-    "test":   "TestNothing"
+    "test":   "TestNothing",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
-    "action": "pass-final"
+    "action": "pass-final",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
-    "action": "coverage_nostatements"
+    "action": "coverage_nostatements",
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action":  "pass",
     "package": "github.com/haveyoudebuggedit/example",
-    "elapsed": "0.024s"
+    "elapsed": "0.101s",
+    "json": true
   }
 ]

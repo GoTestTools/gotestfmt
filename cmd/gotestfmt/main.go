@@ -30,11 +30,18 @@ func main() {
 		"./.gotestfmt",
 	}
 	ci := ""
+	inputFile := "-"
 	flag.StringVar(
 		&ci,
 		"ci",
 		ci,
 		"Which subdirectory to use within the .gotestfmt folder. Defaults to detecting the CI from environment variables.",
+	)
+	flag.StringVar(
+		&inputFile,
+		"input",
+		inputFile,
+		"Read build log from file. Defaults to standard input.",
 	)
 	flag.Parse()
 
@@ -57,5 +64,18 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	format.Format(os.Stdin, os.Stdout)
+
+	input := os.Stdin
+	if inputFile != "-" {
+		fh, err := os.Open(inputFile)
+		if err != nil {
+			panic(err)
+		}
+		defer func() {
+			_ = fh.Close()
+		}()
+		input = fh
+	}
+
+	format.Format(input, os.Stdout)
 }

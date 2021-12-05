@@ -2,7 +2,10 @@ package parser
 
 import (
 	"fmt"
+	"math"
 	"regexp"
+	"sort"
+	"strings"
 	"time"
 
 	"github.com/haveyoudebuggedit/gotestfmt/tokenizer"
@@ -23,7 +26,9 @@ func Parse(
 	return prefixChannel, downloadsChannel, packagesChannel
 }
 
-var noModuleProvidesRegexp = regexp.MustCompile(`no required module provides package (?P<package>[^\s]+);`)
+var downloadErrors = []*regexp.Regexp{
+	regexp.MustCompile(`no required module provides package (?P<package>[^\s]+);`),
+}
 
 func parse(
 	evts <-chan tokenizer.Event,
@@ -31,6 +36,7 @@ func parse(
 	downloadsChannel chan *Downloads,
 	packagesChannel chan *Package,
 ) {
+	outputStarted := false
 	downloadTracker := &downloadsTracker{
 		prefixChannel:       prefixChannel,
 		downloadResultsList: nil,
@@ -39,13 +45,8 @@ func parse(
 		target:              downloadsChannel,
 	}
 	pkgTracker := &packageTracker{
-		currentPackage:  nil,
-		packageList:     []*Package{},
-		packages:        map[string]*Package{},
-		testCases:       nil,
-		lastTestCase:    nil,
-		testCasesByName: map[string]*TestCase{},
-		target:          packagesChannel,
+		packagesByName: map[string]*Package{},
+		target:         packagesChannel,
 	}
 
 	defer func() {
@@ -54,278 +55,286 @@ func parse(
 		close(packagesChannel)
 	}()
 
-	var lastAction tokenizer.Action
+	var prevErroredDownload string
+	var prevErroredPkg string
 	for {
 		evt, ok := <-evts
 		if !ok {
 			return
 		}
-		if evt.Action != tokenizer.ActionDownload &&
-			evt.Action != tokenizer.ActionDownloadFailed &&
-			evt.Action != tokenizer.ActionStdout {
 
-			downloadTracker.Write()
-			if evt.Package != "" {
-				pkgTracker.SetPackage(
-					&Package{
-						Name: evt.Package,
-					},
-				)
+		if evt.Action != tokenizer.ActionStdout {
+			outputStarted = true
+		}
+		if evt.Action != tokenizer.ActionDownload && evt.Action != tokenizer.ActionDownloadFailed && evt.Package != "" {
+			pkgTracker.SetTestStartTime(evt.Package, evt.Test, evt.Received)
+			if evt.Elapsed != 0 {
+				pkgTracker.SetTestElapsed(evt.Package, evt.Test, evt.Elapsed)
+			}
+			if evt.Coverage != nil {
+				pkgTracker.SetCoverage(evt.Package, evt.Test, *evt.Coverage)
+			}
+			if evt.Cached {
+				pkgTracker.SetCached(evt.Package, evt.Test)
 			}
 		}
-	prevaction:
+
 		switch evt.Action {
-		case tokenizer.ActionRun:
-			fallthrough
-		case tokenizer.ActionCont:
-			pkgTracker.SetLastTest(evt.Test)
+		case tokenizer.ActionFailFinal:
+			pkgTracker.SetResult(evt.Package, evt.Test, ResultFail)
+			if len(evt.Output) > 0 {
+				pkgTracker.AddReason(evt.Package, string(evt.Output))
+			}
+		case tokenizer.ActionSkipFinal:
+			pkgTracker.SetResult(evt.Package, evt.Test, ResultSkip)
+			if len(evt.Output) > 0 {
+				pkgTracker.AddReason(evt.Package, string(evt.Output))
+			}
+		case tokenizer.ActionPassFinal:
+			pkgTracker.SetResult(evt.Package, evt.Test, ResultPass)
+			if len(evt.Output) > 0 {
+				pkgTracker.AddReason(evt.Package, string(evt.Output))
+			}
 		case tokenizer.ActionFail:
-			result := ResultFail
-			finish(evt, pkgTracker, result)
+			pkgTracker.SetResult(evt.Package, evt.Test, ResultFail)
+			if len(evt.Output) > 0 {
+				pkgTracker.AddReason(evt.Package, string(evt.Output))
+			}
 		case tokenizer.ActionPass:
-			result := ResultPass
-			finish(evt, pkgTracker, result)
+			pkgTracker.SetResult(evt.Package, evt.Test, ResultPass)
+			if len(evt.Output) > 0 {
+				pkgTracker.AddReason(evt.Package, string(evt.Output))
+			}
 		case tokenizer.ActionSkip:
-			result := ResultSkip
-			finish(evt, pkgTracker, result)
+			pkgTracker.SetResult(evt.Package, evt.Test, ResultSkip)
+			if len(evt.Output) > 0 {
+				pkgTracker.AddReason(evt.Package, string(evt.Output))
+			}
 		case tokenizer.ActionDownload:
 			downloadTracker.Add(
-				&Download{
-					Package: evt.Package,
-					Version: evt.Version,
-				},
+				evt.Package,
+				evt.Version,
 			)
 		case tokenizer.ActionDownloadFailed:
-			downloadTracker.Add(
-				&Download{
-					Package: evt.Package,
-					Version: evt.Version,
-					Failed:  true,
-					Reason:  string(evt.Output),
-				},
-			)
+			prevErroredDownload = evt.Package
+			downloadTracker.SetDownloadFailed(evt.Package, evt.Version)
+			downloadTracker.AddReason(evt.Package, evt.Output)
 		case tokenizer.ActionPackage:
-			pkgTracker.SetPackage(
-				&Package{
-					Name: evt.Package,
-				},
-			)
+			pkgTracker.SetResult(evt.Package, "", ResultFail)
+			prevErroredPkg = evt.Package
 		case tokenizer.ActionStdout:
-			switch lastAction {
-			case "":
-				// Special case: error message right before any output indicates that there was an error downloading a
-				// dependency. We will try to identify it here.
-				pkg := ""
-				if match := noModuleProvidesRegexp.FindSubmatch(evt.Output); len(match) != 0 {
-					pkg = string(match[1])
-				} else {
-					prefixChannel <- string(evt.Output)
-					break prevaction
+			if evt.JSON {
+				// We have a JSON-encoded output, that makes things much easier.
+				pkgTracker.AddOutput(evt.Package, evt.Test, evt.Output)
+			} else if len(evt.Output) > 0 {
+				// We don't have a JSON output, so this must be an error.
+				foundDLError := false
+				for _, dlError := range downloadErrors {
+					if submatch := dlError.FindSubmatch(evt.Output); len(submatch) > 0 {
+						pkgName := string(submatch[1])
+						downloadTracker.SetDownloadFailed(pkgName, "")
+						downloadTracker.AddReason(pkgName, evt.Output)
+						prevErroredDownload = pkgName
+						foundDLError = true
+						outputStarted = true
+					}
 				}
-				evt.Action = tokenizer.ActionDownloadFailed
-				downloadTracker.Add(
-					&Download{
-						Package: pkg,
-					},
-				)
-				fallthrough
-			case tokenizer.ActionDownloadFailed:
-				fallthrough
-			case tokenizer.ActionDownload:
-				lastDownload := downloadTracker.GetLast()
-				lastDownload.Failed = true
-				if lastDownload.Reason == "" {
-					lastDownload.Reason = string(evt.Output)
-				} else {
-					lastDownload.Reason = fmt.Sprintf(
-						"%s\n%s",
-						lastDownload.Reason,
-						string(evt.Output),
-					)
-				}
-			case tokenizer.ActionRun:
-				fallthrough
-			case tokenizer.ActionPass:
-				fallthrough
-			case tokenizer.ActionFail:
-				fallthrough
-			case tokenizer.ActionSkip:
-				fallthrough
-			case tokenizer.ActionCont:
-				lastTestCase := pkgTracker.GetLastTestCase()
-				if lastTestCase != nil && len(evt.Output) > 0 {
-					if lastTestCase.Output == "" {
-						lastTestCase.Output = string(evt.Output)
+				if !foundDLError {
+					if prevErroredDownload != "" {
+						downloadTracker.AddReason(prevErroredDownload, evt.Output)
+					} else if prevErroredPkg != "" {
+						pkgTracker.AddOutput(prevErroredPkg, "", evt.Output)
+					} else if !outputStarted {
+						prefixChannel <- string(evt.Output)
 					} else {
-						lastTestCase.Output = fmt.Sprintf(
-							"%s\n%s",
-							lastTestCase.Output,
-							string(evt.Output),
+						panic(
+							fmt.Errorf(
+								"unexpected output encountered: %s (Did you use -json on go test?)",
+								evt.Output,
+							),
 						)
 					}
 				}
-			case tokenizer.ActionPackage:
-				lastPackage := pkgTracker.GetPackage()
-				if lastPackage.Output == "" {
-					lastPackage.Output = string(evt.Output)
-				} else {
-					lastPackage.Output = fmt.Sprintf(
-						"%s\n%s",
-						lastPackage.Output,
-						string(evt.Output),
-					)
-				}
-			case tokenizer.ActionFailFinal:
-				fallthrough
-			case tokenizer.ActionPassFinal:
-				fallthrough
-			case tokenizer.ActionSkipFinal:
-				pkgTracker.Write()
-			default:
-				if len(evt.Output) > 0 {
-					panic(fmt.Errorf("unexpected output after %s event: %s", lastAction, evt.Output))
-				}
 			}
 		}
-		if evt.Action != tokenizer.ActionStdout {
-			lastAction = evt.Action
+		if evt.Action != tokenizer.ActionStdout &&
+			evt.Action != tokenizer.ActionDownloadFailed &&
+			evt.Action != tokenizer.ActionPackage {
+			prevErroredDownload = ""
+			prevErroredPkg = ""
 		}
-	}
-}
-
-func finish(evt tokenizer.Event, pkgTracker *packageTracker, result Result) {
-	if evt.Test != "" {
-		pkgTracker.SetLastTest(evt.Test)
-		lastTestCase := pkgTracker.GetLastTestCase()
-		lastTestCase.Result = result
-		lastTestCase.Duration = evt.Elapsed
-		lastTestCase.Coverage = evt.Coverage
-	}
-	if evt.Package != "" {
-		pkgTracker.SetPackage(
-			&Package{
-				Name:     evt.Package,
-				Result:   result,
-				Duration: evt.Elapsed,
-				Reason:   string(evt.Output),
-				Coverage: evt.Coverage,
-			},
-		)
-		pkgTracker.currentPackage = nil
 	}
 }
 
 type packageTracker struct {
-	currentPackage  *Package
-	packages        map[string]*Package
-	testCases       []*TestCase
-	lastTestCase    *TestCase
-	testCasesByName map[string]*TestCase
-	target          chan<- *Package
-	packageList     []*Package
+	packages       []*Package
+	packagesByName map[string]*Package
+	target         chan<- *Package
 }
 
-func (p *packageTracker) SetPackage(pkg *Package) {
-	if p.currentPackage == nil {
-		pkg.TestCases = p.testCases
-		p.currentPackage = pkg
-		if _, ok := p.packages[pkg.Name]; !ok {
-			p.packageList = append(p.packageList, pkg)
-			p.packages[pkg.Name] = pkg
-		}
-
-		p.testCases = nil
+func (p *packageTracker) AddOutput(pkg string, test string, output []byte) {
+	pkgObj := p.ensurePackage(pkg)
+	if test == "" {
+		pkgObj.Output = pkgObj.Output + string(output) + "\n"
 		return
-	} else if p.currentPackage.Name != pkg.Name {
-		p.currentPackage = p.packages[pkg.Name]
 	}
-
-	if pkg.Result != "" {
-		p.currentPackage.Result = pkg.Result
-	}
-	if pkg.Coverage != nil {
-		p.currentPackage.Coverage = pkg.Coverage
-	}
-	if len(pkg.TestCases) != 0 {
-		p.currentPackage.TestCases = pkg.TestCases
-	}
-	if len(pkg.Output) != 0 {
-		p.currentPackage.Output = pkg.Output
-	}
-	if len(pkg.Reason) != 0 {
-		p.currentPackage.Reason = pkg.Reason
-	}
-	if pkg.Duration != 0 {
-		p.currentPackage.Duration = pkg.Duration
-	}
-	if pkg.StartTime != nil {
-		p.currentPackage.StartTime = pkg.StartTime
-	} else if p.currentPackage != nil {
-		t := time.Now()
-		p.currentPackage.StartTime = &t
-	}
+	testCase := p.ensureTest(pkgObj, test)
+	testCase.Output = testCase.Output + string(output) + "\n"
 }
 
-func (p *packageTracker) Add(testCase *TestCase) {
+func (p *packageTracker) ensureTest(pkgObj *Package, test string) *TestCase {
+	if _, ok := pkgObj.TestCasesByName[test]; !ok {
+		tc := &TestCase{
+			StartTime: nil,
+			Name:      test,
+			Result:    "",
+			Duration:  0,
+			Coverage:  nil,
+			Output:    "",
+		}
+		pkgObj.TestCasesByName[test] = tc
+		pkgObj.TestCases = append(pkgObj.TestCases, tc)
+	}
+
+	return pkgObj.TestCasesByName[test]
+}
+
+func (p *packageTracker) ensurePackage(pkg string) *Package {
+	if pkg == "" {
+		panic("BUG: Empty package name encountered.")
+	}
+	if _, ok := p.packagesByName[pkg]; !ok {
+		pkgObj := &Package{
+			StartTime:       nil,
+			Name:            pkg,
+			Result:          "",
+			Duration:        0,
+			Coverage:        nil,
+			Output:          "",
+			TestCases:       nil,
+			TestCasesByName: map[string]*TestCase{},
+			Reason:          "",
+		}
+		p.packagesByName[pkg] = pkgObj
+		p.packages = append(p.packages, pkgObj)
+	}
+	return p.packagesByName[pkg]
+}
+
+func (p *packageTracker) SetTestStartTime(pkg string, test string, startTime time.Time) {
+	if pkg == "" {
+		return
+	}
+	pkgObj := p.ensurePackage(pkg)
+	if test == "" {
+		if pkgObj.StartTime == nil {
+			pkgObj.StartTime = &startTime
+		}
+		return
+	}
+	testCase := p.ensureTest(pkgObj, test)
 	if testCase.StartTime == nil {
-		t := time.Now()
-		testCase.StartTime = &t
-	}
-	p.lastTestCase = testCase
-	p.testCasesByName[testCase.Name] = testCase
-	if p.currentPackage != nil {
-		p.currentPackage.TestCases = append(p.currentPackage.TestCases, testCase)
-	} else {
-		p.testCases = append(p.testCases, testCase)
+		testCase.StartTime = &startTime
 	}
 }
 
-func (p *packageTracker) GetLastTestCase() *TestCase {
-	return p.lastTestCase
+func (p *packageTracker) SetTestElapsed(pkg string, test string, elapsed time.Duration) {
+	if pkg == "" {
+		return
+	}
+	pkgObj := p.ensurePackage(pkg)
+	if test == "" {
+		pkgObj.Duration = elapsed
+		return
+	}
+	testCase := p.ensureTest(pkgObj, test)
+	testCase.Duration = elapsed
+}
+
+func (p *packageTracker) SetResult(pkg string, test string, result Result) {
+	if pkg == "" {
+		return
+	}
+	pkgObj := p.ensurePackage(pkg)
+	if test == "" {
+		pkgObj.Result = result
+		return
+	}
+	testCase := p.ensureTest(pkgObj, test)
+	testCase.Result = result
+}
+
+func (p *packageTracker) SetCoverage(pkg string, test string, coverage float64) {
+	if pkg == "" {
+		return
+	}
+	pkgObj := p.ensurePackage(pkg)
+	if test == "" {
+		pkgObj.Coverage = &coverage
+		return
+	}
+	testCase := p.ensureTest(pkgObj, test)
+	testCase.Coverage = &coverage
+}
+
+func (p *packageTracker) AddReason(pkg string, reason string) {
+	if pkg == "" {
+		return
+	}
+	pkgObj := p.ensurePackage(pkg)
+	pkgObj.Reason = pkgObj.Reason + reason + "\n"
+}
+
+func (p *packageTracker) SetCached(pkg string, test string) {
+	if pkg == "" {
+		return
+	}
+	pkgObj := p.ensurePackage(pkg)
+	if test == "" {
+		pkgObj.Cached = true
+		return
+	}
+	testCase := p.ensureTest(pkgObj, test)
+	testCase.Cached = true
 }
 
 func (p *packageTracker) Write() {
-	if p.currentPackage == nil {
-		if len(p.testCases) > 0 {
-			startTime := time.Now()
-			for _, testCase := range p.testCases {
-				if testCase.StartTime != nil && testCase.StartTime.Before(startTime) {
-					startTime = *testCase.StartTime
-				}
-			}
-			p.target <- &Package{
-				TestCases: p.testCases,
-				StartTime: &startTime,
-			}
-		}
-		p.testCases = nil
-	}
-	for _, pkg := range p.packageList {
-		p.target <- pkg
-	}
-	p.packages = map[string]*Package{}
-	p.packageList = []*Package{}
-	p.currentPackage = nil
-	p.testCasesByName = map[string]*TestCase{}
-}
-
-func (p *packageTracker) GetTestCase(test string) *TestCase {
-	return p.testCasesByName[test]
-}
-
-func (p *packageTracker) SetLastTest(test string) {
-	if _, ok := p.testCasesByName[test]; !ok {
-		p.Add(
-			&TestCase{
-				Name: test,
+	sort.SliceStable(
+		p.packages, func(i, j int) bool {
+			return p.packages[i].Name < p.packages[j].Name
+		},
+	)
+	for _, pkg := range p.packages {
+		pkg.Output = strings.TrimRight(pkg.Output, "\n")
+		pkg.Reason = strings.TrimRight(pkg.Reason, "\n")
+		sort.SliceStable(
+			pkg.TestCases, func(i, j int) bool {
+				return compareTestCaseNames(pkg.TestCases[i].Name, pkg.TestCases[j].Name)
 			},
 		)
+		for _, tc := range pkg.TestCases {
+			tc.Output = strings.TrimRight(tc.Output, "\n")
+		}
 	}
-	p.lastTestCase = p.testCasesByName[test]
+	for _, pkg := range p.packages {
+		p.target <- pkg
+	}
 }
 
-func (p *packageTracker) GetPackage() *Package {
-	return p.currentPackage
+func compareTestCaseNames(name1 string, name2 string) bool {
+	parts1 := strings.SplitN(name1, "/", -1)
+	parts2 := strings.SplitN(name2, "/", -1)
+
+	for i := 0; i < int(math.Min(float64(len(parts1)), float64(len(parts2)))); i++ {
+		part1 := parts1[i]
+		part2 := parts2[i]
+		if part1 < part2 {
+			return true
+		} else if part1 > part2 {
+			return false
+		}
+	}
+	return len(parts1) < len(parts2)
 }
 
 type downloadsTracker struct {
@@ -339,22 +348,16 @@ type downloadsTracker struct {
 	endTime             *time.Time
 }
 
-func (d *downloadsTracker) Add(download *Download) {
+func (d *downloadsTracker) Add(name string, version string) {
 	if d.downloadsFinished {
-		panic(fmt.Errorf("tried to add download after downloads are already finished (%v)", download))
+		panic(fmt.Errorf("tried to add download after downloads are already finished (%v)", name))
 	}
-	t := time.Now()
-	if d.startTime == nil {
-		d.startTime = &t
+
+	pkg := d.ensurePackage(name)
+	if version != "" {
+		pkg.Version = version
 	}
-	d.endTime = &t
-	packageID := fmt.Sprintf("%s@%s", download.Package, download.Version)
-	if _, ok := d.downloadsByPackage[packageID]; ok {
-		panic(fmt.Errorf("download already exists in tracker (%v)", download))
-	}
-	d.downloadsByPackage[packageID] = download
-	d.downloadResultsList = append(d.downloadResultsList, download)
-	d.lastDownload = download
+	d.lastDownload = pkg
 }
 
 func (d *downloadsTracker) GetLast() *Download {
@@ -370,8 +373,8 @@ func (d *downloadsTracker) Write() {
 	for _, dl := range d.downloadResultsList {
 		if dl.Failed {
 			failed = true
-			break
 		}
+		dl.Reason = strings.TrimRight(dl.Reason, "\n")
 	}
 	d.target <- &Downloads{
 		Packages:  d.downloadResultsList,
@@ -383,4 +386,38 @@ func (d *downloadsTracker) Write() {
 	d.downloadResultsList = nil
 	d.downloadsByPackage = nil
 	close(d.target)
+}
+
+func (d *downloadsTracker) SetDownloadFailed(name string, version string) {
+	if d.downloadsFinished {
+		panic(fmt.Errorf("tried to add download after downloads are already finished (%v)", name))
+	}
+	pkg := d.ensurePackage(name)
+	if version != "" {
+		pkg.Version = version
+	}
+	pkg.Failed = true
+}
+
+func (d *downloadsTracker) ensurePackage(name string) *Download {
+	t := time.Now()
+	if d.startTime == nil {
+		d.startTime = &t
+	}
+	d.endTime = &t
+	if _, ok := d.downloadsByPackage[name]; !ok {
+		d.downloadsByPackage[name] = &Download{
+			Package: name,
+		}
+		d.downloadResultsList = append(d.downloadResultsList, d.downloadsByPackage[name])
+	}
+	return d.downloadsByPackage[name]
+}
+
+func (d *downloadsTracker) AddReason(name string, output []byte) {
+	if d.downloadsFinished {
+		panic(fmt.Errorf("tried to add download after downloads are already finished (%v)", name))
+	}
+	pkg := d.ensurePackage(name)
+	pkg.Reason = pkg.Reason + string(output) + "\n"
 }

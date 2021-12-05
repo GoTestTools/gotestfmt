@@ -1,14 +1,22 @@
-=== RUN   TestSubtest
-=== RUN   TestSubtest/test1
-    subtest_test.go:9: Hello world!
-=== RUN   TestSubtest/test2
-    subtest_test.go:12: Here's an error.
-=== RUN   TestSubtest/test3
-    subtest_test.go:15: Let's skip this one...
---- FAIL: TestSubtest (0.00s)
-    --- PASS: TestSubtest/test1 (0.00s)
-    --- FAIL: TestSubtest/test2 (0.00s)
-    --- SKIP: TestSubtest/test3 (0.00s)
-FAIL
-FAIL    github.com/haveyoudebuggedit/example    0.020s
-FAIL
+{"Time":"2021-12-05T07:01:25.3314854+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest"}
+{"Time":"2021-12-05T07:01:25.3320042+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest","Output":"=== RUN   TestSubtest\n"}
+{"Time":"2021-12-05T07:01:25.3320042+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test1"}
+{"Time":"2021-12-05T07:01:25.3320042+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test1","Output":"=== RUN   TestSubtest/test1\n"}
+{"Time":"2021-12-05T07:01:25.3330012+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test1","Output":"    subtest_test.go:9: Hello world!\n"}
+{"Time":"2021-12-05T07:01:25.3330012+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test2"}
+{"Time":"2021-12-05T07:01:25.3330012+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test2","Output":"=== RUN   TestSubtest/test2\n"}
+{"Time":"2021-12-05T07:01:25.3330012+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test2","Output":"    subtest_test.go:12: Here's an error.\n"}
+{"Time":"2021-12-05T07:01:25.3330012+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test3"}
+{"Time":"2021-12-05T07:01:25.3330012+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test3","Output":"=== RUN   TestSubtest/test3\n"}
+{"Time":"2021-12-05T07:01:25.3339997+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test3","Output":"    subtest_test.go:15: Let's skip this one...\n"}
+{"Time":"2021-12-05T07:01:25.3339997+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest","Output":"--- FAIL: TestSubtest (0.00s)\n"}
+{"Time":"2021-12-05T07:01:25.3339997+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test1","Output":"    --- PASS: TestSubtest/test1 (0.00s)\n"}
+{"Time":"2021-12-05T07:01:25.3339997+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test1","Elapsed":0}
+{"Time":"2021-12-05T07:01:25.3339997+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test2","Output":"    --- FAIL: TestSubtest/test2 (0.00s)\n"}
+{"Time":"2021-12-05T07:01:25.3339997+01:00","Action":"fail","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test2","Elapsed":0}
+{"Time":"2021-12-05T07:01:25.3349996+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test3","Output":"    --- SKIP: TestSubtest/test3 (0.00s)\n"}
+{"Time":"2021-12-05T07:01:25.3349996+01:00","Action":"skip","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest/test3","Elapsed":0}
+{"Time":"2021-12-05T07:01:25.3349996+01:00","Action":"fail","Package":"github.com/haveyoudebuggedit/example","Test":"TestSubtest","Elapsed":0}
+{"Time":"2021-12-05T07:01:25.3349996+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"FAIL\n"}
+{"Time":"2021-12-05T07:01:25.3380014+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"FAIL\tgithub.com/haveyoudebuggedit/example\t0.103s\n"}
+{"Time":"2021-12-05T07:01:25.3380014+01:00","Action":"fail","Package":"github.com/haveyoudebuggedit/example","Elapsed":0.104}

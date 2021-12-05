@@ -6,10 +6,11 @@
     {
       "name": "github.com/haveyoudebuggedit/example",
       "result": "PASS",
-      "coverage": 57.8,
+      "duration": "102ms",
+      "coverage": 100,
       "testcases": [
         {
-          "name": "TestNothing",
+          "name": "TestHello",
           "result": "PASS"
         }
       ]

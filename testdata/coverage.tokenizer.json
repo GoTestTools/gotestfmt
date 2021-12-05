@@ -1,23 +1,38 @@
 [
   {
     "action": "run",
-    "test":   "TestNothing"
+    "test":   "TestHello",
+    "package":  "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action": "pass",
-    "test":   "TestNothing"
+    "test":   "TestHello",
+    "package":  "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
-    "action": "pass-final"
+    "action": "pass-final",
+    "package":  "github.com/haveyoudebuggedit/example",
+    "json": true
   },
   {
     "action": "coverage",
-    "coverage": 57.8
+    "package": "github.com/haveyoudebuggedit/example",
+    "json": true,
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": 100
   },
   {
     "action": "pass",
     "package":  "github.com/haveyoudebuggedit/example",
-    "cached": true,
-    "coverage": 57.8
+    "json": true,
+    "cached": false,
+    "elapsed": "102ms",
+    "coverage": 100
   }
 ]

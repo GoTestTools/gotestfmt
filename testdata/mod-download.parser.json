@@ -24,7 +24,7 @@
     {
       "name": "github.com/haveyoudebuggedit/example",
       "result": "PASS",
-      "duration": "0.027s",
+      "duration": "0.105s",
       "testcases": [
         {
           "name": "TestNothing",

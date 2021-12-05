@@ -1,0 +1,76 @@
+[
+  {
+    "action": "package",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "stdout",
+    "package": "",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "bm90aGluZ190ZXN0LmdvOjc6MTE6IGV4cGVjdGVkICcoJywgZm91bmQgTm90aGluZw==",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "fail",
+    "package": "github.com/haveyoudebuggedit/example",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": "c2V0dXAgZmFpbGVk",
+    "cached": false,
+    "coverage": null
+  },
+  {
+    "action": "run",
+    "package": "github.com/haveyoudebuggedit/example/second",
+    "version": "",
+    "test": "TestNothing",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example/second",
+    "version": "",
+    "test": "TestNothing",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass-final",
+    "package": "github.com/haveyoudebuggedit/example/second",
+    "version": "",
+    "test": "",
+    "elapsed": "0s",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  },
+  {
+    "action": "pass",
+    "package": "github.com/haveyoudebuggedit/example/second",
+    "version": "",
+    "test": "",
+    "elapsed": "2ms",
+    "output": null,
+    "cached": false,
+    "coverage": null,
+    "json": true
+  }
+]

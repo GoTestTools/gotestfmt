@@ -2,7 +2,10 @@ go: downloading github.com/stretchr/testify v1.7.0
 go: downloading github.com/pmezard/go-difflib v1.0.0
 go: downloading github.com/davecgh/go-spew v1.1.0
 go: downloading gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
-=== RUN   TestNothing
---- PASS: TestNothing (0.00s)
-PASS
-ok      github.com/haveyoudebuggedit/example    0.027s
+{"Time":"2021-12-05T06:51:55.2932632+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestNothing"}
+{"Time":"2021-12-05T06:51:55.2943439+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestNothing","Output":"=== RUN   TestNothing\n"}
+{"Time":"2021-12-05T06:51:55.2948686+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestNothing","Output":"--- PASS: TestNothing (0.00s)\n"}
+{"Time":"2021-12-05T06:51:55.29541+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Test":"TestNothing","Elapsed":0}
+{"Time":"2021-12-05T06:51:55.29541+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"PASS\n"}
+{"Time":"2021-12-05T06:51:55.2999702+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"ok  \tgithub.com/haveyoudebuggedit/example\t0.105s\n"}
+{"Time":"2021-12-05T06:51:55.3109276+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Elapsed":0.116}
