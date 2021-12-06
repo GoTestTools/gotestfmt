@@ -29,6 +29,8 @@ Tadam, your tests will now show up in a beautifully formatted fashion. Plug it i
     - [Render settings](#render-settings)
 - [FAQ](#faq)
     - [How do I make the output less verbose?](#how-do-i-make-the-output-less-verbose)
+    - [Can I use gotestfmt without `-json`?](#can-i-use-gotestfmt-without--json)
+    - [Does gotestfmt work with Ginkgo?](#does-gotestfmt-work-with-ginkgo)
 - [Architecture](#architecture)
 - [Building](#building)
 - [License](#license)
@@ -249,6 +251,18 @@ By default, `gotestfmt` will output all tests and their logs. However, you can u
 - **`all`:** Hide all non-error items.
 
 ⚠️ This feature depends on the template you use. If you customized your template please make sure to check the [Render settings](#render-settings) object in your code.
+
+### Can I use gotestfmt without `-json`?
+
+When running `go test` without `-json` the output does not properly contain the package names for each line. This is not a problem if you are running tests only on a single package, but lines become mixed up when running tests on multiple packages. Version 1 of `gotestfmt` supported the raw output, but version 2 dropped support for it because it results in a lot of unmaintainable code based on an undocumented format.
+
+If you need to use `gotestfmt` without using the `-json` flag, please use version 1 of `gotestfmt`. However, it may break, and we may not be able to fix it.
+
+### Does gotestfmt work with Ginkgo?
+
+[Ginkgo](https://onsi.github.io/ginkgo/) has its own output format which is [not compatible with go test](https://github.com/onsi/ginkgo/issues/639). This choice is understandable because the `go test` output format is not properly documented and is also very difficult to work with. However, this means that **`gotestfmt` does not support Ginkgo.**
+
+But, fear not! Ginkgo has a large number of formats it supports using reporters, such as writing jUnit XML reports. Alternatively, you can [even write your own](https://onsi.github.io/ginkgo/#writing-custom-reporters).
 
 ## Architecture
 
