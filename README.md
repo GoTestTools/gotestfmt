@@ -11,7 +11,7 @@ set -euo pipefail
 go test -json -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
 ```
 
-Tadam, your tests will now show up in a beautifully formatted fashion. Plug it into your CI and you're done.
+Tadam, your tests will now show up in a beautifully formatted fashion. Plug it into your CI and you're done. Installation is also easy:
 
 **Note:** Please always save the original log. You will need it if you have to file a bug report for gotestfmt.
 
@@ -19,14 +19,12 @@ Tadam, your tests will now show up in a beautifully formatted fashion. Plug it i
 
 ## Table of Contents
 
+- [Installing](#installing)
 - [Setting it up in your CI system](#setting-it-up-in-your-ci-system)
   - [GitHub Actions](#github-actions)
   - [GitLab CI](#gitlab-ci)
   - [CircleCI](#circleci)
   - [Add your own CI](#add-your-own-ci)
-    - [downloads.tpl](#downloadstpl)
-    - [package.tpl](#packagetpl)
-    - [Render settings](#render-settings)
 - [FAQ](#faq)
     - [How do I make the output less verbose?](#how-do-i-make-the-output-less-verbose)
     - [Can I use gotestfmt without `-json`?](#can-i-use-gotestfmt-without--json)
@@ -34,6 +32,34 @@ Tadam, your tests will now show up in a beautifully formatted fashion. Plug it i
 - [Architecture](#architecture)
 - [Building](#building)
 - [License](#license)
+
+## Installing
+
+You can install `gotestfmt` using the following methods.
+
+### Manually
+
+You can download the binary manually from the [releases section](https://github.com/haveyoudebuggedit/gotestfmt/releases). The binaries have no dependencies and should run without any problems on any of the listed operating systems.
+
+### Using `go install`
+
+You can install `gotestfmt` using the `go install` command:
+
+```
+go install github.com/haveyoudebuggedit/gotestfmt/v2/cmd/gotestfmt@latest
+```
+
+You can then use the `gotestfmt` command, provided that your Go `bin` directory is added to your system path.
+
+### Using a container
+
+You can also run `gotestfmt` in a container. For example:
+
+```
+go test -json ./... | docker run ghcr.io/haveyoudebuggedit/gotestfmt:latest
+```
+
+If you have a high volume of requests you may want to mirror the image to your own registry.
 
 ## Setting it up in your CI system
 
@@ -70,6 +96,10 @@ jobs:
         with:
           # Optional: pass GITHUB_TOKEN to avoid rate limiting.
           token: ${{ secrets.GITHUB_TOKEN }}
+          
+      # Alternatively, install using go install
+      - name: Set up gotestfmt
+        run: go install github.com/haveyoudebuggedit/gotestfmt/v2/cmd/gotestfmt@latest
 
       # Run tests with nice formatting. Save the original log in /tmp/gotest.log
       - name: Run tests
