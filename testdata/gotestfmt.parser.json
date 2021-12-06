@@ -1,0 +1,325 @@
+{
+  "prefix": null,
+  "downloads": {
+    "packages": null,
+    "failed": false
+  },
+  "packages": [
+    {
+      "name": "github.com/haveyoudebuggedit/gotestfmt/v2",
+      "result": "SKIP",
+      "duration": "0s",
+      "coverage": null,
+      "output": "",
+      "testcases": null,
+      "reason": "no test files"
+    },
+    {
+      "name": "github.com/haveyoudebuggedit/gotestfmt/v2/cmd/gotestfmt",
+      "result": "SKIP",
+      "duration": "0s",
+      "coverage": null,
+      "output": "",
+      "testcases": null,
+      "reason": "no test files"
+    },
+    {
+      "name": "github.com/haveyoudebuggedit/gotestfmt/v2/parser",
+      "result": "PASS",
+      "duration": "0s",
+      "coverage": null,
+      "output": "",
+      "testcases": [
+        {
+          "name": "TestParse",
+          "result": "PASS",
+          "duration": "180ms",
+          "coverage": null,
+          "output": "    parse_test.go:20: Locating testdata directory...\n    parse_test.go:35: Testdata directory is located at ../testdata."
+        },
+        {
+          "name": "TestParse/containerssh",
+          "result": "PASS",
+          "duration": "120ms",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/containerssh.tokenizer.json and comparing with ../testdata/containerssh.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/coverage",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/coverage.tokenizer.json and comparing with ../testdata/coverage.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/coverage-nostatements",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/coverage-nostatements.tokenizer.json and comparing with ../testdata/coverage-nostatements.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/depdownloadfailed",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/depdownloadfailed.tokenizer.json and comparing with ../testdata/depdownloadfailed.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/depdownloadfailed-cached",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/depdownloadfailed-cached.tokenizer.json and comparing with ../testdata/depdownloadfailed-cached.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/gosum",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/gosum.tokenizer.json and comparing with ../testdata/gosum.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/gotestfmt",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/gotestfmt.tokenizer.json and comparing with ../testdata/gotestfmt.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/mod-download",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/mod-download.tokenizer.json and comparing with ../testdata/mod-download.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/multipackage-syntax-json",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/multipackage-syntax-json.tokenizer.json and comparing with ../testdata/multipackage-syntax-json.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/nopackages",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/nopackages.tokenizer.json and comparing with ../testdata/nopackages.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/norevision",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/norevision.tokenizer.json and comparing with ../testdata/norevision.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/parallel",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/parallel.tokenizer.json and comparing with ../testdata/parallel.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/skip",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/skip.tokenizer.json and comparing with ../testdata/skip.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/subtest",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/subtest.tokenizer.json and comparing with ../testdata/subtest.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/syntax-error",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/syntax-error.tokenizer.json and comparing with ../testdata/syntax-error.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/testify",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/testify.tokenizer.json and comparing with ../testdata/testify.parser.json...\n    parse_test.go:130: No difference, test successful."
+        },
+        {
+          "name": "TestParse/testifymultipackage",
+          "result": "PASS",
+          "duration": "0s",
+          "coverage": null,
+          "output": "    parse_test.go:52: Parsing ../testdata/testifymultipackage.tokenizer.json and comparing with ../testdata/testifymultipackage.parser.json...\n    parse_test.go:130: No difference, test successful."
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "github.com/haveyoudebuggedit/gotestfmt/v2/renderer",
+      "result": "SKIP",
+      "duration": "0s",
+      "coverage": null,
+      "output": "",
+      "testcases": null,
+      "reason": "no test files"
+    },
+    {
+      "name": "github.com/haveyoudebuggedit/gotestfmt/v2/testutil",
+      "result": "PASS",
+      "duration": "0s",
+      "coverage": null,
+      "output": "",
+      "testcases": [
+        {
+          "name": "TestSleep",
+          "result": "PASS",
+          "duration": "5s",
+          "coverage": null,
+          "output": "    sleep_test.go:10: Now sleeping for 5 seconds...\n    sleep_test.go:12: Welcome back, now finishing test."
+        }
+      ],
+      "reason": ""
+    },
+    {
+      "name": "github.com/haveyoudebuggedit/gotestfmt/v2/tokenizer",
+      "result": "PASS",
+      "duration": "0s",
+      "coverage": null,
+      "output": "",
+      "testcases": [
+        {
+          "name": "TestTokenization",
+          "result": "PASS",
+          "duration": "40ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:21: Locating testdata directory...\n    tokenizer_test.go:36: Testdata directory is located at ../testdata."
+        },
+        {
+          "name": "TestTokenization/containerssh",
+          "result": "PASS",
+          "duration": "200ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/containerssh.txt and comparing with ../testdata/containerssh.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/coverage",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/coverage.txt and comparing with ../testdata/coverage.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/coverage-nostatements",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/coverage-nostatements.txt and comparing with ../testdata/coverage-nostatements.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/depdownloadfailed",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/depdownloadfailed.txt and comparing with ../testdata/depdownloadfailed.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/depdownloadfailed-cached",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/depdownloadfailed-cached.txt and comparing with ../testdata/depdownloadfailed-cached.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/gosum",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/gosum.txt and comparing with ../testdata/gosum.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/gotestfmt",
+          "result": "PASS",
+          "duration": "20ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/gotestfmt.txt and comparing with ../testdata/gotestfmt.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/mod-download",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/mod-download.txt and comparing with ../testdata/mod-download.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/multipackage-syntax-json",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/multipackage-syntax-json.txt and comparing with ../testdata/multipackage-syntax-json.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/nopackages",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/nopackages.txt and comparing with ../testdata/nopackages.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/norevision",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/norevision.txt and comparing with ../testdata/norevision.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/parallel",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/parallel.txt and comparing with ../testdata/parallel.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/skip",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/skip.txt and comparing with ../testdata/skip.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/subtest",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/subtest.txt and comparing with ../testdata/subtest.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/syntax-error",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/syntax-error.txt and comparing with ../testdata/syntax-error.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/testify",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/testify.txt and comparing with ../testdata/testify.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        },
+        {
+          "name": "TestTokenization/testifymultipackage",
+          "result": "PASS",
+          "duration": "10ms",
+          "coverage": null,
+          "output": "    tokenizer_test.go:54: Tokenizing ../testdata/testifymultipackage.txt and comparing with ../testdata/testifymultipackage.tokenizer.json...\n    tokenizer_test.go:103: No difference, test successful."
+        }
+      ],
+      "reason": ""
+    }
+  ]
+}
