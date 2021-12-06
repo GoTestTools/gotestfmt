@@ -29,6 +29,7 @@ Tadam, your tests will now show up in a beautifully formatted fashion. Plug it i
     - [How do I make the output less verbose?](#how-do-i-make-the-output-less-verbose)
     - [Can I use gotestfmt without `-json`?](#can-i-use-gotestfmt-without--json)
     - [Does gotestfmt work with Ginkgo?](#does-gotestfmt-work-with-ginkgo)
+    - [I don't like `gotestfmt`. What else can I use?](#i-dont-like-gotestfmt-what-else-can-i-use)
 - [Architecture](#architecture)
 - [Building](#building)
 - [License](#license)
