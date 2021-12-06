@@ -294,6 +294,14 @@ If you need to use `gotestfmt` without using the `-json` flag, please use versio
 
 But, fear not! Ginkgo has a large number of formats it supports using reporters, such as writing jUnit XML reports. Alternatively, you can [even write your own](https://onsi.github.io/ginkgo/#writing-custom-reporters).
 
+### I don't like `gotestfmt`. What else can I use?
+
+There are more awesome tools out there:
+
+- [gotestsum](https://github.com/gotestyourself/gotestsum)
+- [tparse](https://github.com/mfridman/tparse)
+- [go-junit-report](https://github.com/jstemmer/go-junit-report)
+
 ## Architecture
 
 Gotestfmt takes the output from `go test`, parses it and reformats it with the templates located in the `.gotestfmt` directory, or baked into the application.
