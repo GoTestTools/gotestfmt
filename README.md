@@ -187,7 +187,7 @@ This file contains the output fragment showing the package downloads in the Go t
 | `.Packages` | `[]Package` | A list of packages that have been processed. |
 | `.StartTime` | `*time.Time` | The time the first download line was seen. May be empty. |
 | `.EndTime` | `*time.Time` | The time the last download line was seen. May be empty. |
-| `.Settings` | `RenderSettings` | The render settings (what to hide, etc, see below)/ |
+| `.Settings` | [`RenderSettings`](#render-settings) | The render settings (what to hide, etc, [see below](#render-settings)). |
 
 The `Package` items have the following format:
 
@@ -213,7 +213,7 @@ This template is the output format for the results of a single package and the t
 | `.Reason` | `string` | Text explaining the failure. Empty in most cases. |
 | `.StartTime` | `*time.Time` | A pointer to a time object when the package was first seen in the output. May be nil. |
 | `.EndTime` | `*time.Time` | A pointer to the time object when the package was last seen in the output. May be nil. |
-| `.Settings` | `RenderSettings` | The render settings (what to hide, etc, see below)/ |
+| `.Settings` | [`RenderSettings`](#render-settings) | The render settings (what to hide, etc, [see below](#render-settings)). |
 
 Test cases have the following format:
 
