@@ -173,7 +173,7 @@ workflows:
 
 ### Add your own CI
 
-You can, of course, customize the output to match your CI system. This can be done by creating a folder named `.gotestfmt` in your project and adding the files below. You can find the default templates in the [.gotestfmt](.gotestfmt) folder in this repository.
+You can, of course, customize the output to match your CI system. You can do this creating a folder named `.gotestfmt` in your project and adding the [go template](https://pkg.go.dev/text/template) files below. You can find the default templates in the [.gotestfmt](.gotestfmt) folder in this repository.
 
 When running on a well-known CI system, such as GitHub Actions, gotestfmt will detect that and look in the specific subfolder. If you think a specific CI system should have a custom template, please send us a pull request to this repository.
 
