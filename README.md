@@ -2,7 +2,7 @@
 
 Are you tired of scrolling through endless Golang test logs in GitHub Actions (or other CI systems)?
 
-![An animation showcasing that gotestfmt transforms a text log into an interactive log with folding sections.](https://debugged.it/projects/gotestfmt/gotestfmt.svg)
+![An animation showcasing that gotestfmt transforms a text log into an interactive log with folding sections.](https://debugged.it/projects/gotestfmt/gotestfmt.svg?v2)
 
 Then this is the tool for you. Run it locally, or in any CI system with the following command line like this:
 
