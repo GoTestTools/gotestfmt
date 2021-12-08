@@ -30,6 +30,7 @@ Tadam, your tests will now show up in a beautifully formatted fashion. Plug it i
     - [Can I use gotestfmt without `-json`?](#can-i-use-gotestfmt-without--json)
     - [Does gotestfmt work with Ginkgo?](#does-gotestfmt-work-with-ginkgo)
     - [I don't like `gotestfmt`. What else can I use?](#i-dont-like-gotestfmt-what-else-can-i-use)
+    - [Who uses `gotestfmt`?](#who-uses-gotestfmt)
 - [Architecture](#architecture)
 - [Building](#building)
 - [License](#license)
@@ -302,6 +303,15 @@ There are more awesome tools out there:
 - [gotestsum](https://github.com/gotestyourself/gotestsum)
 - [tparse](https://github.com/mfridman/tparse)
 - [go-junit-report](https://github.com/jstemmer/go-junit-report)
+
+### Who uses `gotestfmt`?
+
+- [ContainerSSH](https://github.com/containerssh/libcontainerssh)
+- [go-ovirt-client](https://github.com/ovirt/go-ovirt-client)
+- [go-ovirt-client-log-klog](https://github.com/ovirt/go-ovirt-client-log-klog)
+- [...and more!](https://github.com/search?q=gotestfmt&type=code) 
+
+*To add your name here simply click the pen icon on top of this box. Please use alphabetic order.* 
 
 ## Architecture
 
