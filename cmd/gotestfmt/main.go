@@ -96,6 +96,8 @@ func main() {
 	ci := ""
 	inputFile := "-"
 	hide := ""
+	var showTestStatus bool
+
 	flag.StringVar(
 		&ci,
 		"ci",
@@ -113,6 +115,12 @@ func main() {
 		"hide",
 		hide,
 		hideDescription(),
+	)
+	flag.BoolVar(
+		&showTestStatus,
+		"showteststatus",
+		showTestStatus,
+		"Show the test status next to the icons (PASS, FAIL, SKIP).",
 	)
 	flag.Parse()
 
@@ -133,6 +141,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	cfg.ShowTestStatus = showTestStatus
 
 	format, err := gotestfmt.New(
 		dirs,

@@ -22,11 +22,11 @@ This template contains the format for an individual package.
         {{- range . -}}
             {{- if or (not $settings.HideSuccessfulTests) (ne .Result "PASS") -}}
                 {{- if eq .Result "PASS" -}}
-                    {{ "  \033" }}[0;32m✅
+                    {{ "  \033" }}[0;32m✅{{if $settings.ShowTestStatus}} ({{.Result}}){{end}}
                 {{- else if eq .Result "SKIP" -}}
-                    {{ "  \033" }}[0;33m🚧
+                    {{ "  \033" }}[0;33m🚧{{if $settings.ShowTestStatus}} ({{.Result}}){{end}}
                 {{- else -}}
-                    {{ "  \033" }}[0;31m❌
+                    {{ "  \033" }}[0;31m❌{{if $settings.ShowTestStatus}} ({{.Result}}){{end}}
                 {{- end -}}
                 {{ " " }}{{- .Name -}}
                 {{- "\033" -}}[0;37m ({{ .Duration -}}
