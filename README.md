@@ -287,9 +287,9 @@ By default, `gotestfmt` will output all tests and their logs. However, you can u
 
 ### How do I know what the icons mean in the output?
 
-The icons are based on the output of `go test -json`. They map to the values from the `[test2json](https://pkg.go.dev/cmd/test2json) package which are PASS, FAIL and SKIP.
+The icons are based on the output of `go test -json`. They map to the values from the [`test2json`](https://pkg.go.dev/cmd/test2json) package (PASS, FAIL, SKIP).
 
-You can use the `-showteststatus` flag to output the words next to the icons in the output.
+You can use the `-showteststatus` flag to output the words next to the icons.
 
 ### Can I use gotestfmt without `-json`?
 
