@@ -213,63 +213,62 @@ When running on a well-known CI system, such as GitHub Actions, gotestfmt will d
 
 This file contains the output fragment showing the package downloads in the Go template format. It has the following variables available:
 
-| Variable | Type | Description |
-|----------|------|-------------|
-| `.Failed` | `bool` | Indicates an overall failure. |
-| `.Packages` | `[]Package` | A list of packages that have been processed. |
-| `.StartTime` | `*time.Time` | The time the first download line was seen. May be empty. |
-| `.EndTime` | `*time.Time` | The time the last download line was seen. May be empty. |
-| `.Settings` | [`RenderSettings`](#render-settings) | The render settings (what to hide, etc, [see below](#render-settings)). |
+| Variable     | Type                                 | Description                                                             |
+|--------------|--------------------------------------|-------------------------------------------------------------------------|
+| `.Failed`    | `bool`                               | Indicates an overall failure.                                           |
+| `.Packages`  | `[]Package`                          | A list of packages that have been processed.                            |
+| `.StartTime` | `*time.Time`                         | The time the first download line was seen. May be empty.                |
+| `.EndTime`   | `*time.Time`                         | The time the last download line was seen. May be empty.                 |
+| `.Settings`  | [`RenderSettings`](#render-settings) | The render settings (what to hide, etc, [see below](#render-settings)). |
 
 The `Package` items have the following format:
 
-| Variable | Type | Description |
-|----------|------|-------------|
+| Variable   | Type     | Description                                                          |
+|------------|----------|----------------------------------------------------------------------|
 | `.Package` | `string` | Name of the package. (e.g. `github.com/haveyoudebuggedit/gotestfmt`) |
-| `.Version` | `string` | Version of the package. (e.g. `v1.0.0`) |
-| `.Failed` | `bool` | If the package download has failed. |
-| `.Reason` | `string` | Text explaining the failure. |
+| `.Version` | `string` | Version of the package. (e.g. `v1.0.0`)                              |
+| `.Failed`  | `bool`   | If the package download has failed.                                  |
+| `.Reason`  | `string` | Text explaining the failure.                                         |
 
 #### package.tpl
 
 This template is the output format for the results of a single package and the tests in it. If multiple packages are tested, this template is called multiple times in a row. It has the following fields:
 
-| Variable | Type | Description |
-|----------|------|-------------|
-| `.Name`   | `string` | Name of the package under test.
-| `.Result` | `string` | Result of all tests in this package. Can be `PASS`, `FAIL`, or `SKIP`. |
-| `.Duration` | `time.Duration` | Duration of all test runs in this package. |
-| `.Coverage` | `*float64` | If coverage data was provided, this indicates the code coverage percentage. |
-| `.Output` | `string` | Additional output from failures. (e.g. syntax error indications) |
-| `.TestCases` | `[]TestCase` | A list of test case results. |
-| `.Reason` | `string` | Text explaining the failure. Empty in most cases. |
-| `.StartTime` | `*time.Time` | A pointer to a time object when the package was first seen in the output. May be nil. |
-| `.EndTime` | `*time.Time` | A pointer to the time object when the package was last seen in the output. May be nil. |
-| `.Settings` | [`RenderSettings`](#render-settings) | The render settings (what to hide, etc, [see below](#render-settings)). |
+| Variable     | Type                                 | Description                                                                            |
+|--------------|--------------------------------------|----------------------------------------------------------------------------------------|
+| `.Name`      | `string`                             | Name of the package under test.                                                        |
+| `.Result`    | `string`                             | Result of all tests in this package. Can be `PASS`, `FAIL`, or `SKIP`.                 |
+| `.Duration`  | `time.Duration`                      | Duration of all test runs in this package.                                             |
+| `.Coverage`  | `*float64`                           | If coverage data was provided, this indicates the code coverage percentage.            |
+| `.Output`    | `string`                             | Additional output from failures. (e.g. syntax error indications)                       |
+| `.TestCases` | `[]TestCase`                         | A list of test case results.                                                           |
+| `.Reason`    | `string`                             | Text explaining the failure. Empty in most cases.                                      |
+| `.StartTime` | `*time.Time`                         | A pointer to a time object when the package was first seen in the output. May be nil.  |
+| `.EndTime`   | `*time.Time`                         | A pointer to the time object when the package was last seen in the output. May be nil. |
+| `.Settings`  | [`RenderSettings`](#render-settings) | The render settings (what to hide, etc, [see below](#render-settings)).                |
 
 Test cases have the following format:
 
-| Variable | Type | Description |
-|----------|------|-------------|
-| `.Name` | `string` | Name of the test case. May contain slashes (`/`) if subtests are run. |
-| `.Result` | `string` | Result of the test. Can be `PASS`, `FAIL`, or `SKIP`. |
-| `.Duration` | `time.Duration` | Duration of all test runs in this package. |
-| `.Coverage` | `float64` | If coverage data was provided, this indicates the code coverage percentage. Contains a negative number if no coverage data is available. |
-| `.Output` | `string` | Log output from the test. |
-| `.StartTime` | `*time.Time` | A pointer to a time object when the test case was first seen in the output. May be nil. |
-| `.EndTime` | `*time.Time` | A pointer to the time object when the test case was last seen in the output. May be nil. |
+| Variable     | Type            | Description                                                                              |
+|--------------|-----------------|------------------------------------------------------------------------------------------|
+| `.Name`      | `string`        | Name of the test case. May contain slashes (`/`) if subtests are run.                    |
+| `.Result`    | `string`        | Result of the test. Can be `PASS`, `FAIL`, or `SKIP`.                                    |
+| `.Duration`  | `time.Duration` | Duration of all test runs in this package.                                               |
+| `.Output`    | `string`        | Log output from the test.                                                                |
+| `.StartTime` | `*time.Time`    | A pointer to a time object when the test case was first seen in the output. May be nil.  |
+| `.EndTime`   | `*time.Time`    | A pointer to the time object when the test case was last seen in the output. May be nil. |
 
 #### Render settings
 
 Render settings are available in all templates. They have the following fields:
 
-| Variable | Type | Description |
-|----------|------|-------------|
-| `.HideSuccessfulDownloads` | `bool` | Hide successful package downloads from the output. |
-| `.HideSuccessfulPackages` | `bool` | Hide all packages that have only successful tests from the output. |
-| `.HideEmptyPackages` | `bool` | Hide the packages from the output that have no test cases. |
-| `.HideSuccessfulTests` | `bool` | Hide all tests from the output that are successful. |
-| `.ShowTestStatus` | `bool` | Show the test status next to the icons (PASS, FAIL, SKIP). |
+| Variable                   | Type   | Description                                                        |
+|----------------------------|--------|--------------------------------------------------------------------|
+| `.HideSuccessfulDownloads` | `bool` | Hide successful package downloads from the output.                 |
+| `.HideSuccessfulPackages`  | `bool` | Hide all packages that have only successful tests from the output. |
+| `.HideEmptyPackages`       | `bool` | Hide the packages from the output that have no test cases.         |
+| `.HideSuccessfulTests`     | `bool` | Hide all tests from the output that are successful.                |
+| `.ShowTestStatus`          | `bool` | Show the test status next to the icons (`PASS`, `FAIL`, `SKIP`).   |
 
 ## FAQ
 
