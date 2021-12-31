@@ -116,4 +116,6 @@ type RenderSettings struct {
 	HideEmptyPackages bool
 	// HideSuccessfulTests hides all tests from the output that are successful.
 	HideSuccessfulTests bool
+	// ShowTestStatus adds words to indicate the test status next to the icons (PASS, FAIl, SKIP).
+	ShowTestStatus bool
 }

@@ -98,7 +98,7 @@ jobs:
         with:
           # Optional: pass GITHUB_TOKEN to avoid rate limiting.
           token: ${{ secrets.GITHUB_TOKEN }}
-          
+
       # Alternatively, install using go install
       - name: Set up gotestfmt
         run: go install github.com/haveyoudebuggedit/gotestfmt/v2/cmd/gotestfmt@latest
@@ -137,7 +137,7 @@ FROM golang
 COPY --from gotestfmt /gotestfmt /usr/local/bin/
 ```
 
-You can then run the tests within this image with the following command:   
+You can then run the tests within this image with the following command:
 
 ```bash
 go test -json -v ./... | /usr/local/bin/gotestfmt
@@ -269,6 +269,7 @@ Render settings are available in all templates. They have the following fields:
 | `.HideSuccessfulPackages` | `bool` | Hide all packages that have only successful tests from the output. |
 | `.HideEmptyPackages` | `bool` | Hide the packages from the output that have no test cases. |
 | `.HideSuccessfulTests` | `bool` | Hide all tests from the output that are successful. |
+| `.ShowTestStatus` | `bool` | Show the test status next to the icons (PASS, FAIL, SKIP). |
 
 ## FAQ
 
@@ -283,6 +284,12 @@ By default, `gotestfmt` will output all tests and their logs. However, you can u
 - **`all`:** Hide all non-error items.
 
 ⚠️ This feature depends on the template you use. If you customized your template please make sure to check the [Render settings](#render-settings) object in your code.
+
+### How do I know what the icons mean in the output?
+
+The icons are based on the output of `go test -json`. They map to the values from the [`test2json`](https://pkg.go.dev/cmd/test2json) package (PASS, FAIL, SKIP).
+
+You can use the `-showteststatus` flag to output the words next to the icons.
 
 ### Can I use gotestfmt without `-json`?
 
@@ -309,9 +316,9 @@ There are more awesome tools out there:
 - [ContainerSSH](https://github.com/containerssh/libcontainerssh)
 - [go-ovirt-client](https://github.com/ovirt/go-ovirt-client)
 - [go-ovirt-client-log-klog](https://github.com/ovirt/go-ovirt-client-log-klog)
-- [...and more!](https://github.com/search?q=gotestfmt&type=code) 
+- [...and more!](https://github.com/search?q=gotestfmt&type=code)
 
-*To add your name here simply click the pen icon on top of this box. Please use alphabetic order.* 
+*To add your name here simply click the pen icon on top of this box. Please use alphabetic order.*
 
 ## Architecture
 

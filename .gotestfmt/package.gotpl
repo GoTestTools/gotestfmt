@@ -29,7 +29,7 @@ This template contains the format for an individual package.
                     {{ "  \033" }}[0;31m❌
                 {{- end -}}
                 {{ " " }}{{- .Name -}}
-                {{- "\033" -}}[0;37m ({{ .Duration -}}
+                {{- "\033" -}}[0;37m ({{if $settings.ShowTestStatus}}{{.Result}}; {{end}}{{ .Duration -}}
                 {{- with .Coverage -}}
                     , coverage: {{ . }}%
                 {{- end -}})
