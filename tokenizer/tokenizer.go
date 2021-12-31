@@ -175,6 +175,12 @@ var stateMachine = []stateChange{
 		stateBetweenTests,
 	},
 	{
+		regexp.MustCompile(`^\?\s+(?P<Package>[^\s]+)\s+\[(?P<Output>.*)]$`),
+		stateRun,
+		ActionSkip,
+		stateRun,
+	},
+	{
 		regexp.MustCompile(`^\?\s+(?P<Package>[^\s]+)\s+(?P<Output>.*)$`),
 		stateInit,
 		ActionSkip,
