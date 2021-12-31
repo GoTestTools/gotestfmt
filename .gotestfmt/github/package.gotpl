@@ -24,14 +24,14 @@ we are creating a stylized header for each package.
             {{- if or (not $settings.HideSuccessfulTests) (ne .Result "PASS") -}}
                 ::group::
                 {{- if eq .Result "PASS" -}}
-                    {{ "\033" }}[0;32m✅{{if $settings.ShowTestStatus}} ({{.Result}}){{end}}
+                    {{ "\033" }}[0;32m✅
                 {{- else if eq .Result "SKIP" -}}
-                    {{ "\033" }}[0;33m🚧{{if $settings.ShowTestStatus}} ({{.Result}}){{end}}
+                    {{ "\033" }}[0;33m🚧
                 {{- else -}}
-                    {{ "\033" }}[0;31m❌{{if $settings.ShowTestStatus}} ({{.Result}}){{end}}
+                    {{ "\033" }}[0;31m❌
                 {{- end -}}
                 {{ " " }}{{- .Name -}}
-                {{- "\033" -}}[0;37m ({{ .Duration -}}
+                {{- "\033" -}}[0;37m ({{if $settings.ShowTestStatus}}{{.Result}}; {{end}}{{ .Duration -}}
                 {{- with .Coverage -}}
                     , coverage: {{ . }}%
                 {{- end -}})

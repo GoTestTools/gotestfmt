@@ -16,24 +16,24 @@ we are creating a stylized header for each package.
     {{- with .TestCases -}}
         {{- range . -}}
             {{- if or (not $settings.HideSuccessfulTests) (ne .Result "PASS") -}}
+                {{- if $settings.ShowTestStatus -}}
+                {{- $title := print .Name " (" .Result "; " .Duration -}}
+                {{- else -}}
                 {{- $title := print .Name " (" .Duration -}}
+                {{- end -}}
                 {{- with .Coverage -}}
                     {{- $title = print ", coverage: " . "%" -}}
                 {{- end -}})
                 {{- $title = print $title ")" -}}
-                {{- $icon = "" -}}
                 {{- if eq .Result "PASS" -}}
-                    {{- $icon = "✅" -}}
+                    {{- $title = print "✅ " $title -}}
                 {{- else if eq .Result "SKIP" -}}
-                    {{- $icon = "🚧" -}}
+                    {{- $title = print "🚧 " $title -}}
                 {{- else -}}
-                    {{- $icon = "❌" -}}
+                    {{- $title = print "❌ " $title -}}
                 {{- end -}}
-                {{- if $settings.ShowTestStatus -}}
-                    {{- $icon = print $icon " (" .Result ")" -}}
-                {{- end -}}
-                {{- $title = print $icon " " $title -}}
                 {{- "\n" -}}
+
                 ##teamcity[blockOpened name='{{- $title -}}']{{- "\n" -}}
                 {{- with .Output -}}
                     {{- . -}}
