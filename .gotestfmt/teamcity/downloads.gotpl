@@ -29,6 +29,6 @@ This template contains the format for a package download.
                 {{- end -}}
             {{- end -}}
         {{- end -}}
-        ##teamcity[blockClosed name='{{ $$title }}']
+        ##teamcity[blockClosed name='{{ $title }}']
     {{- end -}}
 {{- end -}}

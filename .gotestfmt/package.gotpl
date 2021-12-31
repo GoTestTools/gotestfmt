@@ -11,7 +11,11 @@ This template contains the format for an individual package.
     {{- else -}}
         {{ "\033" }}[0;31m
     {{- end -}}
-    📦 {{ .Name }}{{ "\033" }}[0m{{- "\n" -}}
+    📦 {{ .Name -}}{{- "\033" }}[0m
+    {{- with .Coverage -}}
+        {{- "\033" -}}[0;37m ({{ . }}% coverage){{- "\033" -}}[0m
+    {{- end -}}
+    {{- "\n" -}}
     {{- with .Reason -}}
         {{- "  " -}}🛑 {{ . -}}{{- "\n" -}}
     {{- end -}}
@@ -29,13 +33,7 @@ This template contains the format for an individual package.
                     {{ "  \033" }}[0;31m❌
                 {{- end -}}
                 {{ " " }}{{- .Name -}}
-                {{- "\033" -}}[0;37m ({{if $settings.ShowTestStatus}}{{.Result}}; {{end}}{{ .Duration -}}
-                {{- with .Coverage -}}
-                    , coverage: {{ . }}%
-                {{- end -}})
-                {{- "\033" -}}[0m
-                {{- "\n" -}}
-
+                {{- "\033" -}}[0;37m ({{if $settings.ShowTestStatus}}{{.Result}}; {{end}}{{ .Duration -}}){{- "\033" -}}[0m{{- "\n" -}}
                 {{- with .Output -}}
                     {{- . -}}
                     {{- "\n" -}}

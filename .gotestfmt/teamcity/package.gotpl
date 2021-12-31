@@ -5,8 +5,7 @@ we are creating a stylized header for each package.
 */ -}}
 {{- $settings := .Settings -}}
 {{- if and (or (not $settings.HideSuccessfulPackages) (ne .Result "PASS")) (or (not $settings.HideEmptyPackages) (ne .Result "SKIP") (ne (len .TestCases) 0)) -}}
-    {{- $packageTitle := print "📦 " .Name -}}
-    ##teamcity[blockOpened name='{{ $packageTitle }}']{{- "\n" -}}
+    ##teamcity[blockOpened name='📦 {{ .Name }}{{- with .Coverage }} ({{ . }}% coverage){{- end -}}']
     {{- with .Reason -}}
         {{- "  " -}}🛑 {{ . -}}{{- "\n" -}}
     {{- end -}}
@@ -16,15 +15,12 @@ we are creating a stylized header for each package.
     {{- with .TestCases -}}
         {{- range . -}}
             {{- if or (not $settings.HideSuccessfulTests) (ne .Result "PASS") -}}
+                {{- $title := "" -}}
                 {{- if $settings.ShowTestStatus -}}
-                {{- $title := print .Name " (" .Result "; " .Duration -}}
+                    {{- $title = print .Name " (" .Result "; " .Duration ")" -}}
                 {{- else -}}
-                {{- $title := print .Name " (" .Duration -}}
+                    {{- $title = print .Name " (" .Duration ")" -}}
                 {{- end -}}
-                {{- with .Coverage -}}
-                    {{- $title = print ", coverage: " . "%" -}}
-                {{- end -}})
-                {{- $title = print $title ")" -}}
                 {{- if eq .Result "PASS" -}}
                     {{- $title = print "✅ " $title -}}
                 {{- else if eq .Result "SKIP" -}}
@@ -43,5 +39,5 @@ we are creating a stylized header for each package.
             {{- end -}}
         {{- end -}}
     {{- end -}}
-    ##teamcity[blockClosed name='{{ $packageTitle }}']{{- "\n" -}}
+    ##teamcity[blockClosed name='📦 {{ .Name }}{{- with .Coverage }} ({{ . }}% coverage){{- end -}}']{{- "\n" -}}
 {{- end -}}

@@ -26,6 +26,8 @@ type TestCase struct {
 	Duration time.Duration
 	// Coverage is the percentage of code coverage in this test case, or a negative number if no coverage data is
 	// present.
+	//
+	// Deprecated: Coverage is not reported per testcase and should not be used.
 	Coverage *float64
 	// Output is the log output of this test case.
 	Output string
