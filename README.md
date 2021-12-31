@@ -219,6 +219,7 @@ This file contains the output fragment showing the package downloads in the Go t
 | `.Packages`  | `[]Package`                          | A list of packages that have been processed.                            |
 | `.StartTime` | `*time.Time`                         | The time the first download line was seen. May be empty.                |
 | `.EndTime`   | `*time.Time`                         | The time the last download line was seen. May be empty.                 |
+| `.Reason`    | `string`                             | If an extra reason is given for the failure, the text is included here. |
 | `.Settings`  | [`RenderSettings`](#render-settings) | The render settings (what to hide, etc, [see below](#render-settings)). |
 
 The `Package` items have the following format:

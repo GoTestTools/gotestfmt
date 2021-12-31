@@ -21,28 +21,32 @@ func Parse(
 ) (<-chan string, <-chan *Downloads, <-chan *Package) {
 	prefixChannel := make(chan string)
 	downloadsChannel := make(chan *Downloads)
+	downloadsFailureReason := make(chan string)
 	packagesChannel := make(chan *Package)
-	go parse(evts, prefixChannel, downloadsChannel, packagesChannel)
+	go parse(evts, prefixChannel, downloadsChannel, downloadsFailureReason, packagesChannel)
 	return prefixChannel, downloadsChannel, packagesChannel
 }
 
 var downloadErrors = []*regexp.Regexp{
 	regexp.MustCompile(`no required module provides package (?P<package>[^\s]+);`),
+	regexp.MustCompile(`updates to go.mod needed; to update it:`),
 }
 
 func parse(
 	evts <-chan tokenizer.Event,
 	prefixChannel chan string,
 	downloadsChannel chan *Downloads,
+	downloadsFailureReason chan string,
 	packagesChannel chan *Package,
 ) {
 	outputStarted := false
 	downloadTracker := &downloadsTracker{
-		prefixChannel:       prefixChannel,
-		downloadResultsList: nil,
-		downloadsByPackage:  map[string]*Download{},
-		downloadsFinished:   false,
-		target:              downloadsChannel,
+		prefixChannel:          prefixChannel,
+		downloadResultsList:    nil,
+		downloadsByPackage:     map[string]*Download{},
+		downloadsFinished:      false,
+		downloadsFailureReason: downloadsFailureReason,
+		target:                 downloadsChannel,
 	}
 	pkgTracker := &packageTracker{
 		packagesByName: map[string]*Package{},
@@ -131,17 +135,26 @@ func parse(
 				foundDLError := false
 				for _, dlError := range downloadErrors {
 					if submatch := dlError.FindSubmatch(evt.Output); len(submatch) > 0 {
-						pkgName := string(submatch[1])
-						downloadTracker.SetDownloadFailed(pkgName, "")
-						downloadTracker.AddReason(pkgName, evt.Output)
-						prevErroredDownload = pkgName
+						if len(submatch) > 1 {
+							pkgName := string(submatch[1])
+							downloadTracker.SetDownloadFailed(pkgName, "")
+							downloadTracker.AddReason(pkgName, evt.Output)
+							prevErroredDownload = pkgName
+						} else {
+							downloadTracker.SetFailureReason(submatch[0])
+							prevErroredDownload = "*"
+						}
 						foundDLError = true
 						outputStarted = true
 					}
 				}
 				if !foundDLError {
 					if prevErroredDownload != "" {
-						downloadTracker.AddReason(prevErroredDownload, evt.Output)
+						if prevErroredDownload == "*" {
+							downloadTracker.SetFailureReason(evt.Output)
+						} else {
+							downloadTracker.AddReason(prevErroredDownload, evt.Output)
+						}
 					} else if prevErroredPkg != "" {
 						pkgTracker.AddOutput(prevErroredPkg, "", evt.Output)
 					} else if !outputStarted {
@@ -341,14 +354,16 @@ func compareTestCaseNames(name1 string, name2 string) bool {
 }
 
 type downloadsTracker struct {
-	downloadResultsList []*Download
-	downloadsByPackage  map[string]*Download
-	downloadsFinished   bool
-	lastDownload        *Download
-	target              chan *Downloads
-	prefixChannel       chan string
-	startTime           *time.Time
-	endTime             *time.Time
+	downloadResultsList    []*Download
+	downloadsByPackage     map[string]*Download
+	downloadsFinished      bool
+	lastDownload           *Download
+	target                 chan *Downloads
+	prefixChannel          chan string
+	startTime              *time.Time
+	endTime                *time.Time
+	downloadsFailureReason chan string
+	failureReason          []byte
 }
 
 func (d *downloadsTracker) Add(name string, version string) {
@@ -379,11 +394,15 @@ func (d *downloadsTracker) Write() {
 		}
 		dl.Reason = strings.TrimRight(dl.Reason, "\n")
 	}
+	if len(d.failureReason) > 0 {
+		failed = true
+	}
 	d.target <- &Downloads{
 		Packages:  d.downloadResultsList,
 		Failed:    failed,
 		StartTime: d.startTime,
 		EndTime:   d.endTime,
+		Reason:    strings.TrimSpace(string(d.failureReason)),
 	}
 	d.downloadsFinished = true
 	d.downloadResultsList = nil
@@ -423,4 +442,11 @@ func (d *downloadsTracker) AddReason(name string, output []byte) {
 	}
 	pkg := d.ensurePackage(name)
 	pkg.Reason = pkg.Reason + string(output) + "\n"
+}
+
+func (d *downloadsTracker) SetFailureReason(output []byte) {
+	if d.downloadsFinished {
+		panic(fmt.Errorf("tried to add download failure reason after downloads are already finished"))
+	}
+	d.failureReason = append(append(d.failureReason, output...), '\n')
 }

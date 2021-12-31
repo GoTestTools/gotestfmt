@@ -3,7 +3,7 @@
 This template contains the format for a package download.
 */ -}}
 {{- $settings := .Settings -}}
-{{- if .Packages -}}
+{{- if or .Packages .Reason -}}
     {{- if or (not $settings.HideSuccessfulDownloads) .Failed -}}
         {{- if .Failed -}}
             {{ "\033" }}[0;31m❌
@@ -30,5 +30,8 @@ This template contains the format for a package download.
                 {{- end -}}
             {{- end -}}
         {{- end -}}
+    {{- end -}}
+    {{- with .Reason -}}
+    {{- "   " -}}{{- "\033" }}[0;31m🛑 {{ . }}{{- "\033" }}[0m{{ "\n" -}}
     {{- end -}}
 {{- end -}}

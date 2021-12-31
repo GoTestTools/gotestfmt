@@ -3,7 +3,7 @@
 This template contains the format for a package download.
 */ -}}
 {{- $settings := .Settings -}}
-{{- if .Packages -}}
+{{- if or .Packages .Reason -}}
     {{- if or (not .Settings.HideSuccessfulDownloads) .Failed -}}
         {{- "\033" }}[0Ksection_start:{{ with .StartTime }}{{ .Unix }}{{ else }}0{{ end }}:dependency_downloads{{ "\r\033" }}[0K{{- "\n" -}}
         {{- if .Failed -}}
@@ -31,6 +31,9 @@ This template contains the format for a package download.
                 {{- end -}}
             {{- end -}}
         {{- end -}}
-        {{- "\033" }}[0Ksection_start:{{ with .EndTime }}{{ .Unix }}{{ else }}0{{ end }}:dependency_downloads{{ "\r\033" }}[0K{{- "\n" -}}
+        {{- with .Reason -}}
+        {{- "   " -}}{{- "\033" }}[0;31m🛑 {{ . }}{{- "\033" }}[0m{{ "\n" -}}
+        {{- end -}}
+        {{- "\033" }}[0Ksection_end:{{ with .EndTime }}{{ .Unix }}{{ else }}0{{ end }}:dependency_downloads{{ "\r\033" }}[0K{{- "\n" -}}
     {{- end -}}
 {{- end -}}
