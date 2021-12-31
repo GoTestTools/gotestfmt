@@ -90,6 +90,7 @@ func (p *Package) ID() string {
 	)
 }
 
+// Download is the download information about a single package.
 type Download struct {
 	// Package is the name of the package being downloaded.
 	Package string `json:"package"`
@@ -111,6 +112,8 @@ type Downloads struct {
 	StartTime *time.Time `json:"-"`
 	// EndTime indicates when the downloads finished.
 	EndTime *time.Time `json:"-"`
+	// Reason describes the failure reason if a separate one is present.
+	Reason string `json:"reason"`
 }
 
 // ParseResult is an overall structure for parser results, containing the prefix text, downloads and packagesByName.

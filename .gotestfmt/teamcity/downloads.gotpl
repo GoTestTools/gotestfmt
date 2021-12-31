@@ -3,7 +3,7 @@
 This template contains the format for a package download.
 */ -}}
 {{- $settings := .Settings -}}
-{{- if .Packages -}}
+{{- if or .Packages .Reason -}}
     {{- if or (not $settings.HideSuccessfulDownloads) .Failed -}}
         {{- $title := "Dependency downloads" -}}
         {{- if .Failed -}}
@@ -11,8 +11,7 @@ This template contains the format for a package download.
         {{- else -}}
             {{- $title = print "📥 " $title -}}
         {{- end -}}
-        ##teamcity[blockOpened name='{{ $title }}']
-
+        ##teamcity[blockOpened name='{{ $title }}']{{ "\n" -}}
         {{- range .Packages -}}
             {{- if or (not $settings.HideSuccessfulDownloads) .Failed -}}
                 {{- "   " -}}
@@ -28,6 +27,9 @@ This template contains the format for a package download.
                     {{- "     " -}}{{ . -}}{{ "\n" -}}
                 {{- end -}}
             {{- end -}}
+        {{- end -}}
+        {{- with .Reason -}}
+        {{- "   " -}}🛑 {{ . }}{{ "\n" -}}
         {{- end -}}
         ##teamcity[blockClosed name='{{ $title }}']
     {{- end -}}
