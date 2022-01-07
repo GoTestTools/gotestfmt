@@ -35,7 +35,7 @@ This template contains the format for an individual package.
                 {{ " " }}{{- .Name -}}
                 {{- "\033" -}}[0;37m ({{if $settings.ShowTestStatus}}{{.Result}}; {{end}}{{ .Duration -}}){{- "\033" -}}[0m{{- "\n" -}}
                 {{- with .Output -}}
-                    {{- . -}}
+                    {{- formatTestOutput . $settings -}}
                     {{- "\n" -}}
                 {{- end -}}
             {{- end -}}

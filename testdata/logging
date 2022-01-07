@@ -1,0 +1,23 @@
+{"Time":"2022-01-07T12:03:22.543183249+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestGoLogging"}
+{"Time":"2022-01-07T12:03:22.543262565+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestGoLogging","Output":"=== RUN   TestGoLogging\n"}
+{"Time":"2022-01-07T12:03:22.543278611+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestGoLogging","Output":"=== PAUSE TestGoLogging\n"}
+{"Time":"2022-01-07T12:03:22.543284348+01:00","Action":"pause","Package":"github.com/haveyoudebuggedit/example","Test":"TestGoLogging"}
+{"Time":"2022-01-07T12:03:22.543289695+01:00","Action":"run","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog"}
+{"Time":"2022-01-07T12:03:22.543295473+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog","Output":"=== RUN   TestKLog\n"}
+{"Time":"2022-01-07T12:03:22.543301932+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog","Output":"=== PAUSE TestKLog\n"}
+{"Time":"2022-01-07T12:03:22.543307988+01:00","Action":"pause","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog"}
+{"Time":"2022-01-07T12:03:22.543313716+01:00","Action":"cont","Package":"github.com/haveyoudebuggedit/example","Test":"TestGoLogging"}
+{"Time":"2022-01-07T12:03:22.543319311+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestGoLogging","Output":"=== CONT  TestGoLogging\n"}
+{"Time":"2022-01-07T12:03:22.54332638+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestGoLogging","Output":"    test_test.go:10: Hello world!\n"}
+{"Time":"2022-01-07T12:03:22.54333562+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestGoLogging","Output":"--- PASS: TestGoLogging (0.00s)\n"}
+{"Time":"2022-01-07T12:03:22.543343368+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Test":"TestGoLogging","Elapsed":0}
+{"Time":"2022-01-07T12:03:22.543352152+01:00","Action":"cont","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog"}
+{"Time":"2022-01-07T12:03:22.543358448+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog","Output":"=== CONT  TestKLog\n"}
+{"Time":"2022-01-07T12:03:22.543364891+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog","Output":"I0107 12:03:22.543194  228224 test_test.go:15] This is an info message\n"}
+{"Time":"2022-01-07T12:03:22.543483254+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog","Output":"W0107 12:03:22.543232  228224 test_test.go:16] This is a warning message\n"}
+{"Time":"2022-01-07T12:03:22.543513075+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog","Output":"E0107 12:03:22.543234  228224 test_test.go:17] This is an error message\n"}
+{"Time":"2022-01-07T12:03:22.543521731+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog","Output":"--- PASS: TestKLog (0.00s)\n"}
+{"Time":"2022-01-07T12:03:22.543526947+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Test":"TestKLog","Elapsed":0}
+{"Time":"2022-01-07T12:03:22.54353212+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"PASS\n"}
+{"Time":"2022-01-07T12:03:22.543555909+01:00","Action":"output","Package":"github.com/haveyoudebuggedit/example","Output":"ok  \tgithub.com/haveyoudebuggedit/example\t0.001s\n"}
+{"Time":"2022-01-07T12:03:22.543846378+01:00","Action":"pass","Package":"github.com/haveyoudebuggedit/example","Elapsed":0.002}
