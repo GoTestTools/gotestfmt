@@ -97,11 +97,11 @@ jobs:
       - name: Run self-test
         run: |
           set -euo pipefail
-          go test -json ./... 2>&1 | tee /tmp/gotest.log | go run ./cmd/gotestfmt
+          go test -json ./... 2>&1 | tee /tmp/gotest.log | go run ./cmd/gotestfmt -formatter "go run ./cmd/gotestfmt-formatter/main.go"
       - name: Run self-test (verbose)
         run: |
           set -euo pipefail
-          go test -json -v ./... 2>&1 | tee /tmp/gotest-verbose.log | go run ./cmd/gotestfmt
+          go test -json -v ./... 2>&1 | tee /tmp/gotest-verbose.log | go run ./cmd/gotestfmt -formatter "go run ./cmd/gotestfmt-formatter/main.go"
       - name: Upload test log
         uses: actions/upload-artifact@v2
         with:

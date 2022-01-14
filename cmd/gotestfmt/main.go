@@ -95,6 +95,7 @@ func main() {
 	}
 	ci := ""
 	inputFile := "-"
+	formatter := ""
 	hide := ""
 	var showTestStatus bool
 
@@ -122,6 +123,12 @@ func main() {
 		showTestStatus,
 		"Show the test status next to the icons (PASS, FAIL, SKIP).",
 	)
+	flag.StringVar(
+		&formatter,
+		"formatter",
+		formatter,
+		"Absolute path to an external program to format individual test output. This program will be called for each test case with a non-empty output and receive the test case output on stdin. It must produce the final output on stdout.",
+	)
 	flag.Parse()
 
 	if ci != "" {
@@ -143,6 +150,7 @@ func main() {
 	}
 
 	cfg.ShowTestStatus = showTestStatus
+	cfg.Formatter = formatter
 
 	format, err := gotestfmt.New(
 		dirs,

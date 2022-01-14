@@ -27,6 +27,7 @@ Tadam, your tests will now show up in a beautifully formatted fashion. Plug it i
   - [Add your own CI](#add-your-own-ci)
 - [FAQ](#faq)
     - [How do I make the output less verbose?](#how-do-i-make-the-output-less-verbose)
+    - [How do I format the log lines within a test?](#how-do)
     - [Can I use gotestfmt without `-json`?](#can-i-use-gotestfmt-without--json)
     - [Does gotestfmt work with Ginkgo?](#does-gotestfmt-work-with-ginkgo)
     - [I don't like `gotestfmt`. What else can I use?](#i-dont-like-gotestfmt-what-else-can-i-use)
@@ -263,13 +264,14 @@ Test cases have the following format:
 
 Render settings are available in all templates. They have the following fields:
 
-| Variable                   | Type   | Description                                                        |
-|----------------------------|--------|--------------------------------------------------------------------|
-| `.HideSuccessfulDownloads` | `bool` | Hide successful package downloads from the output.                 |
-| `.HideSuccessfulPackages`  | `bool` | Hide all packages that have only successful tests from the output. |
-| `.HideEmptyPackages`       | `bool` | Hide the packages from the output that have no test cases.         |
-| `.HideSuccessfulTests`     | `bool` | Hide all tests from the output that are successful.                |
-| `.ShowTestStatus`          | `bool` | Show the test status next to the icons (`PASS`, `FAIL`, `SKIP`).   |
+| Variable                   | Type     | Description                                                                                                         |
+|----------------------------|----------|---------------------------------------------------------------------------------------------------------------------|
+| `.HideSuccessfulDownloads` | `bool`   | Hide successful package downloads from the output.                                                                  |
+| `.HideSuccessfulPackages`  | `bool`   | Hide all packages that have only successful tests from the output.                                                  |
+| `.HideEmptyPackages`       | `bool`   | Hide the packages from the output that have no test cases.                                                          |
+| `.HideSuccessfulTests`     | `bool`   | Hide all tests from the output that are successful.                                                                 |
+| `.ShowTestStatus`          | `bool`   | Show the test status next to the icons (`PASS`, `FAIL`, `SKIP`).                                                    |
+| `.Formatter`               | `string` | Path to the formatter to be used. This formatter can be invoked by calling `formatTestOutput outputHere .Settings`. | 
 
 ## FAQ
 
@@ -284,6 +286,18 @@ By default, `gotestfmt` will output all tests and their logs. However, you can u
 - **`all`:** Hide all non-error items.
 
 ⚠️ This feature depends on the template you use. If you customized your template please make sure to check the [Render settings](#render-settings) object in your code.
+
+### How do I format the log lines within a test?
+
+Gotestfmt starting with version 2.2.0 supports running external formatters:
+
+```
+go test -json -v ./... 2>&1 | gotestfmt -formatter "/path/to/your/formatter"
+```
+
+The formatter will be called for each individual test case separately and the entire output of the test case will be passed to the formatter on the standard input. The formatter can then write the modified test output to the standard output. The formatter has 10 seconds to finish the test case, otherwise it will be terminated.
+
+You can find a sample formatter written in Go in [cmd/gotestfmt-formatter/main.go](cmd/gotestfmt-formatter/main.go).
 
 ### How do I know what the icons mean in the output?
 
