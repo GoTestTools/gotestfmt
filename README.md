@@ -15,8 +15,6 @@ Tadam, your tests will now show up in a beautifully formatted fashion. Plug it i
 
 **Note:** Please always save the original log. You will need it if you have to file a bug report for gotestfmt.
 
-**⚠️ With version 2.0 gotestfmt switched to supporting only JSON output. Please add the `-json` flag to your `go test` command line!**
-
 ## Table of Contents
 
 - [Installing](#installing)
