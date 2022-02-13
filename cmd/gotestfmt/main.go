@@ -97,6 +97,7 @@ func main() {
 	inputFile := "-"
 	formatter := ""
 	hide := ""
+	var nofail bool
 	var showTestStatus bool
 
 	flag.StringVar(
@@ -128,6 +129,12 @@ func main() {
 		"formatter",
 		formatter,
 		"Absolute path to an external program to format individual test output. This program will be called for each test case with a non-empty output and receive the test case output on stdin. It must produce the final output on stdout.",
+	)
+	flag.BoolVar(
+		&nofail,
+		"nofail",
+		nofail,
+		"Return an exit code of 0 even if one or more tests failed.",
 	)
 	flag.Parse()
 
@@ -172,5 +179,7 @@ func main() {
 	}
 
 	exitCode := format.FormatWithConfigAndExitCode(input, os.Stdout, cfg)
-	os.Exit(exitCode)
+	if !nofail {
+		os.Exit(exitCode)
+	}
 }
