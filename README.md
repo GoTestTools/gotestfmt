@@ -27,7 +27,8 @@ Tadam, your tests will now show up in a beautifully formatted fashion. Plug it i
   - [Add your own CI](#add-your-own-ci)
 - [FAQ](#faq)
     - [How do I make the output less verbose?](#how-do-i-make-the-output-less-verbose)
-    - [How do I format the log lines within a test?](#how-do)
+    - [How do I format the log lines within a test?](#how-do-i-format-the-log-lines-within-a-test)
+    - [Why does gotestfmt exit with a non-zero status?](#why-does-gotestfmt-exit-with-a-non-zero-status)
     - [Can I use gotestfmt without `-json`?](#can-i-use-gotestfmt-without--json)
     - [Does gotestfmt work with Ginkgo?](#does-gotestfmt-work-with-ginkgo)
     - [I don't like `gotestfmt`. What else can I use?](#i-dont-like-gotestfmt-what-else-can-i-use)
@@ -298,6 +299,10 @@ go test -json -v ./... 2>&1 | gotestfmt -formatter "/path/to/your/formatter"
 The formatter will be called for each individual test case separately and the entire output of the test case will be passed to the formatter on the standard input. The formatter can then write the modified test output to the standard output. The formatter has 10 seconds to finish the test case, otherwise it will be terminated.
 
 You can find a sample formatter written in Go in [cmd/gotestfmt-formatter/main.go](cmd/gotestfmt-formatter/main.go).
+
+### Why does gotestfmt exit with a non-zero status?
+
+As of version 2.3.0 gotestfmt returns with a non-zero exit status when one or more tests fail. We added this behavior to make sure your CI doesn't pass on failing tests if you forget the `set -euo pipefail` option. You can disable this behavior by passing the `-nofail` parameter in the command line.
 
 ### How do I know what the icons mean in the output?
 
