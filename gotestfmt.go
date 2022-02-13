@@ -18,7 +18,7 @@ var fs embed.FS
 
 func New(
 	templateDirs []string,
-) (Combined, error) {
+) (CombinedExitCode, error) {
 	downloadsTpl := findTemplate(templateDirs, "downloads.gotpl")
 
 	packageTpl := findTemplate(templateDirs, "package.gotpl")
@@ -55,6 +55,12 @@ type Combined interface {
 	Formatter
 }
 
+// CombinedExitCode contains Combined and adds a function to format with exit code.
+type CombinedExitCode interface {
+	Combined
+	FormatterExitCode
+}
+
 // GoTestFmt implements the classic Format instruction. This is no longer in use.
 //
 // Deprecated: please use the Formatter interface instead.
@@ -68,24 +74,40 @@ type Formatter interface {
 	FormatWithConfig(input io.Reader, target io.WriteCloser, cfg renderer.RenderSettings)
 }
 
+// FormatterExitCode contains an extended format function to accept render settings and returns an exit code
+type FormatterExitCode interface {
+	FormatWithConfigAndExitCode(input io.Reader, target io.WriteCloser, cfg renderer.RenderSettings) int
+}
+
 type goTestFmt struct {
 	packageTpl   []byte
 	downloadsTpl []byte
 }
 
 func (g *goTestFmt) Format(input io.Reader, target io.WriteCloser) {
-	g.FormatWithConfig(input, target, renderer.RenderSettings{})
+	g.FormatWithConfigAndExitCode(input, target, renderer.RenderSettings{})
 }
 
 func (g *goTestFmt) FormatWithConfig(input io.Reader, target io.WriteCloser, cfg renderer.RenderSettings) {
+	_ = g.FormatWithConfigAndExitCode(input, target, cfg)
+}
+
+func (g *goTestFmt) FormatWithConfigAndExitCode(input io.Reader, target io.WriteCloser, cfg renderer.RenderSettings) int {
 	tokenizerOutput := tokenizer.Tokenize(input)
 	prefixes, downloads, packages := parser.Parse(tokenizerOutput)
-	result := renderer.RenderWithSettings(prefixes, downloads, packages, g.downloadsTpl, g.packageTpl, cfg)
+	result, exitCodeChan := renderer.RenderWithSettingsAndExitCode(
+		prefixes,
+		downloads,
+		packages,
+		g.downloadsTpl,
+		g.packageTpl,
+		cfg,
+	)
 
 	for {
 		fragment, ok := <-result
 		if !ok {
-			return
+			return <-exitCodeChan
 		}
 		if _, err := target.Write(fragment); err != nil {
 			panic(fmt.Errorf("failed to write to output: %w", err))

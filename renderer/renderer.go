@@ -84,6 +84,72 @@ func RenderWithSettings(
 	return result
 }
 
+// RenderWithSettingsAndExitCode takes the two input channels from the parser and renders them into text output
+// fragments as well as an exit code.
+func RenderWithSettingsAndExitCode(
+	prefixes <-chan string,
+	downloadsChannel <-chan *parser.Downloads,
+	packagesChannel <-chan *parser.Package,
+	downloadsTemplate []byte,
+	packagesTemplate []byte,
+	settings RenderSettings,
+) (<-chan []byte, <-chan int) {
+	result := make(chan []byte)
+	exitCodeChan := make(chan int)
+	go func() {
+		exitCode := 0
+		defer func() {
+			close(result)
+			exitCodeChan <- exitCode
+			close(exitCodeChan)
+		}()
+		for {
+			prefix, ok := <-prefixes
+			if !ok {
+				break
+			}
+			result <- []byte(fmt.Sprintf("%s\n", prefix))
+		}
+
+		for {
+			downloads, ok := <-downloadsChannel
+			if !ok {
+				break
+			}
+			if downloads.Failed {
+				exitCode = 1
+			}
+			result <- renderTemplate(
+				"downloads.gotpl",
+				downloadsTemplate,
+				Downloads{
+					downloads,
+					settings,
+				},
+			)
+		}
+
+		for {
+			pkg, ok := <-packagesChannel
+			if !ok {
+				break
+			}
+			if pkg.Result == parser.ResultFail {
+				exitCode = 1
+			}
+			result <- renderTemplate(
+				"package.gotpl",
+				packagesTemplate,
+				Package{
+					pkg,
+					settings,
+				},
+			)
+		}
+	}()
+	return result, exitCodeChan
+}
+
 // Downloads contains the downloads for rendering.
 type Downloads struct {
 	*parser.Downloads

@@ -171,5 +171,6 @@ func main() {
 		input = fh
 	}
 
-	format.FormatWithConfig(input, os.Stdout, cfg)
+	exitCode := format.FormatWithConfigAndExitCode(input, os.Stdout, cfg)
+	os.Exit(exitCode)
 }
