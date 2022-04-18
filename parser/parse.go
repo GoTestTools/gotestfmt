@@ -159,6 +159,8 @@ func parse(
 						pkgTracker.AddOutput(prevErroredPkg, "", evt.Output)
 					} else if !outputStarted {
 						prefixChannel <- string(evt.Output)
+					} else if strings.HasPrefix(string(evt.Output), "exit status ") {
+						// Ignore go-acc exit status reporting.
 					} else {
 						panic(
 							fmt.Errorf(
