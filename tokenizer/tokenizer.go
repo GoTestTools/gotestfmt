@@ -158,6 +158,12 @@ var stateMachine = []stateChange{
 	},
 	{
 		regexp.MustCompile(`^ok\s+(?P<Package>[^\s]+)\s+(\((?P<Cached>cached)\)|(?P<Elapsed>[^\s]*))(|([\s]+)coverage: ((?P<Coverage>.*)% of statements|\[no statements]))$`),
+		stateRun,
+		ActionPass,
+		stateRun,
+	},
+	{
+		regexp.MustCompile(`^ok\s+(?P<Package>[^\s]+)\s+(\((?P<Cached>cached)\)|(?P<Elapsed>[^\s]*))(|([\s]+)coverage: ((?P<Coverage>.*)% of statements|\[no statements]))$`),
 		stateInit,
 		ActionPass,
 		stateBetweenTests,
