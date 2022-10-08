@@ -1,4 +1,4 @@
-module github.com/haveyoudebuggedit/example
+module github.com/gotesttools/example
 
 go 1.17
 

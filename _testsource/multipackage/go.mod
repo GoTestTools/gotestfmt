@@ -1,1 +1,1 @@
-module "github.com/haveyoudebuggedit/example"
+module "github.com/gotesttools/example"

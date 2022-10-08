@@ -1,13 +1,13 @@
 package example_test
 
 import (
-	"testing"
+    "testing"
 
-	"github.com/haveyoudebuggedit/example"
+    "github.com/gotesttools/example"
 )
 
 func TestHello(t *testing.T) {
-	if example.Hello() != "Hello world!" {
-		t.Fail()
-	}
+    if example.Hello() != "Hello world!" {
+        t.Fail()
+    }
 }

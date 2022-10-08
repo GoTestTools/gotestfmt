@@ -1,4 +1,4 @@
-{{- /*gotype: github.com/haveyoudebuggedit/gotestfmt/v2/renderer.Package*/ -}}
+{{- /*gotype: github.com/gotesttools/gotestfmt/v2/renderer.Package*/ -}}
 {{- /*
 This template contains the format for an individual package.
 */ -}}

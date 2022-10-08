@@ -1,4 +1,4 @@
-{{- /*gotype: github.com/haveyoudebuggedit/gotestfmt/parser.Package*/ -}}
+{{- /*gotype: github.com/gotesttools/gotestfmt/v2/parser.Package*/ -}}
 {{- /*
 This template contains the format for an individual package. GitHub actions does not currently support nested groups so
 we are creating a stylized header for each package.

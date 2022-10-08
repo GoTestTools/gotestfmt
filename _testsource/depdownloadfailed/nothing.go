@@ -1,5 +1,5 @@
 package gomod
 
 import (
-	_ "github.com/haveyoudebuggedit/nonexistent"
+    _ "github.com/gotesttools/nonexistent"
 )

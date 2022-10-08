@@ -23,7 +23,7 @@ jobs:
           version: 19.03.13
       - run:
           name: Container test
-          command: go test -json -v ./... 2>&1 | docker run -i ghcr.io/haveyoudebuggedit/gotestfmt:latest
+          command: go test -json -v ./... 2>&1 | docker run -i ghcr.io/gotesttools/gotestfmt:latest
 workflows:
   version: 2
   build-workflow:
