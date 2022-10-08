@@ -6,6 +6,9 @@ builds:
       - linux
       - windows
       - darwin
+    ignore:
+      - goos: windows
+        goarch: arm
     main: ./cmd/gotestfmt
 archives:
   - format_overrides:
