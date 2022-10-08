@@ -8,7 +8,7 @@ builds:
       - darwin
     ignore:
       - goos: windows
-        goarch: arm
+        goarch: arm64
     main: ./cmd/gotestfmt
 archives:
   - format_overrides:
