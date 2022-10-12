@@ -1,0 +1,201 @@
+[
+    {
+      "action": "download",
+      "package": "go.flow.arcalot.io/pluginsdk",
+      "version": "v0.0.0-20221007155452-ba5c76da9fc9",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "gopkg.in/yaml.v3",
+      "version": "v3.0.1",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "go.arcalot.io/log",
+      "version": "v1.1.0",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "go.arcalot.io/lang",
+      "version": "v1.0.0",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "github.com/docker/docker",
+      "version": "v20.10.18+incompatible",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "github.com/docker/go-connections",
+      "version": "v0.4.0",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "github.com/opencontainers/image-spec",
+      "version": "v1.0.2",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "go.arcalot.io/assert",
+      "version": "v1.1.0",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "github.com/docker/go-units",
+      "version": "v0.5.0",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "github.com/docker/distribution",
+      "version": "v2.8.1+incompatible",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "github.com/opencontainers/go-digest",
+      "version": "v1.0.0",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "github.com/pkg/errors",
+      "version": "v0.9.1",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "github.com/sirupsen/logrus",
+      "version": "v1.9.0",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "golang.org/x/net",
+      "version": "v0.0.0-20201021035429-f5854403a974",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "github.com/gogo/protobuf",
+      "version": "v1.3.2",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "download",
+      "package": "golang.org/x/sys",
+      "version": "v0.0.0-20220715151400-c0bba94af5f8",
+      "test": "",
+      "elapsed": "0s",
+      "output": null,
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "stdout",
+      "package": "",
+      "version": "",
+      "test": "",
+      "elapsed": "0s",
+      "output": "Li4vLi4vLi4vZ28vcGtnL21vZC9nby5mbG93LmFyY2Fsb3QuaW8vcGx1Z2luc2RrQHYwLjAuMC0yMDIyMTAwNzE1NTQ1Mi1iYTVjNzZkYTlmYzkvYXRwL2NsaWVudC5nbzo4OjI6IG1pc3NpbmcgZ28uc3VtIGVudHJ5IGZvciBtb2R1bGUgcHJvdmlkaW5nIHBhY2thZ2UgZ2l0aHViLmNvbS9meGFtYWNrZXIvY2Jvci92MiAoaW1wb3J0ZWQgYnkgZ28uZmxvdy5hcmNhbG90LmlvL3BsdWdpbnNkay9hdHApOyB0byBhZGQ6",
+      "cached": false,
+      "coverage": null,
+      "json": false
+    },
+    {
+      "action": "stdout",
+      "package": "",
+      "version": "",
+      "test": "",
+      "elapsed": "0s",
+      "output": "CWdvIGdldCBnby5mbG93LmFyY2Fsb3QuaW8vcGx1Z2luc2RrL2F0cEB2MC4wLjAtMjAyMjEwMDcxNTU0NTItYmE1Yzc2ZGE5ZmM5",
+      "cached": false,
+      "coverage": null,
+      "json": false
+    }
+  ]
+  

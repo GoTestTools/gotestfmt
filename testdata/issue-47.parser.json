@@ -1,0 +1,106 @@
+{
+    "prefix": null,
+    "downloads": {
+        "packages": [
+            {
+                "package": "go.flow.arcalot.io/pluginsdk",
+                "version": "v0.0.0-20221007155452-ba5c76da9fc9",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "gopkg.in/yaml.v3",
+                "version": "v3.0.1",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "go.arcalot.io/log",
+                "version": "v1.1.0",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "go.arcalot.io/lang",
+                "version": "v1.0.0",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "github.com/docker/docker",
+                "version": "v20.10.18+incompatible",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "github.com/docker/go-connections",
+                "version": "v0.4.0",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "github.com/opencontainers/image-spec",
+                "version": "v1.0.2",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "go.arcalot.io/assert",
+                "version": "v1.1.0",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "github.com/docker/go-units",
+                "version": "v0.5.0",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "github.com/docker/distribution",
+                "version": "v2.8.1+incompatible",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "github.com/opencontainers/go-digest",
+                "version": "v1.0.0",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "github.com/pkg/errors",
+                "version": "v0.9.1",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "github.com/sirupsen/logrus",
+                "version": "v1.9.0",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "golang.org/x/net",
+                "version": "v0.0.0-20201021035429-f5854403a974",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "github.com/gogo/protobuf",
+                "version": "v1.3.2",
+                "failed": false,
+                "reason": ""
+            },
+            {
+                "package": "golang.org/x/sys",
+                "version": "v0.0.0-20220715151400-c0bba94af5f8",
+                "failed": false,
+                "reason": ""
+            }
+        ],
+        "failed": true,
+        "reason": "../../../go/pkg/mod/go.flow.arcalot.io/pluginsdk@v0.0.0-20221007155452-ba5c76da9fc9/atp/client.go:8:2: missing go.sum entry for module providing package github.com/fxamacker/cbor/v2 (imported by go.flow.arcalot.io/pluginsdk/atp); to add:\n\tgo get go.flow.arcalot.io/pluginsdk/atp@v0.0.0-20221007155452-ba5c76da9fc9"
+    },
+    "packages": null
+}
