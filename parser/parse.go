@@ -30,6 +30,7 @@ func Parse(
 var downloadErrors = []*regexp.Regexp{
 	regexp.MustCompile(`no required module provides package (?P<package>[^\s]+);`),
 	regexp.MustCompile(`updates to go.mod needed; to update it:`),
+	regexp.MustCompile(`.+missing go.sum entry for module.+; to add:`),
 }
 
 func parse(
