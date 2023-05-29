@@ -418,6 +418,11 @@ func parseLine(currentState state, line []byte, output chan<- Event) state {
 			continue
 		}
 
+		// Don't match the "package" action against a JSON lines - issue #52
+		if jsonLine != nil && stateTransition.action == ActionPackage {
+			continue
+		}
+
 		if match := stateTransition.regexp.FindSubmatch(line); len(match) != 0 {
 			elapsed, err := getTimeElapsed(stateTransition.regexp, match, "Elapsed")
 			if err == nil {
