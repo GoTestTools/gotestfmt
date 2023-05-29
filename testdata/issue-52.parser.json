@@ -1,0 +1,27 @@
+{
+  "prefix": null,
+  "downloads": {
+    "packages": null,
+    "failed": false,
+    "reason": ""
+  },
+  "packages": [
+    {
+      "name": "code-intelligence.com/cifuzz/integration-tests/other",
+      "result": "",
+      "duration": "0s",
+      "coverage": null,
+      "output": "",
+      "testcases": [
+        {
+          "name": "TestIntegration_Other_RunCoverage",
+          "result": "FAIL",
+          "duration": "0s",
+          "coverage": null,
+          "output": "The FUZZ_TEST_CXXFLAGS and FUZZ_TEST_LDFLAGS environment variables"
+        }
+      ],
+      "reason": ""
+    }
+  ]
+}
