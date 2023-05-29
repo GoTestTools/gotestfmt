@@ -1,1 +1,1 @@
-{"Time":"2023-05-26T14:52:41.180732Z","Action":"output","Package":"code-intelligence.com/cifuzz/integration-tests/other","Test":"TestIntegration_Other_RunCoverage","Output":"The FUZZ_TEST_CXXFLAGS and FUZZ_TEST_LDFLAGS environment variables\n"}
+{"Time":"2023-05-26T14:52:41.180732Z","Action":"output","Package":"code-intelligence.com/cifuzz/integration-tests/other","Test":"TestIntegration_Other_RunCoverage","Output":"# The FUZZ_TEST_CXXFLAGS and FUZZ_TEST_LDFLAGS environment variables\n"}
