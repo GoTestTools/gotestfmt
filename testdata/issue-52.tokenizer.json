@@ -1,0 +1,13 @@
+[
+  {
+    "action": "stdout",
+    "package": "code-intelligence.com/cifuzz/integration-tests/other",
+    "version": "",
+    "test": "TestIntegration_Other_RunCoverage",
+    "elapsed": "0s",
+    "output": "IyBUaGUgRlVaWl9URVNUX0NYWEZMQUdTIGFuZCBGVVpaX1RFU1RfTERGTEFHUyBlbnZpcm9ubWVudCB2YXJpYWJsZXM=",
+    "cached": false,
+    "coverage": null,
+    "json": true
+  }
+]
