@@ -17,11 +17,12 @@ import (
 var fs embed.FS
 
 func New(
+	templateRoot string,
 	templateDirs []string,
 ) (CombinedExitCode, error) {
-	downloadsTpl := findTemplate(templateDirs, "downloads.gotpl")
+	downloadsTpl := findTemplate(templateRoot, templateDirs, "downloads.gotpl")
 
-	packageTpl := findTemplate(templateDirs, "package.gotpl")
+	packageTpl := findTemplate(templateRoot, templateDirs, "package.gotpl")
 
 	return &goTestFmt{
 		downloadsTpl: downloadsTpl,
@@ -29,17 +30,17 @@ func New(
 	}, nil
 }
 
-func findTemplate(dirs []string, tpl string) []byte {
+func findTemplate(root string, dirs []string, tpl string) []byte {
 	var lastError error
 	for _, dir := range dirs {
-		templateContents, err := os.ReadFile(path.Join(dir, tpl))
+		templateContents, err := os.ReadFile(path.Join(root, dir, tpl))
 		if err == nil {
 			return templateContents
 		}
 		lastError = err
 	}
 	for _, dir := range dirs {
-		templateContents, err := fs.ReadFile(path.Join(dir, tpl))
+		templateContents, err := fs.ReadFile(path.Join("./.gotestfmt", dir, tpl))
 		if err == nil {
 			return templateContents
 		}
@@ -49,6 +50,7 @@ func findTemplate(dirs []string, tpl string) []byte {
 }
 
 // Combined is an interface that combines both the classic GoTestFmt interface and the Formatter interface.
+//
 //goland:noinspection GoDeprecation
 type Combined interface {
 	GoTestFmt
@@ -64,6 +66,7 @@ type CombinedExitCode interface {
 // GoTestFmt implements the classic Format instruction. This is no longer in use.
 //
 // Deprecated: please use the Formatter interface instead.
+//
 //goland:noinspection GoDeprecation
 type GoTestFmt interface {
 	Format(input io.Reader, target io.WriteCloser)

@@ -12,19 +12,10 @@ import (
 )
 
 // ciEnvironments maps environment variables to directories to check for templates.
-var ciEnvironments = map[string][]string{
-	"GITHUB_WORKFLOW": {
-		"./.gotestfmt/github",
-		"./.gotestfmt",
-	},
-	"TEAMCITY_VERSION": {
-		"./.gotestfmt/teamcity",
-		"./.gotestfmt",
-	},
-	"GITLAB_CI": {
-		"./.gotestfmt/gitlab",
-		"./.gotestfmt",
-	},
+var ciEnvironments = map[string]string{
+	"GITHUB_WORKFLOW":  "github",
+	"TEAMCITY_VERSION": "teamcity",
+	"GITLAB_CI":        "gitlab",
 }
 
 type hide string
@@ -90,13 +81,12 @@ func hideDescription() string {
 }
 
 func main() {
-	dirs := []string{
-		"./.gotestfmt",
-	}
+	dirs := []string{""}
 	ci := ""
 	inputFile := "-"
 	formatter := ""
 	hide := ""
+	templateDir := "./.gotestfmt"
 	var nofail bool
 	var showTestStatus bool
 
@@ -130,6 +120,12 @@ func main() {
 		formatter,
 		"Absolute path to an external program to format individual test output. This program will be called for each test case with a non-empty output and receive the test case output on stdin. It must produce the final output on stdout.",
 	)
+	flag.StringVar(
+		&templateDir,
+		"template-dir",
+		templateDir,
+		"Absolute path to a folder containing templates",
+	)
 	flag.BoolVar(
 		&nofail,
 		"nofail",
@@ -140,13 +136,16 @@ func main() {
 
 	if ci != "" {
 		dirs = []string{
-			fmt.Sprintf("./.gotestfmt/%s", filepath.Clean(ci)),
-			"./.gotestfmt",
+			filepath.Clean(ci),
+			"",
 		}
 	} else {
-		for env, directories := range ciEnvironments {
+		for env, subDir := range ciEnvironments {
 			if os.Getenv(env) != "" {
-				dirs = directories
+				dirs = []string{
+					subDir,
+					"",
+				}
 			}
 		}
 	}
@@ -160,6 +159,7 @@ func main() {
 	cfg.Formatter = formatter
 
 	format, err := gotestfmt.New(
+		templateDir,
 		dirs,
 	)
 	if err != nil {
